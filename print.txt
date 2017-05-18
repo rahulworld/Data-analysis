@@ -1,0 +1,1177 @@
+/home/milan/workspace/istsos/auth.py:39:import pprint
+/home/milan/workspace/istsos/auth.py:46:    print >> sys.stderr, ("Failed to import pickle from any known place")
+/home/milan/workspace/istsos/auth.py:48:pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/auth.py:66:    #print >> sys.stderr, "\nCheck_password: %s" % pp.pformat(environ)
+/home/milan/workspace/istsos/walib/procedure.py:249:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/procedure.py:380:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/procedure.py:441:                        print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/walib/procedure.py:699:                    #print >> sys.stderr, o['constraint']                    
+/home/milan/workspace/istsos/walib/procedure.py:789:                        print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/walib/procedure.py:802:        #print >> sys.stderr, "SML:%s" % sml
+/home/milan/workspace/istsos/walib/utils.py:522:            #print >> sys.stderr, "Adding authentication"
+/home/milan/workspace/istsos/walib/utils.py:525:            #print >> sys.stderr, "No authentication"
+/home/milan/workspace/istsos/walib/utils.py:534:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/utils.py:632:        print >> sys.stderr, "to_unicode_or_bust(%s,%s)\n%s" % (obj,encoding,traceback.print_exc())
+/home/milan/workspace/istsos/walib/utils.py:657:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/users.py:39:            print >> sys.stderr, ("Failed to import pickle from any known place")
+/home/milan/workspace/istsos/walib/users.py:67:        #print >> sys.stderr, "\n\nUser: %s" % pp.pprint(self)
+/home/milan/workspace/istsos/walib/users.py:97:        #print >> sys.stderr, "Checking service '%s' for user '%s'" % (service, self.username)
+/home/milan/workspace/istsos/walib/users.py:99:            #print >> sys.stderr, " > group '%s'" % group
+/home/milan/workspace/istsos/walib/users.py:101:            #print >> sys.stderr, "    > keys %s" % keys
+/home/milan/workspace/istsos/walib/users.py:104:        print >> sys.stderr, "NOT AUTHORIZED"
+/home/milan/workspace/istsos/walib/configManager.py:43:        print myconfig.serviceurl
+/home/milan/workspace/istsos/walib/resourceFactory.py:32:    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:69:            #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:75:                pathinfo.pop(0) #print >> sys.stderr, pathinfo.pop(0)  # remove service name
+/home/milan/workspace/istsos/walib/resourceFactory.py:82:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:89:                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:96:                                #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:99:                                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:133:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:141:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:150:                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:154:                            #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:168:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:176:                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:179:                            #print >> sys.stderr, resource              
+/home/milan/workspace/istsos/walib/resourceFactory.py:182:                                #print >> sys.stderr, resource     
+/home/milan/workspace/istsos/walib/resourceFactory.py:187:                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:190:                            #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:195:                            #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:203:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:211:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:219:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:227:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:236:                    #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:243:                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:248:                                #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:260:                                        #print >> sys.stderr, resource
+/home/milan/workspace/istsos/walib/resourceFactory.py:273:                    #print >> sys.stderr, resource              
+/home/milan/workspace/istsos/walib/resourceFactory.py:276:                        #print >> sys.stderr, resource     
+/home/milan/workspace/istsos/walib/resourceFactory.py:280:                        #print >> sys.stderr, resource     
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:179:        #import pprint
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:180:        #pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:182:        #print >> sys.stderr, "\n\nSML: %s" % smlstring
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:183:        #print >> sys.stderr, "\n\nSML: %s" % pp.pprint(self.json)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:306:            #print >> sys.stderr, servicedb.mogrify(sql,params)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:332:                #print >> sys.stderr, "Sampling value: ",time_sam_val, cap['value']
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:337:                #print >> sys.stderr, "Acquisition value: ",time_acq_val, cap['value']
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:400:                                #print >> sys.stderr, servicedb.mogrify(sql,params)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:425:                            #print >> sys.stderr, servicedb.mogrify(sql,params)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:535:            #print >> sys.stderr, "Service url: %s" % self.serviceconf.serviceurl["url"]
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:548:            #print >> sys.stderr, "\n\nSML: %s\n%s\n" % (self.procedurename,res.content)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:558:            #print >> sys.stderr, "\n\nSML: %s\n%s\n" % (self.procedurename,res.content)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:637:        #import pprint
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:638:        #pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:639:        #print >> sys.stderr, "\n\nENVIRON: %s" % pp.pprint(self.waEnviron)
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:682:                        #print >> sys.stderr, proc['name']
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:705:                            print >> sys.stderr, "\n\nSML: %s\n\n" % res.content
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:713:                        #print >> sys.stderr, ret['outputs'][0]['constraint']['interval']
+/home/milan/workspace/istsos/walib/istsos/services/procedures/procedures.py:724:                                #print >> sys.stderr, "'%s' == '%s'" % (self.observedProperty,op["def"])
+/home/milan/workspace/istsos/walib/istsos/services/status/status.py:168:            print procedure['name']
+/home/milan/workspace/istsos/walib/istsos/services/status/status.py:169:            print status['status']
+/home/milan/workspace/istsos/walib/istsos/services/status/status.py:182:                print log.response['data']
+/home/milan/workspace/istsos/walib/istsos/services/virtualprocedures/virtualprocedures.py:59:        #print >> sys.stderr, "Deleting procedure.."
+/home/milan/workspace/istsos/walib/istsos/services/virtualprocedures/virtualprocedures.py:61:        #print >> sys.stderr, " > success: %s"  % self.response['success']
+/home/milan/workspace/istsos/walib/istsos/services/virtualprocedures/ratingcurve.py:84:        print "flag: ", self.serviceconf.getobservation['transactional_log']
+/home/milan/workspace/istsos/walib/istsos/services/virtualprocedures/ratingcurve.py:208:            #print change_elem
+/home/milan/workspace/istsos/walib/istsos/services/services.py:391:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/istsos/services/services.py:405:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/walib/istsos/services/services.py:489:        print headers
+/home/milan/workspace/istsos/walib/istsos/services/services.py:663:                        print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/walib/istsos/istsos.py:200:                print >> sys.stderr, "Exception: %s" %  e
+/home/milan/workspace/istsos/walib/istsos/istsos.py:243:            print >> sys.stderr, error
+/home/milan/workspace/istsos/walib/istsos/istsos.py:248:            print >> sys.stderr, error
+/home/milan/workspace/istsos/walib/istsos/istsos.py:254:            print >> sys.stderr, error
+/home/milan/workspace/istsos/walib/databaseManager.py:32:#import pprint
+/home/milan/workspace/istsos/walib/databaseManager.py:33:#pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/walib/databaseManager.py:146:            print >> sys.stderr,  e.message
+/home/milan/workspace/istsos/walib/databaseManager.py:154:            print >> sys.stderr,  e.message
+/home/milan/workspace/istsos/walib/databaseManager.py:194:        """Mogrify an sql statement (print >> sys.stderr,  the actual sql query that will be executed)"""
+/home/milan/workspace/istsos/application_istsoslib.py:114:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_istsoslib.py:125:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/test/walib/istsos/services/operations.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/operations.py:39:    pp = pprint.PrettyPrinter(indent=2)   
+/home/milan/workspace/istsos/test/walib/istsos/services/operations.py:245:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:59:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:368:                #print 'the delete is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:369:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:440:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:441:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:555:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:556:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:665:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:666:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:772:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:773:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:889:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:890:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:928:                #print 'the delete is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:929:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:999:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/configsections.py:1000:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/observedproperties.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/observedproperties.py:35:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/observedproperties.py:173:            #pp.pprint(get1)
+/home/milan/workspace/istsos/test/walib/istsos/services/observedproperties.py:218:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/observedproperties.py:262:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:35:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:120:                    #pp.pprint(get3)   
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:121:                    #pp.pprint(post1)
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:158:            #print 'the results are the same:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:159:            #pp.pprint(get1)
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:197:                #print 'the update is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:198:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:238:                #print 'the delete is successful:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/dataqualities.py:239:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/epsgs.py:20:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/epsgs.py:28:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:41:    pp = pprint.PrettyPrinter(indent=2)
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:177:                    #pp.pprint(get3)   
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:178:                    #pp.pprint(post1)
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:217:            #pp.pprint(get1)
+/home/milan/workspace/istsos/test/walib/istsos/services/offerings.py:302:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/uoms.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/uoms.py:34:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/uoms.py:163:            #pp.pprint(get1)
+/home/milan/workspace/istsos/test/walib/istsos/services/uoms.py:244:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/systemtypes.py:23:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/systemtypes.py:35:#    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/systemtypes.py:48:#            print 'services_name_systemtypes_GET: SUCCESS'
+/home/milan/workspace/istsos/test/walib/istsos/services/systemtypes.py:58:#            print 'services_name_systemtypes_GET: FAILED'
+/home/milan/workspace/istsos/test/walib/istsos/services/systemtypes.py:67:#        print 'services_name_systemtypes_GET: FAILED'
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:46:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:282:            print 'get3:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:283:            print pp.pformat(get3)
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:284:            print 'put, after:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:285:            print pp.pformat(put)
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:291:            print '\ntemp:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:292:            print pp.pformat(temp)
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:293:            print '\nptloc, after:\n'
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:294:            print pp.pformat(ptloc)
+/home/milan/workspace/istsos/test/walib/istsos/services/procedures.py:351:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/walib/istsos/services/services.py:22:import pprint
+/home/milan/workspace/istsos/test/walib/istsos/services/services.py:36:    pp = pprint.PrettyPrinter(indent=2)    
+/home/milan/workspace/istsos/test/walib/istsos/services/services.py:223:            #pp.pprint(get1)
+/home/milan/workspace/istsos/test/walib/istsos/services/services.py:306:                #pp.pprint(get6)
+/home/milan/workspace/istsos/test/prove.py:18:import json, pprint
+/home/milan/workspace/istsos/test/prove.py:24:    pp = pprint.PrettyPrinter(indent=2)   
+/home/milan/workspace/istsos/test/prove.py:30:    print "operations/status, GET \n"
+/home/milan/workspace/istsos/test/prove.py:37:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:42:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:44:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:47:    print "operations/log, GET"
+/home/milan/workspace/istsos/test/prove.py:54:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:59:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:61:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:64:    print "operations/log, DELETE"
+/home/milan/workspace/istsos/test/prove.py:71:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:76:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:78:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:81:    print "operations/about, GET"
+/home/milan/workspace/istsos/test/prove.py:88:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:93:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:95:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:98:    print "operations/validatedb, POST"
+/home/milan/workspace/istsos/test/prove.py:119:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:121:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:123:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:126:    print "operations/initialization, GET"
+/home/milan/workspace/istsos/test/prove.py:136:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:138:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:140:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:143:    print "operations/initialization, PUT"
+/home/milan/workspace/istsos/test/prove.py:156:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:158:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:159:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:162:    print "services, GET"
+/home/milan/workspace/istsos/test/prove.py:172:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:174:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:176:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:179:    print "services, POST"
+/home/milan/workspace/istsos/test/prove.py:195:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:197:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:198:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:201:    print "services/{name}, GET"
+/home/milan/workspace/istsos/test/prove.py:213:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:215:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:217:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:220:    print "services/{name}, PUT"
+/home/milan/workspace/istsos/test/prove.py:242:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:244:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:245:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:248:    print "services/{name}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:260:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:262:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:263:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:266:    print "services/{name}/configsections, GET"
+/home/milan/workspace/istsos/test/prove.py:278:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:280:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:282:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:285:    print "services/{name}/configsections, PUT"
+/home/milan/workspace/istsos/test/prove.py:371:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:373:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:374:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:377:    print "services/{name}/configsections, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:386:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:391:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:393:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:397:    print "services/{name}/configsections/getobservation, GET"
+/home/milan/workspace/istsos/test/prove.py:409:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:411:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:413:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:416:    print "services/{name}/configsections/getobservation, PUT"
+/home/milan/workspace/istsos/test/prove.py:437:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:439:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:440:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:443:    print "services/{name}/configsections/getobservation, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:452:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:457:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:459:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:462:    print "services/{name}/configsections/identification, GET"
+/home/milan/workspace/istsos/test/prove.py:474:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:476:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:478:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:481:    print "services/{name}/configsections/identification, PUT"
+/home/milan/workspace/istsos/test/prove.py:504:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:506:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:507:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:510:    print "services/{name}/configsections/identification, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:519:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:524:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:526:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:529:    print "services/{name}/configsections/geo, GET"
+/home/milan/workspace/istsos/test/prove.py:541:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:543:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:545:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:548:    print "services/{name}/configsections/geo, PUT"
+/home/milan/workspace/istsos/test/prove.py:570:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:572:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:573:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:576:    print "services/{name}/configsections/geo, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:585:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:590:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:592:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:595:    print "services/{name}/configsections/connection, GET"
+/home/milan/workspace/istsos/test/prove.py:607:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:609:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:611:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:614:    print "services/{name}/configsections/connection, PUT"
+/home/milan/workspace/istsos/test/prove.py:636:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:638:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:639:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:642:    print "services/{name}/configsections/connection/operations/validatedb, GET"
+/home/milan/workspace/istsos/test/prove.py:654:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:656:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:658:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:661:    print "services/{name}/configsections/serviceurl, GET"
+/home/milan/workspace/istsos/test/prove.py:673:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:675:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:677:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:680:    print "services/{name}/configsections/serviceurl, PUT"
+/home/milan/workspace/istsos/test/prove.py:695:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:697:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:698:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:701:    print "services/{name}/configsections/serviceurl, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:710:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:715:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:717:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:720:    print "services/{name}/configsections/provider, GET"
+/home/milan/workspace/istsos/test/prove.py:732:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:734:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:736:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:739:    print "services/{name}/configsections/provider, PUT"
+/home/milan/workspace/istsos/test/prove.py:768:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:770:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:771:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:774:    print "services/{name}/configsections/provider, DELETE" #shouldn't work with default as {name}
+/home/milan/workspace/istsos/test/prove.py:783:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:788:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:790:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:793:    print "services/{name}/dataqualities, GET"
+/home/milan/workspace/istsos/test/prove.py:805:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:807:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:809:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:812:    print "services/{name}/dataqualities, POST"
+/home/milan/workspace/istsos/test/prove.py:830:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:832:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:833:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:836:    print "services/{name}/dataqualities/{code}, GET"
+/home/milan/workspace/istsos/test/prove.py:849:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:851:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:853:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:856:    print "services/{name}/dataqualities/{code}, PUT"
+/home/milan/workspace/istsos/test/prove.py:875:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:877:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:878:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:881:    print "services/{name}/dataqualities/{code}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:894:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:896:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:897:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:900:    print "services/{name}/procedures, POST"
+/home/milan/workspace/istsos/test/prove.py:981:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:983:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:985:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:988:    print "services/{name}/procedures/{name}, GET"
+/home/milan/workspace/istsos/test/prove.py:1001:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1003:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1005:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1008:    print "services/{name}/procedures/{name}, PUT"
+/home/milan/workspace/istsos/test/prove.py:1090:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1092:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1093:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1096:    print "services/{name}/procedures/{name}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:1109:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1111:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1112:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1115:    print "services/{name}/procedures/operations/getlist, GET"
+/home/milan/workspace/istsos/test/prove.py:1127:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1129:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1131:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1134:    print "services/{name}/offerings, GET"
+/home/milan/workspace/istsos/test/prove.py:1146:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1148:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1150:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1153:    print "services/{name}/offerings, POST"
+/home/milan/workspace/istsos/test/prove.py:1175:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1177:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1179:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1182:    print "services/{name}/offerings/{name}, GET"
+/home/milan/workspace/istsos/test/prove.py:1195:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1197:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1199:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1202:    print "services/{name}/offerings/{name}, PUT"
+/home/milan/workspace/istsos/test/prove.py:1224:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1226:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1227:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1230:    print "services/{name}/offerings/{name}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:1243:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1245:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1246:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1249:    print "services/{name}/offerings/{name}/procedures, GET"
+/home/milan/workspace/istsos/test/prove.py:1262:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1264:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1266:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1269:    print "services/{name}/offerings/{name}/procedures/operations/membelist, GET"
+/home/milan/workspace/istsos/test/prove.py:1282:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1284:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1286:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1289:    print "services/{name}/offerings/{name}/procedures/operations/nonmemberlist, GET"
+/home/milan/workspace/istsos/test/prove.py:1302:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1304:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1306:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1310:    print "services/{name}/offerings/operations/getlist, GET"
+/home/milan/workspace/istsos/test/prove.py:1321:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1323:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1325:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1328:    print "services/{name}/operations/getobservation/offerings/{name}/procedures/..., GET"
+/home/milan/workspace/istsos/test/prove.py:1345:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1347:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1349:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1352:    print "services/{name}/operations/insertobservation, POST"
+/home/milan/workspace/istsos/test/prove.py:1423:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1425:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1427:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1430:    print "services/{name}/observedproperties, GET"
+/home/milan/workspace/istsos/test/prove.py:1441:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1443:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1445:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1448:    print "services/{name}/observedproperties, POST"
+/home/milan/workspace/istsos/test/prove.py:1468:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1470:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1472:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1475:    print "services/{name}/observedproperties/{name}, GET"
+/home/milan/workspace/istsos/test/prove.py:1488:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1490:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1492:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1495:    print "services/{name}/observedproperties/{name}, PUT"
+/home/milan/workspace/istsos/test/prove.py:1515:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1517:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1518:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1521:    print "services/{name}/observedproperties/{name}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:1534:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1536:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1537:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1540:    print "services/{nome}/uoms, GET"
+/home/milan/workspace/istsos/test/prove.py:1552:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1554:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1556:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1559:    print "services/{nome}/uoms, POST"
+/home/milan/workspace/istsos/test/prove.py:1578:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1580:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1581:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1584:    print "services/{name}/uoms/{name}, GET"
+/home/milan/workspace/istsos/test/prove.py:1597:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1599:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1601:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1604:    print "services/{name}/uoms/{name}, PUT"
+/home/milan/workspace/istsos/test/prove.py:1624:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1626:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1627:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1630:    print "services/{name}/uoms/{name}, DELETE"
+/home/milan/workspace/istsos/test/prove.py:1643:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1645:    pp.pprint(res.json)
+/home/milan/workspace/istsos/test/prove.py:1646:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1649:    print "services/{name}/epsgs, GET"
+/home/milan/workspace/istsos/test/prove.py:1661:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1663:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1665:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/prove.py:1668:    print "services/{name}/systemtypes, GET"
+/home/milan/workspace/istsos/test/prove.py:1680:        print str(e)
+/home/milan/workspace/istsos/test/prove.py:1682:    pp.pprint(res.json)   
+/home/milan/workspace/istsos/test/prove.py:1684:    print "\n ************************************ \n"
+/home/milan/workspace/istsos/test/post.py:23:    #print  fname + ', POST'
+/home/milan/workspace/istsos/test/post.py:34:        print str(e)
+/home/milan/workspace/istsos/test/put.py:23:    #print fname + ', PUT'
+/home/milan/workspace/istsos/test/put.py:34:        print str(e)
+/home/milan/workspace/istsos/test/delete.py:22:    #print fname + ', DELETE'
+/home/milan/workspace/istsos/test/delete.py:32:        print str(e)
+/home/milan/workspace/istsos/test/get.py:22:    #print fname + ', GET'
+/home/milan/workspace/istsos/test/get.py:32:        print str(e)
+/home/milan/workspace/istsos/runAllTests.py:56:    print ms
+/home/milan/workspace/istsos/runAllTests.py:60:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:140:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:162:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:174:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:189:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:241:        print res
+/home/milan/workspace/istsos/runAllTests.py:244:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:251:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:254:    if verb: print '\t|---TESTING dataqualities \n'
+/home/milan/workspace/istsos/runAllTests.py:257:        for el in dataqualities: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:261:    if verb: print '\t|---TESTING epsg\n'
+/home/milan/workspace/istsos/runAllTests.py:264:        for el in epsgs: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:268:    if verb: print '\t|---TESTING observedproperties \n'
+/home/milan/workspace/istsos/runAllTests.py:271:        for el in observedproperties: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:275:    if verb: print '\t|---TESTING offerings \n'
+/home/milan/workspace/istsos/runAllTests.py:278:        for el in observedproperties: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:282:    if verb: print '\t|---TESTING operations \n'
+/home/milan/workspace/istsos/runAllTests.py:285:        for el in operations: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:289:    if verb: print '\t|---TESTING procedures \n'
+/home/milan/workspace/istsos/runAllTests.py:292:        for el in procedures: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:296:    if verb: print '\t|---TESTING services \n'
+/home/milan/workspace/istsos/runAllTests.py:299:        for el in services: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:304:    if verb: print '\t|---TESTING systemtypes \n'
+/home/milan/workspace/istsos/runAllTests.py:307:        for el in systemtypes: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:312:    if verb: print '\t|---TESTING uoms \n'
+/home/milan/workspace/istsos/runAllTests.py:315:        for el in uoms: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:319:    if verb: print '\t|---TESTING configsections \n'
+/home/milan/workspace/istsos/runAllTests.py:322:        for el in configsections: print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:330:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/runAllTests.py:333:    if verb: print '\t|---TESTING getCapabilities \n'
+/home/milan/workspace/istsos/runAllTests.py:337:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:341:    if verb: print '\t|---TESTING registerSensor \n'
+/home/milan/workspace/istsos/runAllTests.py:345:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:349:    if verb: print '\t|---TESTING describeSensor \n'
+/home/milan/workspace/istsos/runAllTests.py:353:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:357:    if verb: print '\t|---TESTING getFeatureOfInterest \n'
+/home/milan/workspace/istsos/runAllTests.py:361:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:365:    if verb: print '\t|---TESTING insertObservation \n'
+/home/milan/workspace/istsos/runAllTests.py:369:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:373:    if verb: print '\t|---TESTING getObservation \n'
+/home/milan/workspace/istsos/runAllTests.py:377:            print '\t\t|---' + el
+/home/milan/workspace/istsos/runAllTests.py:392:    print "results:"
+/home/milan/workspace/istsos/runAllTests.py:393:    print "--test duration: %s" % duration
+/home/milan/workspace/istsos/runAllTests.py:394:    print "--run tests:     %s" % (npassed+nfailed)
+/home/milan/workspace/istsos/runAllTests.py:395:    print "--passed tests:  %s" % npassed
+/home/milan/workspace/istsos/runAllTests.py:396:    print "--failed tests:  %s" % nfailed
+/home/milan/workspace/istsos/runAllTests.py:398:        print ""
+/home/milan/workspace/istsos/runAllTests.py:399:        print "failed test list: %s" %("\n -".join(failed))
+/home/milan/workspace/istsos/runAllTests.py:416:    #print args.__dict__
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/_build/html/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/html/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/html/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/_build/v2.3.0-RC1/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/examples/files/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:51:    print "dt: %s" % dt
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:59:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:63:    print "D: %s" % D
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:67:    print "g: %s" % g
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:71:    print "ea: %s" % ea
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:75:    print "ed: %s" % ed
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:82:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:86:    print "j: %s" % j
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:91:    print "J: %s" % J
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:95:    print "dr: %s" % dr
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:99:    print "d: %s" % d
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:103:    print "b: %s" % b
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:107:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:111:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:115:    print "t: %s" % t
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:119:    print "w: %s" % w
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:126:    print "w1: %s" % w1
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:130:    print "w2: %s" % w2
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:134:    print "ws: %s" % ws
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:141:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:150:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:154:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:158:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:162:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:166:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:173:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:186:    print "f: %s" % f
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:190:    print "nes: %s" % nes
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:194:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:199:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:207:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:214:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:218:    print "beta: %s" % beta
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:222:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:226:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:283:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:284:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/documentation/re/html/_downloads/FAO56.py:285:    print "J: %s" % J
+/home/milan/workspace/istsos/scheduler.py:33:        print 'demo job4'
+/home/milan/workspace/istsos/scheduler.py:37:        print "I am printed at every minute at the 30th second!"
+/home/milan/workspace/istsos/scheduler.py:68:    print "Checking changes"
+/home/milan/workspace/istsos/scheduler.py:70:        print " > Initialization.."
+/home/milan/workspace/istsos/scheduler.py:78:                print "  > Change detectd: %s" % service
+/home/milan/workspace/istsos/scheduler.py:81:                #print jobs
+/home/milan/workspace/istsos/scheduler.py:83:                    print " job: %s" % j.name
+/home/milan/workspace/istsos/makecheck.py:56:    print ms
+/home/milan/workspace/istsos/makecheck.py:60:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/makecheck.py:140:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/makecheck.py:162:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/makecheck.py:174:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/makecheck.py:189:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/makecheck.py:239:        print res
+/home/milan/workspace/istsos/makecheck.py:242:    if verb: print '\t|---' + ms
+/home/milan/workspace/istsos/makecheck.py:249:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/makecheck.py:252:    if verb: print '\t|---TESTING dataqualities \n'
+/home/milan/workspace/istsos/makecheck.py:255:        for el in dataqualities: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:259:    if verb: print '\t|---TESTING epsg\n'
+/home/milan/workspace/istsos/makecheck.py:262:        for el in epsgs: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:266:    if verb: print '\t|---TESTING observedproperties \n'
+/home/milan/workspace/istsos/makecheck.py:269:        for el in observedproperties: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:273:    if verb: print '\t|---TESTING offerings \n'
+/home/milan/workspace/istsos/makecheck.py:276:        for el in observedproperties: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:280:    if verb: print '\t|---TESTING operations \n'
+/home/milan/workspace/istsos/makecheck.py:283:        for el in operations: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:287:    if verb: print '\t|---TESTING procedures \n'
+/home/milan/workspace/istsos/makecheck.py:290:        for el in procedures: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:294:    if verb: print '\t|---TESTING services \n'
+/home/milan/workspace/istsos/makecheck.py:297:        for el in services: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:302:    if verb: print '\t|---TESTING systemtypes \n'
+/home/milan/workspace/istsos/makecheck.py:305:        for el in systemtypes: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:310:    if verb: print '\t|---TESTING uoms \n'
+/home/milan/workspace/istsos/makecheck.py:313:        for el in uoms: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:317:    if verb: print '\t|---TESTING configsections \n'
+/home/milan/workspace/istsos/makecheck.py:320:        for el in configsections: print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:328:    if verb: print '|---' + ms
+/home/milan/workspace/istsos/makecheck.py:331:    if verb: print '\t|---TESTING getCapabilities \n'
+/home/milan/workspace/istsos/makecheck.py:335:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:339:    if verb: print '\t|---TESTING registerSensor \n'
+/home/milan/workspace/istsos/makecheck.py:343:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:347:    if verb: print '\t|---TESTING describeSensor \n'
+/home/milan/workspace/istsos/makecheck.py:351:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:355:    if verb: print '\t|---TESTING getFeatureOfInterest \n'
+/home/milan/workspace/istsos/makecheck.py:359:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:363:    if verb: print '\t|---TESTING insertObservation \n'
+/home/milan/workspace/istsos/makecheck.py:367:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:371:    if verb: print '\t|---TESTING getObservation \n'
+/home/milan/workspace/istsos/makecheck.py:375:            print '\t\t|---' + el
+/home/milan/workspace/istsos/makecheck.py:390:    print "results:"
+/home/milan/workspace/istsos/makecheck.py:391:    print "--test duration: %s" % duration
+/home/milan/workspace/istsos/makecheck.py:392:    print "--run tests:     %s" % (npassed+nfailed)
+/home/milan/workspace/istsos/makecheck.py:393:    print "--passed tests:  %s" % npassed
+/home/milan/workspace/istsos/makecheck.py:394:    print "--failed tests:  %s" % nfailed
+/home/milan/workspace/istsos/makecheck.py:396:        print ""
+/home/milan/workspace/istsos/makecheck.py:397:        print "failed test list: %s" %("\n -".join(failed))
+/home/milan/workspace/istsos/makecheck.py:414:    #print args.__dict__
+/home/milan/workspace/istsos/wnslib/response.py:111:        print "Save " + self.__message['notification'] + " notification result"
+/home/milan/workspace/istsos/wnslib/services/registrations/registrations.py:41:        print pathinfo
+/home/milan/workspace/istsos/wnslib/services/notifications/notifications.py:43:            print self.not_id
+/home/milan/workspace/istsos/wnslib/services/notifications/notifications.py:120:                print  "Notification"
+/home/milan/workspace/istsos/wnslib/services/notifications/notifications.py:202:                print >> sys.stderr, "simpleNot"
+/home/milan/workspace/istsos/wnslib/services/notifications/notifications.py:211:                print >> sys.stderr, "Notification"
+/home/milan/workspace/istsos/wnslib/services/setup/setup.py:48:        #print "Service path: ", services_dir
+/home/milan/workspace/istsos/wnslib/notificationScheduler.py:65:            print e
+/home/milan/workspace/istsos/wnslib/notificationScheduler.py:86:                    print "Please define a Twitter id"
+/home/milan/workspace/istsos/wnslib/notify.py:67:        print 'send mail'
+/home/milan/workspace/istsos/wnslib/notify.py:70:            print "please define a email subject"
+/home/milan/workspace/istsos/wnslib/notify.py:73:            print "please define a email text"
+/home/milan/workspace/istsos/wnslib/notify.py:100:            print 'successfully sent the mail'
+/home/milan/workspace/istsos/wnslib/notify.py:102:            print 'failed to send mail'
+/home/milan/workspace/istsos/wnslib/notify.py:103:            print e
+/home/milan/workspace/istsos/wnslib/notify.py:114:            print "please define a twitter account to update status"
+/home/milan/workspace/istsos/wnslib/notify.py:116:        print 'update twitter status'
+/home/milan/workspace/istsos/wnslib/notify.py:125:                    print 'Duplicate tweet'
+/home/milan/workspace/istsos/wnslib/notify.py:127:                    print e
+/home/milan/workspace/istsos/wnslib/notify.py:129:                print e
+/home/milan/workspace/istsos/wnslib/notify.py:146:            print "please define a twitter account to send private message"
+/home/milan/workspace/istsos/wnslib/notify.py:148:        print 'Send via Twitter'
+/home/milan/workspace/istsos/wnslib/notify.py:157:            print 'send direct message'
+/home/milan/workspace/istsos/wnslib/notify.py:163:                    print 'Duplicate tweet'
+/home/milan/workspace/istsos/wnslib/notify.py:165:                    print e
+/home/milan/workspace/istsos/wnslib/notify.py:167:                print e
+/home/milan/workspace/istsos/wnslib/notify.py:175:        print "try ftp"
+/home/milan/workspace/istsos/wnslib/notify.py:180:            print e
+/home/milan/workspace/istsos/wnslib/notify.py:185:            print e
+/home/milan/workspace/istsos/wnslib/notify.py:196:        print "end ftp"
+/home/milan/workspace/istsos/wnslib/notify.py:202:        print "notify via FAX"
+/home/milan/workspace/istsos/wnslib/notify.py:208:        print "notify via SMS"
+/home/milan/workspace/istsos/wnslib/resourceFactory.py:32:    print >> sys.stderr, path
+/home/milan/workspace/istsos/wnslib/notificationManager.py:84:    print func_path
+/home/milan/workspace/istsos/wnslib/notificationManager.py:125:        print "Exception in validate python"
+/home/milan/workspace/istsos/wnslib/notificationManager.py:273:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/wnslib/notificationManager.py:356:        print "file removed"
+/home/milan/workspace/istsos/wnslib/notificationManager.py:358:        print "file not found"
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:25:    print "getObservation from: ", startDate, " to: ", endDate
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:36:        print "no data"
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:44:    print T, ' ', RH, ' ', index
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:47:        print "Not all values"
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:48:        print  "temp must be > 27"
+/home/milan/workspace/istsos/Tutorial/arduino/canicola.py:60:    print message
+/home/milan/workspace/istsos/Tutorial/arduino/serial_data_logger.py:35:    print "start loop"
+/home/milan/workspace/istsos/Tutorial/arduino/serial_data_logger.py:52:			print " Exception: ", e 
+/home/milan/workspace/istsos/Tutorial/arduino/serial_data_logger.py:54:		print tmp_row
+/home/milan/workspace/istsos/Tutorial/arduino/serial_data_logger.py:67:				print "create new observation file"
+/home/milan/workspace/istsos/Tutorial/arduino/serial_data_logger.py:163:		print "Error: ", e
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:43:    print "dt: %s" % dt
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:51:    print "e0T: %s" % e0T
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:55:    print "D: %s" % D
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:59:    print "g: %s" % g
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:63:    print "ea: %s" % ea
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:67:    print "ed: %s" % ed
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:74:    print "Gsc: %s" % Gsc
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:78:    print "j: %s" % j
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:83:    print "J: %s" % J
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:87:    print "dr: %s" % dr
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:91:    print "d: %s" % d
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:95:    print "b: %s" % b
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:99:    print "Sc: %s" % Sc
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:103:    print "Lz: %s" % Lz
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:107:    print "t: %s" % t
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:111:    print "w: %s" % w
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:118:    print "w1: %s" % w1
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:122:    print "w2: %s" % w2
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:126:    print "ws: %s" % ws
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:133:    print "Ra: %s" % Ra
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:142:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:146:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:150:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:154:        print "Rs: %s" % Rs
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:158:        print "Rso: %s" % Rso
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:165:        print "Rns: %s" % Rns
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:178:    print "f: %s" % f
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:185:    print "nes: %s" % nes
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:189:    print "Rnl: %s" % Rnl
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:194:    print "Rn: %s" % Rn
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:202:    print "Ghr: %s" % Ghr
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:209:    print "alpha: %s" % alpha
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:213:    print "beta: %s" % beta
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:217:    print "gamma: %s" % gamma
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:221:    print "ET0: %s" % ET0
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:278:    print "JLi: %s, JLd: %s,  JLm: %s,  JLe: %s" % (JLi,JLd,JLm,JLe)
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:279:    print "cJ: %s, pJ: %s" % (Jc,Jp)
+/home/milan/workspace/istsos/Tutorial/vp/FAO56.py:280:    print "J: %s" % J
+/home/milan/workspace/istsos/Tutorial/fill/procedure.py:10:		print "problem with ", json_data['system_id']
+/home/milan/workspace/istsos/Tutorial/fill/procedure.py:11:		print r.json()
+/home/milan/workspace/istsos/Tutorial/fill/procedure.py:389:	print " Add procedure"
+/home/milan/workspace/istsos/Tutorial/fill/execute.py:15:print " Create new service"
+/home/milan/workspace/istsos/Tutorial/fill/execute.py:18:print r.text
+/home/milan/workspace/istsos/Tutorial/fill/execute.py:29:print " Terminated :)"
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:10:		print "problem with ", json_data['system_id']
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:11:		print r.json()
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:150:	print " Add virtual procedure"
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:155:	print " Add virtual procedure script"
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:168:	print r.text
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:204:		print r.json()
+/home/milan/workspace/istsos/Tutorial/fill/virtual.py:211:		print r.json()
+/home/milan/workspace/istsos/application_wnslib.py:121:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_wnslib.py:127:            print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_wnslib.py:137:            print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_wnslib.py:145:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/scheduler_notification.py:33:        print 'demo job4'
+/home/milan/workspace/istsos/scheduler_notification.py:37:        print "I am printed at every minute at the 30th second!"
+/home/milan/workspace/istsos/scheduler_notification.py:65:print "Running..."
+/home/milan/workspace/istsos/scheduler_notification.py:74:    #print "Checking changes"
+/home/milan/workspace/istsos/scheduler_notification.py:77:        print " > Initialization.."
+/home/milan/workspace/istsos/scheduler_notification.py:87:                print "  > Change detectd: %s" % service
+/home/milan/workspace/istsos/scheduler_notification.py:91:                    print " job: %s" % j.name
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:278:        #print >> sys.stderr, "opr_ids: %s" % opr_ids
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:279:        #print >> sys.stderr, "ret_prc: %s" % ret_prc
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:280:        #print >> sys.stderr, "uom_ids: %s" % uom_ids
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:281:        #print >> sys.stderr, "opr_ids: %s" % opr_ids
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:282:        #print >> sys.stderr, "filter.constr: %s" % filter.constr
+/home/milan/workspace/istsos/istsoslib/responders/RSresponse.py:342:                        print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/istsoslib/responders/IOresponse.py:23:import sys, pprint #for debug only
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:923:            #print sql.replace('\n','')
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:948:                #print >> sys.stderr, "---------------------------------"
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:957:                    #print >> sys.stderr, qis
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:959:                        #print >> sys.stderr, " not < %s" % max(qis)
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:962:                        #print >> sys.stderr, " not > %s" % min(qis)
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:965:                        #print >> sys.stderr, " not >= %s" % min(qis)
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:968:                        #print >> sys.stderr, " not <= %s" % max(qis)
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:971:                        #print >> sys.stderr, " not = %s" % qis
+/home/milan/workspace/istsos/istsoslib/responders/GOresponse.py:974:                    #    print >> sys.stderr, " ELSE"
+/home/milan/workspace/istsos/istsoslib/renderers/DSresponseRender.py:78:                    print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/istsoslib/filters/IO_filter.py:153:                        print >> sys.stderr, "XML: %s" % requestObject
+/home/milan/workspace/istsos/istsoslib/filters/RS_filter.py:110:            #print >> sys.stderr, "capabilities: ",capabilities
+/home/milan/workspace/istsos/istsoslib/filters/RS_filter.py:136:            #print >> sys.stderr, self.time_sam_val
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:253:            #print >> sys.stderr, "**************************"
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:254:            #print >> sys.stderr, requestObject
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:256:                #print >> sys.stderr, " > qualityFilter is set"
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:268:                        #print >> sys.stderr, self.qualityFilter
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:417:#               print >> sys.stderr, "\n\nELE: %s" % len(elements)
+/home/milan/workspace/istsos/istsoslib/filters/GO_filter.py:436:                            #print >> sys.stderr, "\n\nVAL: %s\n\n" % (val.data)
+/home/milan/workspace/istsos/istsoslib/sosDatabase.py:128:            #print e.message
+/home/milan/workspace/istsos/istsoslib/sosDatabase.py:138:            print e.message
+/home/milan/workspace/istsos/istsoslib/sosDatabase.py:146:            print e.message
+/home/milan/workspace/istsos/istsoslib/sosDatabase.py:188:            print e.message
+/home/milan/workspace/istsos/istsoslib/sosDatabase.py:198:        """Mogrify an sql statement (print the actual sql query that will be executed)"""
+/home/milan/workspace/istsos/scripts/raw2csv.py:39:import pprint
+/home/milan/workspace/istsos/scripts/raw2csv.py:41:pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/scripts/raw2csv.py:49:    print "\nError loading internal libs:\n >> please run the script from the istSOS root folder.\n\n"
+/home/milan/workspace/istsos/scripts/raw2csv.py:50:    print str(e)
+/home/milan/workspace/istsos/scripts/raw2csv.py:206:            print message 
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:53:import pprint
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:63:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:67:pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:76:                print message
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:82:    # Activate and print verbose information
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:265:                    print "Error setting start date for proc %s: %s" % (procedure,ee)
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:333:        #pp.pprint(smeasures)
+/home/milan/workspace/istsos/scripts/istsos2istsos.py:364:        #print res.json()
+/home/milan/workspace/istsos/scripts/user.py:31:import pprint
+/home/milan/workspace/istsos/scripts/user.py:38:    print >> sys.stderr, ("Failed to import pickle from any known place")
+/home/milan/workspace/istsos/scripts/user.py:43:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/user.py:46:pp = pprint.PrettyPrinter(indent=4)
+/home/milan/workspace/istsos/scripts/user.py:66:            print ("You ca choose role between: admin (or a), networkmanager (or n), datamanager (or d), viewer (or v).\nAdd -h for help")
+/home/milan/workspace/istsos/scripts/user.py:81:            print ("To remove a user, the user name must be provided.\nAdd -h for help")
+/home/milan/workspace/istsos/scripts/user.py:84:            print "User file not exist"
+/home/milan/workspace/istsos/scripts/user.py:92:                print "User '%s' does not have role %s" % (user, role)
+/home/milan/workspace/istsos/scripts/user.py:106:                print "User '%s' does not exists" % user
+/home/milan/workspace/istsos/scripts/user.py:113:            print "User file not exist"
+/home/milan/workspace/istsos/scripts/user.py:115:        pp.pprint(users) 
+/home/milan/workspace/istsos/scripts/user.py:117:            print user'''
+/home/milan/workspace/istsos/scripts/user.py:122:            print ("To add or update a user the username must be defined.\nAdd -h for help")
+/home/milan/workspace/istsos/scripts/user.py:125:            print ("To add or update a user a password must be defined.\nAdd -h for help")
+/home/milan/workspace/istsos/scripts/user.py:162:            print ("To add or update an user's role the username must be defined.\nAdd -h for help")
+/home/milan/workspace/istsos/scripts/user.py:166:            print "Users file not exist"
+/home/milan/workspace/istsos/scripts/user.py:180:            print "User not exists in file, to create the user set also the password.\nAdd -h for help"
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:41:import pprint
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:44:print path.abspath(".")
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:45:print path.normpath("%s/../" % path.abspath("."))
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:46:print path.abspath(path.dirname(__file__))
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:47:print path.normpath("%s/../../" % path.abspath(__file__))
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:56:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:114:    pp = pprint.PrettyPrinter(indent=2)
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:191:            print cvlist
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:200:        print "ERROR: %s\n\n" % e
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:201:        #traceback.print_exc()
+/home/milan/workspace/istsos/scripts/sos_virtualHQ_importer.py:266:    #print args.__dict__
+/home/milan/workspace/istsos/scripts/istsos2csv.py:39:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/istsos2csv.py:55:        print "File: %s/%s_%s.dat" % (path, procedure, datetime.datetime.strftime(datenumber, "%Y%m%d%H%M%S%f"))
+/home/milan/workspace/istsos/scripts/istsos2csv.py:58:        #print "\n".join(lines)
+/home/milan/workspace/istsos/scripts/istsos2csv.py:64:    print "istsos2csv start.."
+/home/milan/workspace/istsos/scripts/istsos2csv.py:110:        print params
+/home/milan/workspace/istsos/scripts/istsos2csv.py:114:            print ("%s - %s") % (tmpBegin,tmpEnd)
+/home/milan/workspace/istsos/scripts/istsos2csv.py:127:            print " %s ************************** " % iso.datetime_isoformat(tmpEnd)
+/home/milan/workspace/istsos/scripts/istsos2csv.py:140:            print " %s ************************** " % iso.datetime_isoformat(end)
+/home/milan/workspace/istsos/scripts/istsos2csv.py:142:        print "Finish."
+/home/milan/workspace/istsos/scripts/istsos2csv.py:145:        print "ERROR: %s\n\n" % e
+/home/milan/workspace/istsos/scripts/istsos2csv.py:146:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/istsos2csv.py:209:    #print args.__dict__
+/home/milan/workspace/istsos/scripts/converter/csv.py:202:                print "%s [%s]:%s" % (fileName,cnt,line)
+/home/milan/workspace/istsos/scripts/converter/csv.py:203:                print traceback.print_exc()
+/home/milan/workspace/istsos/scripts/converter/kern.py:180:                self.log(traceback.print_exc())
+/home/milan/workspace/istsos/scripts/converter/campbell.py:155:                            print "Error in line %s: %s" % (lineCounter, arr)
+/home/milan/workspace/istsos/scripts/constrain2db.py:38:import pprint
+/home/milan/workspace/istsos/scripts/constrain2db.py:46:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/constrain2db.py:57:    pp = pprint.PrettyPrinter(indent=2)
+/home/milan/workspace/istsos/scripts/constrain2db.py:93:            print "RETRIVING PRECEDURES..."
+/home/milan/workspace/istsos/scripts/constrain2db.py:94:            pp.pprint(res.json)
+/home/milan/workspace/istsos/scripts/constrain2db.py:95:            print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:98:                pp.pprint(res.json)
+/home/milan/workspace/istsos/scripts/constrain2db.py:99:                print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:125:                    print "RETRIVING PRECEDURES..."
+/home/milan/workspace/istsos/scripts/constrain2db.py:126:                    pp.pprint(res.json)
+/home/milan/workspace/istsos/scripts/constrain2db.py:127:                    print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:130:                        pp.pprint(res.json)
+/home/milan/workspace/istsos/scripts/constrain2db.py:131:                        print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:154:                    print "SAVING PRECEDURE %s..." % line[0]
+/home/milan/workspace/istsos/scripts/constrain2db.py:155:                    pp.pprint(json.dumps(ds["data"]))
+/home/milan/workspace/istsos/scripts/constrain2db.py:156:                    print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:158:                print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:159:                print " > Updated %s procedure success: %s" %(line[0],res.json['success'])
+/home/milan/workspace/istsos/scripts/constrain2db.py:163:                        pp.pprint(res.json)
+/home/milan/workspace/istsos/scripts/constrain2db.py:165:                print "---------------------"
+/home/milan/workspace/istsos/scripts/constrain2db.py:169:        print "ERROR: %s\n\n" % e
+/home/milan/workspace/istsos/scripts/constrain2db.py:170:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/constrain2db.py:201:    #print args.__dict__
+/home/milan/workspace/istsos/scripts/sos2istsos.py:30:import pprint
+/home/milan/workspace/istsos/scripts/sos2istsos.py:37:#print path.abspath(".")
+/home/milan/workspace/istsos/scripts/sos2istsos.py:38:#print path.normpath("%s/../" % path.abspath("."))
+/home/milan/workspace/istsos/scripts/sos2istsos.py:39:#print path.abspath(path.dirname(__file__))
+/home/milan/workspace/istsos/scripts/sos2istsos.py:40:#print path.normpath("%s/../../" % path.abspath(__file__))
+/home/milan/workspace/istsos/scripts/sos2istsos.py:51:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/sos2istsos.py:165:                print res.text
+/home/milan/workspace/istsos/scripts/sos2istsos.py:185:    pp = pprint.PrettyPrinter(indent=2)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:208:        print "%s:%s" % (duser,dpassw)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:212:            print "User and password!"
+/home/milan/workspace/istsos/scripts/sos2istsos.py:223:            print "From: %s" % args['from']
+/home/milan/workspace/istsos/scripts/sos2istsos.py:227:            print "To: %s" % args['to']
+/home/milan/workspace/istsos/scripts/sos2istsos.py:266:                print "\n%s" % pname
+/home/milan/workspace/istsos/scripts/sos2istsos.py:267:                print "================================"
+/home/milan/workspace/istsos/scripts/sos2istsos.py:282:                #print res.content
+/home/milan/workspace/istsos/scripts/sos2istsos.py:286:                #print res.content
+/home/milan/workspace/istsos/scripts/sos2istsos.py:289:                #print "Root: %s" % ds.getroot().tag
+/home/milan/workspace/istsos/scripts/sos2istsos.py:291:                    print "Error on DS for %s" % pname
+/home/milan/workspace/istsos/scripts/sos2istsos.py:296:                #print "Outputs found: %s" % len(elDescribe)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:299:                print "istsos_version: ", istsos_version
+/home/milan/workspace/istsos/scripts/sos2istsos.py:305:                    print "Observed properties (v2): %s " % len(elFields)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:307:                        print fs.get('name')
+/home/milan/workspace/istsos/scripts/sos2istsos.py:313:                    print "Observed properties: %s " % len(elDescribe)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:316:                        #print definition
+/home/milan/workspace/istsos/scripts/sos2istsos.py:321:                print {
+/home/milan/workspace/istsos/scripts/sos2istsos.py:345:                    print "Error on GO for %s:\nparams:%s\n%s" % (pname,{
+/home/milan/workspace/istsos/scripts/sos2istsos.py:430:                    #print procedures[pname].data
+/home/milan/workspace/istsos/scripts/sos2istsos.py:436:                        #print json.dumps(procedures[pname].data)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:453:                        print res.text
+/home/milan/workspace/istsos/scripts/sos2istsos.py:482:                        print "%s: %s - %s" % (pname, procedures[pname].begin, procedures[pname].end)
+/home/milan/workspace/istsos/scripts/sos2istsos.py:607:                        print " > Completed in %s" % timedelta(seconds=int(time.time() - startTime))
+/home/milan/workspace/istsos/scripts/sos2istsos.py:610:        print "ERROR: %s\n\n" % e
+/home/milan/workspace/istsos/scripts/sos2istsos.py:611:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/sos2istsos.py:710:    #print args.__dict__
+/home/milan/workspace/istsos/scripts/csv2istsos.py:32:import pprint
+/home/milan/workspace/istsos/scripts/csv2istsos.py:36:#print path.abspath(".")
+/home/milan/workspace/istsos/scripts/csv2istsos.py:37:#print path.normpath("%s/../" % path.abspath("."))
+/home/milan/workspace/istsos/scripts/csv2istsos.py:48:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/csv2istsos.py:59:            print message
+/home/milan/workspace/istsos/scripts/csv2istsos.py:65:            print message
+/home/milan/workspace/istsos/scripts/csv2istsos.py:71:            print message
+/home/milan/workspace/istsos/scripts/csv2istsos.py:77:            print message
+/home/milan/workspace/istsos/scripts/csv2istsos.py:79:    pp = pprint.PrettyPrinter(indent=2)
+/home/milan/workspace/istsos/scripts/csv2istsos.py:364:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/csv2istsos.py:368:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/csv2istsos.py:453:    #print args.__dict__
+/home/milan/workspace/istsos/scripts/istsosutils.py:32:import pprint
+/home/milan/workspace/istsos/scripts/istsosutils.py:42:    print "\nError loading internal libs:"
+/home/milan/workspace/istsos/scripts/istsosutils.py:90:        print " > %s: %s - %s" % (name, ret[0], ret[1]) 
+/home/milan/workspace/istsos/scripts/istsosutils.py:109:            print "%s: %s - %s" % (name, None, None) 
+/home/milan/workspace/istsos/scripts/istsosutils.py:128:        print "Requesting a getCapabilitie: %s/%s" % (self.host,self.service)
+/home/milan/workspace/istsos/scripts/istsosutils.py:129:        print params
+/home/milan/workspace/istsos/scripts/istsosutils.py:150:                #print pname
+/home/milan/workspace/istsos/scripts/istsosutils.py:172:        print "Procedures list result:"
+/home/milan/workspace/istsos/scripts/istsosutils.py:173:        print " - Found: %s procedures" % len(procedures)
+/home/milan/workspace/istsos/scripts/istsosutils.py:205:        print "Requesting %s GetObservation: %s/%s" % (name,self.host,self.service)
+/home/milan/workspace/istsos/scripts/istsosutils.py:206:        #print params
+/home/milan/workspace/istsos/scripts/istsosutils.py:210:        #print res.json()
+/home/milan/workspace/istsos/scripts/istsosutils.py:283:            #print json.dumps(procedures[pname].data)
+/home/milan/workspace/istsos/scripts/istsosutils.py:286:            print json["message"]
+/home/milan/workspace/istsos/scripts/istsosutils.py:400:            print row
+/home/milan/workspace/istsos/scripts/registercsv.py:41:import pprint
+/home/milan/workspace/istsos/scripts/registercsv.py:45:#print path.abspath(".")
+/home/milan/workspace/istsos/scripts/registercsv.py:46:#print path.normpath("%s/../" % path.abspath("."))
+/home/milan/workspace/istsos/scripts/registercsv.py:54:    print "\nError loading internal libs:\n >> did you run the script from the istSOS root folder?\n\n"
+/home/milan/workspace/istsos/scripts/registercsv.py:88:            print line
+/home/milan/workspace/istsos/scripts/registercsv.py:94:        print "ERROR: %s\n\n" % e
+/home/milan/workspace/istsos/scripts/registercsv.py:95:        traceback.print_exc()
+/home/milan/workspace/istsos/scripts/registercsv.py:125:    #print args.__dict__
+/home/milan/workspace/istsos/application_walib.py:134:                print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_walib.py:144:            print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_walib.py:162:            print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/application_walib.py:173:        print >> sys.stderr, traceback.print_exc()
+/home/milan/workspace/istsos/lib/requests/certs.py:25:    print(where())
+/home/milan/workspace/istsos/lib/requests/__init__.py:26:   >>> print(r.text)
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:49:    assert_fingerprint,
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:189:    assert_fingerprint = None
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:193:                 assert_hostname=None, assert_fingerprint=None):
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:200:        self.assert_fingerprint = assert_fingerprint
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:240:        if self.assert_fingerprint:
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:241:            assert_fingerprint(self.sock.getpeercert(binary_form=True),
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:242:                               self.assert_fingerprint)
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connection.py:256:                            or self.assert_fingerprint is not None)
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connectionpool.py:639:    :class:`.VerifiedHTTPSConnection` uses one of ``assert_fingerprint``,
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connectionpool.py:658:                 assert_hostname=None, assert_fingerprint=None,
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connectionpool.py:670:        self.assert_fingerprint = assert_fingerprint
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/connectionpool.py:684:                          assert_fingerprint=self.assert_fingerprint)
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/packages/six.py:313:    print_ = getattr(builtins, "print")
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/packages/six.py:335:    def print_(*args, **kwargs):
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/packages/six.py:336:        """The new-style print function."""
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/packages/six.py:358:            raise TypeError("invalid keyword arguments to print()")
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:85:def assert_fingerprint(cert, fingerprint):
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:87:    Checks if given fingerprint matches the supplied certificate.
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:91:    :param fingerprint:
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:92:        Fingerprint as string of hexdigits, can be interspersed by colons.
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:102:    fingerprint = fingerprint.replace(':', '').lower()
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:103:    digest_length, odd = divmod(len(fingerprint), 2)
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:106:        raise SSLError('Fingerprint is of invalid length.')
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:109:    fingerprint_bytes = unhexlify(fingerprint.encode())
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:115:    if not cert_digest == fingerprint_bytes:
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:116:        raise SSLError('Fingerprints did not match. Expected "{0}", got "{1}".'
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/ssl_.py:117:                       .format(hexlify(fingerprint_bytes),
+/home/milan/workspace/istsos/lib/requests/packages/urllib3/util/__init__.py:8:    assert_fingerprint,
+/home/milan/workspace/istsos/lib/requests/packages/chardet/chardetect.py:16:from __future__ import absolute_import, print_function, unicode_literals
+/home/milan/workspace/istsos/lib/requests/packages/chardet/chardetect.py:72:            print("You are running chardetect interactively. Press " +
+/home/milan/workspace/istsos/lib/requests/packages/chardet/chardetect.py:76:        print(description_of(f, f.name))
+/home/milan/workspace/istsos/lib/isodate/duration.py:227:        # print '__rsub__:', self, other
+/home/milan/workspace/istsos/lib/isodate/isoduration.py:107:            # print groups[key]
+/home/milan/workspace/istsos/lib/oauthlib/oauth2/rfc6749/clients/mobile_application.py:162:            ...     print(message, old, new)
+/home/milan/workspace/istsos/lib/apscheduler/scheduler.py:458:    def print_jobs(self, out=None):
+/home/milan/workspace/istsos/lib/apscheduler/scheduler.py:463:        :param out: a file-like object to print to (defaults to **sys.stdout**
+/home/milan/workspace/istsos/lib/pytz/tzinfo.py:272:        ...     print('Ambiguous')
+/home/milan/workspace/istsos/lib/pytz/tzinfo.py:300:        ...     print('Non-existent')
+/home/milan/workspace/istsos/lib/pytz/tzinfo.py:401:        ...     print('Ambiguous')
+/home/milan/workspace/istsos/lib/pytz/tzinfo.py:440:        ...     print('Ambiguous')
+/home/milan/workspace/istsos/lib/pytz/tzinfo.py:479:        ...     print('Ambiguous')
+/home/milan/workspace/istsos/lib/pytz/tzfile.py:129:    from pprint import pprint
+/home/milan/workspace/istsos/lib/pytz/tzfile.py:135:    pprint(tz._utc_transition_times)
+/home/milan/workspace/istsos/lib/pytz/tzfile.py:136:    #print tz.asPython(4)
+/home/milan/workspace/istsos/lib/pytz/tzfile.py:137:    #print tz.transitions_mapping
+/home/milan/workspace/istsos/lib/pytz/__init__.py:152:    ...     print('Unknown')
+/home/milan/workspace/istsos/lib/pytz/__init__.py:158:    ...     print('Unknown')
+/home/milan/workspace/istsos/lib/pytz/__init__.py:297:    >>> def print_list(list_of_strings):
+/home/milan/workspace/istsos/lib/pytz/__init__.py:300:    ...         print(s)
+/home/milan/workspace/istsos/lib/pytz/__init__.py:302:    >>> print_list(country_timezones['nz'])
+/home/milan/workspace/istsos/lib/pytz/__init__.py:305:    >>> print_list(country_timezones['ch'])
+/home/milan/workspace/istsos/lib/pytz/__init__.py:307:    >>> print_list(country_timezones['CH'])
+/home/milan/workspace/istsos/lib/pytz/__init__.py:309:    >>> print_list(country_timezones[unicode('ch')])
+/home/milan/workspace/istsos/lib/pytz/__init__.py:311:    >>> print_list(country_timezones['XXX'])
+/home/milan/workspace/istsos/lib/pytz/__init__.py:319:    >>> print_list(country_timezones('nz'))
+/home/milan/workspace/istsos/lib/pytz/__init__.py:352:    >>> print(country_names['au'])
+/home/milan/workspace/istsos/lib/etree.py:42:          print >> sys.stderr, ("Failed to import ElementTree from any known place")
+/home/milan/workspace/istsos/lib/argparse.py:1014:        parser.print_help()
+/home/milan/workspace/istsos/lib/argparse.py:1567:        - formatter_class -- HelpFormatter class for printing help messages
+/home/milan/workspace/istsos/lib/argparse.py:2328:    # Help-printing methods
+/home/milan/workspace/istsos/lib/argparse.py:2330:    def print_usage(self, file=None):
+/home/milan/workspace/istsos/lib/argparse.py:2333:        self._print_message(self.format_usage(), file)
+/home/milan/workspace/istsos/lib/argparse.py:2335:    def print_help(self, file=None):
+/home/milan/workspace/istsos/lib/argparse.py:2338:        self._print_message(self.format_help(), file)
+/home/milan/workspace/istsos/lib/argparse.py:2340:    def _print_message(self, message, file=None):
+/home/milan/workspace/istsos/lib/argparse.py:2351:            self._print_message(message, _sys.stderr)
+/home/milan/workspace/istsos/lib/argparse.py:2363:        self.print_usage(_sys.stderr)
+/home/milan/workspace/istsos/lib/twitter/api.py:61:      >>> print [s.text for s in statuses]
+/home/milan/workspace/istsos/lib/twitter/api.py:74:      >>> print [u.name for u in users]
+/home/milan/workspace/istsos/lib/twitter/api.py:79:      >>> print status.text
+/home/milan/workspace/istsos/lib/twitter/api.py:190:      print >> sys.stderr, 'Twitter now requires an oAuth Access Token for API calls.'
+/home/milan/workspace/istsos/lib/twitter/api.py:191:      print >> sys.stderr, 'If your using this library from a command line utility, please'
+/home/milan/workspace/istsos/lib/twitter/api.py:192:      print >> sys.stderr, 'run the included get_access_token.py tool to generate one.'

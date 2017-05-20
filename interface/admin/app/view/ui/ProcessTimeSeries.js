@@ -37,11 +37,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                     title: '',
                     region: 'center',
                     items: [
-                        {
-                            xtype: 'procedurechart',
-                            region: 'center',
-                            id: 'chartpanel'
-                        },
+
                         {
                             xtype: 'panel',
                             height: 300,
@@ -51,30 +47,155 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                             collapsible: true,
                             hideCollapseTool: true,
                             title: '',
-                            region: 'south',
+                            region: 'north',
                             split: true,
                             items: [
                                 {
-                                    xtype: 'proceduregrid',
+                                    xtype: 'panel',
                                     flex: 1,
                                     region: 'center',
-                                    id: 'gridpanel'
+                                    id: 'gridpanel',
+                                    items: [
+                                    {
+                                    layout: {
+                                        type: 'hbox'
+                                    },
+                                    margin: '5 10 20 10',
+                                    labelWidth: 35,
+                                    anchor: '100%',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            id: 'oeCbObservedProperty',
+                                            name: 'observedproperty',
+                                            fieldLabel: 'Property',
+                                            labelWidth: 70,
+                                            allowBlank: false,
+                                            displayField: 'name',
+                                            margin: '5 10 0 10',
+                                            forceSelection: true,
+                                            queryMode: 'local',
+                                            
+                                            valueField: 'definition',
+                                            flex: 0.6,
+                                            margin: '5 10 0 10',
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            disabled: true,
+                                            margin: '5 10 0 10',
+                                            id: 'btnPlot',
+                                            text: 'Preview',
+                                            flex: 0.4,
+                                            margin: '5 10 0 10',
+                                        }
+                                    ]    
+                                    }
+                                    ,{
+                                        layout: {
+                                        type: 'hbox'
+                                    },
+                                    items :[
+                                    {
+                     xtype: 'combobox',
+                     padding: '5 10 0 10',
+                     store: Ext.create('Ext.data.Store', {
+                        fields: ['abbr', 'name'],
+                        data: [{
+                           'abbr': 'digital filter',
+                           'name': 'digital filter'
+                        },{
+                           'abbr': 'exeedance',
+                           'name': 'exeedance'
+                        },{
+                           'abbr': 'resample',
+                           'name': 'resample'
+                        },{
+                           'abbr': 'integrate',
+                           'name': 'integrate'
+                        },{
+                           'abbr': 'compare',
+                           'name': 'compare'
+                        },{
+                           'abbr': 'subract',
+                           'name': 'subract'
+                        },{
+                           'abbr': 'integrate',
+                           'name': 'integrate'
+                        },{
+                           'abbr': 'data values',
+                           'name': 'data values'
+                        },{
+                           'abbr': 'hydro events',
+                           'name': 'hydro events'
+                        },{
+                           'abbr': 'hydro indicies',
+                           'name': 'hydro indicies'
+                        },{
+                           'abbr': 'statistics',
+                           'name': 'statistics'
+                        }]
+                     }),
+                     valueField: 'abbr',
+                     fieldLabel: 'methods',
+                     displayField: 'name'
+                  },
+                                    {
+                    xtype: 'button',
+                  text: 'Execute',
+                  width: 150,
+                  margin: '5 10 0 10',
+                  },{
+                  xtype: 'button',
+                  text: 'Save',
+                  width: 150,
+                  margin: '5 10 0 10',
+                  },{
+                  xtype: 'fieldcontainer',
+                  defaultType: 'checkboxfield',
+                     items: [{
+                        boxLabel: 'Over Write',
+                        inputValue: 'html',
+                        id: 'checkbox1',
+                        margin: '5 10 0 10',
+                     }]
+                        }
+                                    ]
+                    }
+
+                                    ]
                                 },
                                 {
-                                    xtype: 'proceduremap',
+                                    xtype: 'panel',
                                     flex: 1,
                                     region: 'east',
                                     split: true,
                                     id: 'proceduremap',
+                                    bodyCls: 'viewerChart',
                                     width: 150,
                                     collapsible: true,
                                     hideCollapseTool: true
                                 }
                             ]
-                        }
+                        },
+                        {
+                            xtype: 'panel',
+                            border: 0,
+                            id: 'chartpanel',
+                            layout: {
+                                type: 'fit'
+                            },
+                            bodyCls: 'viewerChart',
+                            region: 'center'
+                        },
+                        {
+                                    xtype: 'textarea',
+                                    fieldLabel: 'History',
+                                    region: 'south'
+                                }
                     ]
-                },
-                {
+                    },
+                    {
                     xtype: 'panel',
                     width: 300,
                     layout: {

@@ -267,7 +267,7 @@ istsos.engine.analysisConfig = {
         },
         "Process Time Series": {
             istTitle: "Process Time Series",
-            
+            icon: 'process_time_series.png',
             istBody: ["istsos.view.ProcessTimeSeries"],
             wapage: 'MainCenter',
             istFooter: istsos.EMPTY

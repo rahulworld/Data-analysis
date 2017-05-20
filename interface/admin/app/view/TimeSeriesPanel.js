@@ -10,8 +10,8 @@
  * class.
  */
 
-Ext.define('istsos.view.ProcessTimeSeries', {
-    extend: 'istsos.view.ui.ProcessTimeSeries',
+Ext.define('istsos.view.TimeSeriesPanel', {
+    extend: 'istsos.view.ui.TimeSeriesPanel',
     alias: 'widget.viewerpanel',
 
     initComponent: function() {

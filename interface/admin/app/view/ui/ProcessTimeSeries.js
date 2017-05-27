@@ -161,6 +161,19 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                      }]
                         }
                                     ]
+                    },{
+                        xtype: 'panel',
+                        
+                        layout: {
+                            type: 'fit'
+                        },
+                        items: [
+                            {
+                            xtype: 'ProcessTab',
+                            border: 0,
+                            id: 'pchoose'
+                            }
+                        ]
                     }
 
                                     ]

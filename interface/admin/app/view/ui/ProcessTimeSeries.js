@@ -149,6 +149,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                             }]
                         }, {
                             // "xtype": "panel",
+                            // "viewModel": {
+                            //     type: "mypanel"
+                            // },
                             // "height": 109,
                             // "width": 849,
                             // "items": [{

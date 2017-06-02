@@ -260,8 +260,8 @@ istsos.engine.analysisConfig = {
     "Data Analysis": {
         "Add Sensor Name": {
             istTitle: "Add Sensor Name",
-            
-            istBody: ["istsos.view.Editor1"],
+            icon: 'process_time_series.png',
+            istBody: ["istsos.view.addSensor"],
             wapage: 'MainCenter',
             istFooter: istsos.EMPTY
         },
@@ -274,14 +274,14 @@ istsos.engine.analysisConfig = {
         },
         "Manage Sensor": {
             istTitle: "Manage Sensor",
-
-            istBody: ["istsos.view.ViewerPanel"],
+            icon: 'process_time_series.png',
+            istBody: ["istsos.view.Editor1"],
             wapage: 'MainCenter',
             istFooter: istsos.EMPTY
         },
         "Compare Sensor": {
             istTitle: "Compare Sensor",
-            
+            icon: 'process_time_series.png',
             istBody: ["istsos.view.ViewerPanel"],
             wapage: 'MainCenter',
             istFooter: istsos.EMPTY

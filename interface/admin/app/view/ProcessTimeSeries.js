@@ -12,7 +12,7 @@
 
 Ext.define('istsos.view.ProcessTimeSeries', {
     extend: 'istsos.view.ui.ProcessTimeSeries',
-    alias: 'widget.viewerpanel',
+    alias: 'widget.viewerpanel1',
 
     initComponent: function() {
         console.log('This is Time Series Page');

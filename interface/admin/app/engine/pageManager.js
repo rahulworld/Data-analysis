@@ -120,8 +120,11 @@ istsos.engine.pageManager.openWaPage = function (conf){
     mainCenter.removeAll(true);
     try{
         var page = null;
+        console.log('here is good');
+        console.log(page);
         if (Ext.isEmpty(conf['wapage']) || conf['wapage'] == "CenterPage" ) {
             page = Ext.create('istsos.view.ui.CenterPage',Ext.apply({},conf));
+            console.log('here is good324324');
         } else if (conf['wapage'] == 'WizardPage') {
             page = Ext.create('istsos.view.ui.WizardPage',{
                 istConfig: istsos.engine.pageManager.getWizardConfig(conf['wizardName']) 
@@ -130,11 +133,13 @@ istsos.engine.pageManager.openWaPage = function (conf){
                 istService: conf['istService']
             });
         } else if (conf['wapage'] == 'MainCenter') {
+            console.log('here is good1');
             if(Ext.isArray(conf.istBody)){
                 if(conf.istBody.length==1){
                     page = Ext.create(conf.istBody[0],{
                         flex: 1 //,padding: 16
-                    });  
+                    });
+                    console.log('here is very good');
                 }
             }
         } else{

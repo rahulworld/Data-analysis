@@ -8,28 +8,36 @@
  *
  * Do NOT hand edit this file.
  */
-Ext.define('istsos.view.ui.ProcessTimeSeries', {
+Ext.define('istsos.view.ui.ProcessTimeSeries',
+{
     extend: 'Ext.panel.Panel',
     requires: ['istsos.view.ProcedureChart', 'istsos.view.ProcedureGrid', 'istsos.view.ProcedureMap', 'istsos.view.ProcedureChooser'],
     border: 0,
-    layout: {
+    layout:
+    {
         type: 'border'
     },
-    initComponent: function() {
+    initComponent: function()
+    {
         var me = this;
-        Ext.applyIf(me, {
-            items: [{
+        Ext.applyIf(me,
+        {
+            items: [
+            {
                 xtype: 'panel',
                 border: 0,
-                layout: {
+                layout:
+                {
                     type: 'border'
                 },
                 title: '',
                 region: 'center',
-                items: [{
+                items: [
+                {
                     xtype: 'panel',
                     height: 300,
-                    layout: {
+                    layout:
+                    {
                         type: 'border'
                     },
                     collapsible: true,
@@ -37,19 +45,29 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                     title: '',
                     region: 'north',
                     split: true,
-                    items: [{
+                    items: [
+                    {
                         xtype: 'panel',
                         flex: 1,
                         region: 'center',
                         id: 'gridpanel',
-                        items: [{
-                            layout: {
+                        items: [
+                        {
+                            border: true,
+                            height: 50,
+                            maxHeight: 100,
+                            maxWidth: 2000,
+                            minWidth: 0,
+                            bodyBorder: true,
+                            bodyPadding: 10,
+                            layout:
+                            {
                                 type: 'hbox'
                             },
-                            margin: '5 10 20 10',
                             labelWidth: 35,
                             anchor: '100%',
-                            items: [{
+                            items: [
+                            {
                                 xtype: 'combobox',
                                 id: 'oeCbObservedProperty',
                                 name: 'observedproperty',
@@ -57,142 +75,210 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                                 labelWidth: 70,
                                 allowBlank: false,
                                 displayField: 'name',
-                                margin: '5 10 0 10',
                                 forceSelection: true,
                                 queryMode: 'local',
                                 valueField: 'definition',
                                 flex: 0.6,
-                                margin: '5 10 0 10',
-                            }, {
+                                margin: '5 5 5 5'
+                            },
+                            {
                                 xtype: 'button',
                                 disabled: true,
-                                margin: '5 10 0 10',
                                 id: 'btnPlot',
                                 text: 'Preview',
                                 flex: 0.4,
-                                margin: '5 10 0 10',
+                                margin: '5 5 5 5'
                             }]
-                        }, {
-                            layout: {
-                                type: 'hbox'
-                            },
-                            items: [{
+                        },
+                        {
+                            "xtype": "panel",
+                            "border": true,
+                            "height": 50,
+                            "maxHeight": 100,
+                            "maxWidth": 2000,
+                            "minWidth": 0,
+                            "layout": "hbox",
+                            "bodyBorder": true,
+                            "bodyPadding": 10,
+                            "items": [
+                            {
                                 "xtype": "combobox",
-                                store: Ext.create('Ext.data.Store', {
+                                store: Ext.create('Ext.data.Store',
+                                {
                                     fields: ['abbr', 'name'],
-                                    data: [{
+                                    data: [
+                                    {
                                         'abbr': 'digital filter',
                                         'name': 'digital filter'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'exeedance',
                                         'name': 'exeedance'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'resample',
                                         'name': 'resample'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'integrate',
                                         'name': 'integrate'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'compare',
                                         'name': 'compare'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'subract',
                                         'name': 'subract'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'integrate',
                                         'name': 'integrate'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'data values',
                                         'name': 'data values'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'hydro events',
                                         'name': 'hydro events'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'hydro indicies',
                                         'name': 'hydro indicies'
-                                    }, {
+                                    },
+                                    {
                                         'abbr': 'statistics',
                                         'name': 'statistics'
                                     }]
                                 }),
+                                "flex": 1,
+                                "margins": "",
+                                "flex": 2,
+                                "itemId": "mycombobox",
+                                "margin": 0,
+                                "maxHeight": 0,
+                                "fieldBodyCls": "",
+                                "fieldLabel": "Method",
+                                "labelWidth": 50,
+                                "matchFieldWidth": false,
                                 "fieldLabel": "Methods",
                                 "valueField": "abbr",
                                 "displayField": "name",
                                 queryMode: 'local',
                                 forceSelection: true,
-                                listeners: {
+                                listeners:
+                                {
                                     // render: 'onComboboxRender'
-                                    change: function(field, newValue, oldValue) {
+                                    change: function(field, newValue, oldValue)
+                                    {
                                         console.log(newValue);
                                     },
                                     scope: this
                                 }
-                            }, {
-                                xtype: 'button',
-                                text: 'Execute',
-                                width: 150,
-                                flex: 1
-                            }, {
-                                xtype: 'button',
-                                text: 'Save',
-                                width: 150,
-                                flex: 1
-                            }, {
-                                xtype: 'fieldcontainer',
-                                defaultType: 'checkboxfield',
-                                flex: 1,
-                                items: [{
-                                    boxLabel: 'Over Write',
-                                    inputValue: 'html',
-                                    id: 'checkbox1',
-                                }]
+                            },
+                            {
+                                "xtype": "button",
+                                "flex": 1,
+                                "flex": 2,
+                                "height": 30,
+                                "margin": "0 5 0 5",
+                                "maxHeight": 40,
+                                "maxWidth": 150,
+                                "width": 100,
+                                "text": "Execute "
+                            },
+                            {
+                                "xtype": "button",
+                                "flex": 1,
+                                "margins": "",
+                                "height": 30,
+                                "margin": "0 10 10 0",
+                                "maxHeight": 40,
+                                "maxWidth": 150,
+                                "padding": "none",
+                                "width": 100,
+                                "text": "Save"
+                            },
+                            {
+                                "xtype": "checkboxfield",
+                                "flex": 1,
+                                "fieldLabel": "",
+                                "boxLabel": "over write"
                             }]
-                        }, {
-                            // "xtype": "panel",
-                            // "viewModel": {
-                            //     type: "mypanel"
-                            // },
-                            // "height": 109,
-                            // "width": 849,
-                            // "items": [{
-                            //     "xtype": "panel",
-                            //     "padding": 10,
-                            //     "layout": {
-                            //         "type": "hbox",
-                            //         "align": "stretch"
-                            //     },
-                            //     "items": [{
-                            //         "xtype": "textfield",
-                            //         "width": "",
-                            //         "fieldLabel": "Frequency"
-                            //     }, {
-                            //         "xtype": "combobox",
-                            //         "margin": 0,
-                            //         "renderData": "min\nmax",
-                            //         "fieldLabel": "Sampling Method",
-                            //         "displayField": "min"
-                            //     }]
-                            // }, {
-                            //     "xtype": "panel",
-                            //     "margin": 10,
-                            //     "layout": {
-                            //         "type": "hbox",
-                            //         "align": "stretch"
-                            //     },
-                            //     "items": [{
-                            //         "xtype": "combobox",
-                            //         "fieldLabel": "Fill"
-                            //     }, {
-                            //         "xtype": "combobox",
-                            //         "fieldLabel": "Limit",
-                            //         "store": "max"
-                            //     }, {
-                            //         "xtype": "combobox",
-                            //         "fieldLabel": "How Quality"
-                            //     }]
-                            // }]
-                        }]
-                    }, {
+                        },
+                        {
+    "xtype": "panel",
+    "viewModel": {
+        type: "mypanel"
+    },
+    "height": 109,
+    "width": "none",
+    "bodyBorder": true,
+    "items": [
+        {
+            "xtype": "panel",
+            "border": false,
+            "padding": 5,
+            "layout": {
+                "type": "hbox",
+                "align": "middle"
+            },
+            "items": [
+                {
+                    "xtype": "textfield",
+                    "id": "edittextFrequency",
+                    "margin": "0 0 10 10",
+                    "width": "",
+                    "fieldLabel": "Frequency",
+                    "labelWidth": 70
+                },
+                {
+                    "xtype": "combobox",
+                    "margins": "",
+                    "id": "comboxSmapling",
+                    "margin": "0 0 10 10",
+                    "fieldLabel": "Sampling Method",
+                    "labelWidth": 120
+                }
+            ]
+        },
+        {
+            "xtype": "panel",
+            "border": false,
+            "margin": 10,
+            "layout": {
+                "type": "hbox",
+                "align": "middle"
+            },
+            "items": [
+                {
+                    "xtype": "combobox",
+                    "id": "comboxFill",
+                    "margin": "0 5 5 0",
+                    "fieldLabel": "Fill",
+                    "labelWidth": 30
+                },
+                {
+                    "xtype": "combobox",
+                    "id": "comboxLimit",
+                    "margin": "0 5 5 0",
+                    "fieldLabel": "Limit",
+                    "labelWidth": 40,
+                },
+                {
+                    "xtype": "combobox",
+                    "id": "comboxHowquality",
+                    "margin": "0 5 5 0",
+                    "fieldLabel": "How Quality",
+                    "labelWidth": 80
+                }
+            ]
+        }
+    ]
+}]
+                    },
+                    {
                         xtype: 'panel',
                         flex: 1,
                         region: 'east',
@@ -203,29 +289,40 @@ Ext.define('istsos.view.ui.ProcessTimeSeries', {
                         collapsible: true,
                         hideCollapseTool: true
                     }]
-                }, {
+                },
+                {
                     xtype: 'panel',
                     border: 0,
                     id: 'chartpanel',
-                    layout: {
+                    layout:
+                    {
                         type: 'fit'
                     },
                     bodyCls: 'viewerChart',
                     region: 'center'
-                }, {
+                },
+                {
                     xtype: 'textarea',
                     fieldLabel: 'History',
                     region: 'south'
+                },
+                {
+                    // xtype: 'textarea',
+                    // fieldLabel: 'History',
+                    // region: 'center'
                 }]
-            }, {
+            },
+            {
                 xtype: 'panel',
                 width: 300,
-                layout: {
+                layout:
+                {
                     type: 'fit'
                 },
                 title: '',
                 region: 'west',
-                items: [{
+                items: [
+                {
                     xtype: 'procedurechooser',
                     border: 0,
                     id: 'pchoose'

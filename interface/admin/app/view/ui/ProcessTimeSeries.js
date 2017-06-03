@@ -108,7 +108,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     fields: ['abbr', 'name'],
                                     data: [
                                     {
-                                        'abbr': 'digital filter',
+                                        'abbr': 'digital_filter',
                                         'name': 'digital filter'
                                     },
                                     {
@@ -153,20 +153,15 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     }]
                                 }),
                                 "flex": 1,
-                                "margins": "",
-                                "flex": 2,
                                 "itemId": "mycombobox",
                                 "margin": 0,
                                 "maxHeight": 0,
-                                "fieldBodyCls": "",
-                                "fieldLabel": "Method",
                                 "labelWidth": 50,
-                                "matchFieldWidth": false,
                                 "fieldLabel": "Methods",
                                 "valueField": "abbr",
                                 "displayField": "name",
                                 queryMode: 'local',
-                                forceSelection: true,
+                                "value": "digital filter",
                                 listeners:
                                 {
                                     // render: 'onComboboxRender'
@@ -208,75 +203,221 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                             }]
                         },
                         {
-    "xtype": "panel",
-    "viewModel": {
-        type: "mypanel"
-    },
-    "height": 109,
-    "width": "none",
-    "bodyBorder": true,
-    "items": [
-        {
-            "xtype": "panel",
-            "border": false,
-            "padding": 5,
-            "layout": {
-                "type": "hbox",
-                "align": "middle"
-            },
-            "items": [
-                {
-                    "xtype": "textfield",
-                    "id": "edittextFrequency",
-                    "margin": "0 0 10 10",
-                    "width": "",
-                    "fieldLabel": "Frequency",
-                    "labelWidth": 70
-                },
-                {
-                    "xtype": "combobox",
-                    "margins": "",
-                    "id": "comboxSmapling",
-                    "margin": "0 0 10 10",
-                    "fieldLabel": "Sampling Method",
-                    "labelWidth": 120
-                }
-            ]
-        },
-        {
-            "xtype": "panel",
-            "border": false,
-            "margin": 10,
-            "layout": {
-                "type": "hbox",
-                "align": "middle"
-            },
-            "items": [
-                {
-                    "xtype": "combobox",
-                    "id": "comboxFill",
-                    "margin": "0 5 5 0",
-                    "fieldLabel": "Fill",
-                    "labelWidth": 30
-                },
-                {
-                    "xtype": "combobox",
-                    "id": "comboxLimit",
-                    "margin": "0 5 5 0",
-                    "fieldLabel": "Limit",
-                    "labelWidth": 40,
-                },
-                {
-                    "xtype": "combobox",
-                    "id": "comboxHowquality",
-                    "margin": "0 5 5 0",
-                    "fieldLabel": "How Quality",
-                    "labelWidth": 80
-                }
-            ]
-        }
-    ]
-}]
+                            "xtype": "panel",
+                            "viewModel":
+                            {
+                                type: "mypanel"
+                            },
+                            "height": 109,
+                            "width": "none",
+                            "bodyBorder": true,
+                            "items": [
+                            {
+                                "xtype": "panel",
+                                "border": false,
+                                "padding": 5,
+                                "layout":
+                                {
+                                    "type": "hbox",
+                                    "align": "middle"
+                                },
+                                "items": [
+                                {
+                                    "xtype": "textfield",
+                                    "id": "edittextFrequency",
+                                    "margin": "0 0 10 10",
+                                    "width": "",
+                                    "fieldLabel": "Frequency",
+                                    "labelWidth": 70
+                                },
+                                {
+                                    "xtype": "combobox",
+                                    "margins": "",
+                                    "id": "comboxSmapling",
+                                    "margin": "0 0 10 10",
+                                    "fieldLabel": "Sampling Method",
+                                    "labelWidth": 120,
+                                    "value": "mean",
+                                    store: Ext.create('Ext.data.Store',
+                                    {
+                                        fields: ['abbr', 'name'],
+                                        data: [
+                                        {
+                                            'abbr': 'mean',
+                                            'name': 'mean'
+                                        },
+                                        {
+                                            'abbr': 'max',
+                                            'name': 'max'
+                                        },
+                                        {
+                                            'abbr': 'min',
+                                            'name': 'min'
+                                        },
+                                        {
+                                            'abbr': 'first',
+                                            'name': 'first'
+                                        },
+                                        {
+                                            'abbr': 'last',
+                                            'name': 'last'
+                                        },
+                                        {
+                                            'abbr': 'median',
+                                            'name': 'median'
+                                        },
+                                        {
+                                            'abbr': 'sum',
+                                            'name': 'sum'
+                                        }]
+                                    }),
+                                    "matchFieldWidth": false,
+                                    "valueField": "abbr",
+                                    "displayField": "name",
+                                    queryMode: 'local',
+                                    forceSelection: true,
+                                    listeners:
+                                    {
+                                        // render: 'onComboboxRender'
+                                        change: function(field, newValue, oldValue)
+                                        {
+                                            console.log(newValue);
+                                        },
+                                        scope: this
+                                    }
+                                }]
+                            },
+                            {
+                                "xtype": "panel",
+                                "border": false,
+                                "margin": 10,
+                                "layout":
+                                {
+                                    "type": "hbox",
+                                    "align": "middle"
+                                },
+                                "items": [
+                                {
+                                    "xtype": "combobox",
+                                    "id": "comboxFill",
+                                    "margin": "0 5 5 0",
+                                    "fieldLabel": "Fill",
+                                    "labelWidth": 30,
+                                    "value": "bfill",
+                                    store: Ext.create('Ext.data.Store',
+                                    {
+                                        fields: ['abbr', 'name'],
+                                        data: [
+                                        {
+                                            'abbr': 'bfill',
+                                            'name': 'bfill'
+                                        },
+                                        {
+                                            'abbr': 'ffill',
+                                            'name': 'ffill'
+                                        }]
+                                    }),
+                                    "matchFieldWidth": false,
+                                    "valueField": "abbr",
+                                    "displayField": "name",
+                                    queryMode: 'local',
+                                    forceSelection: true,
+                                    listeners:
+                                    {
+                                        // render: 'onComboboxRender'
+                                        change: function(field, newValue, oldValue)
+                                        {
+                                            console.log(newValue);
+                                        },
+                                        scope: this
+                                    }
+                                },
+                                {
+                                    xtype: 'spinnerfield',
+                                    margin: '0 5 5 0',
+                                    fieldLabel: 'Limit',
+                                    labelWidth: 50,
+                                    "id": "comboxLimit",
+                                    "value": -1,
+                                    step: -1,
+                                    // override onSpinUp (using step isn't neccessary)
+                                    onSpinUp: function()
+                                    {
+                                        var me = this;
+                                        if (!me.readOnly)
+                                        {
+                                            var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                            me.setValue((val - me.step) + ' ');
+                                        }
+                                    },
+                                    // override onSpinDown
+                                    onSpinDown: function()
+                                    {
+                                        var me = this;
+                                        if (!me.readOnly)
+                                        {
+                                            var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                            me.setValue((val + me.step) + ' ');
+                                        }
+                                    }
+                                },
+                                {
+                                    "xtype": "combobox",
+                                    "id": "comboxHowquality",
+                                    "margin": "0 5 5 0",
+                                    "fieldLabel": "How Quality",
+                                    "labelWidth": 80,
+                                    "value": "mean",
+                                    store: Ext.create('Ext.data.Store',
+                                    {
+                                        fields: ['abbr', 'name'],
+                                        data: [
+                                        {
+                                            'abbr': 'mean',
+                                            'name': 'mean'
+                                        },
+                                        {
+                                            'abbr': 'max',
+                                            'name': 'max'
+                                        },
+                                        {
+                                            'abbr': 'min',
+                                            'name': 'min'
+                                        },
+                                        {
+                                            'abbr': 'first',
+                                            'name': 'first'
+                                        },
+                                        {
+                                            'abbr': 'last',
+                                            'name': 'last'
+                                        },
+                                        {
+                                            'abbr': 'median',
+                                            'name': 'median'
+                                        },
+                                        {
+                                            'abbr': 'sum',
+                                            'name': 'sum'
+                                        }]
+                                    }),
+                                    "matchFieldWidth": false,
+                                    "valueField": "abbr",
+                                    "displayField": "name",
+                                    queryMode: 'local',
+                                    forceSelection: true,
+                                    listeners:
+                                    {
+                                        // render: 'onComboboxRender'
+                                        change: function(field, newValue, oldValue)
+                                        {
+                                            console.log(newValue);
+                                        },
+                                        scope: this
+                                    }
+                                }]
+                            }]
+                        }]
                     },
                     {
                         xtype: 'panel',

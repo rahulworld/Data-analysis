@@ -1,0 +1,51 @@
+{
+    "total": 11,
+    "success": true,
+    "message": "Capabilities time uoms loaded correctly",
+    "data": [
+                                    {
+                                        "abbr": "digital_filter",
+                                        "name": "digital filter"
+                                    },
+                                    {
+                                        "abbr": "exeedance",
+                                        "name": "exeedance"
+                                    },
+                                    {
+                                        "abbr": "resample",
+                                        "name": "resample"
+                                    },
+                                    {
+                                        "abbr": "integrate",
+                                        "name": "integrate"
+                                    },
+                                    {
+                                        "abbr": "compare",
+                                        "name": "compare"
+                                    },
+                                    {
+                                        "abbr": "subract",
+                                        "name": "subract"
+                                    },
+                                    {
+                                        "abbr": "integrate",
+                                        "name": "integrate"
+                                    },
+                                    {
+                                        "abbr": "data values",
+                                        "name": "data values"
+                                    },
+                                    {
+                                        "abbr": "hydro events",
+                                        "name": "hydro events"
+                                    },
+                                    {
+                                        "abbr": "hydro indicies",
+                                        "name": "hydro indicies"
+                                    },
+                                    {
+                                        "abbr": "statistics",
+                                        "name": "statistics"
+                                    }
+    ]
+}

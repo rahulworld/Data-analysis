@@ -14,6 +14,10 @@
 Ext.define('istsos.view.proceduresList', {
     extend: 'istsos.view.ui.proceduresList',
 
+    requires: [
+        'istsos.store.gridProceduresList'
+    ],
+
     initComponent: function() {
         var me = this;
         

@@ -565,6 +565,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'combobox',
+                                        id:'timeUnitsCombox',
                                         flex: 1,
                                         fieldLabel: 'time units'
                                     }]
@@ -583,6 +584,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'checkboxfield',
+                                        id:'checkUsetime',
                                         flex: 0.2,
                                         fieldLabel: '',
                                         height: 40,

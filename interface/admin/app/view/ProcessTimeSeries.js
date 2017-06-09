@@ -14,6 +14,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
     extend: 'istsos.view.ui.ProcessTimeSeries',
     alias: 'widget.viewerpanel1',
 
+    requires: [
+        'istsos.store.SamplingMethod'
+    ],
+
     initComponent: function() {
         console.log('This is Time Series Page');
         var me = this;
@@ -93,7 +97,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
 
 
-        
+        Ext.getCmp("methodsCombox").select(2);
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
 
             var value = combo.getValue();
@@ -136,6 +140,20 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(true);
                     integrate.setVisible(true);
                   break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
             }
         });
 

@@ -73,6 +73,14 @@ Ext.define('istsos.view.ProcedureChooser', {
     extend: 'istsos.view.ui.ProcedureChooser',
     alias: 'widget.procedurechooser',
 
+    requires: [
+        'istsos.Sensor',
+        'istsos.store.Offerings',
+        'istsos.store.Services',
+        'istsos.store.gridProceduresList',
+        'istsos.utils'
+    ],
+
     initComponent: function() {
 
         var me = this;

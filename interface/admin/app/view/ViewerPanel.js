@@ -19,23 +19,31 @@ Ext.define('istsos.view.ViewerPanel', {
         me.callParent(arguments);
 
         Ext.getCmp('pchoose').on("serviceSelected",function(service) {
+            // this.fit2service(service);
+            console.log('this is procedure chooser panel service selected');
+            console.log(service);
             this.fit2service(service);
         },Ext.getCmp('proceduremap'));
 
         Ext.getCmp('pchoose').on("offeringSelected",function(offering) {
             this.fit2offering(offering);
+            console.log('this is procedure chooser panel offering selected');
         },Ext.getCmp('proceduremap'));
 
         Ext.getCmp('pchoose').on("procedureSelected",function(procedure) {
             this.fit2procedure(procedure);
+            console.log('this is procedure chooser panel procedure selected');
         },Ext.getCmp('proceduremap'));
 
         Ext.getCmp('proceduremap').on("procedureSelected",function(service, offering, procedure) {
             this._addProcedure(service, offering, procedure);
+            console.log('this is procedure chooser panel offering selected all services offering and procedure');
         },Ext.getCmp('pchoose'));
 
         Ext.getCmp('pchoose').on("procedureAdded",function(procedure) {
             this['chart'].addProcedure(procedure);
+            console.log(procedure);
+            // console.log(this['chart']);
             this['map'].add2highlight(procedure);
             this['map'].fit2offering();
         },{
@@ -57,11 +65,15 @@ Ext.define('istsos.view.ViewerPanel', {
             this.initReadOnlyGrid(
                 chartpanel.procedures,
                 Ext.getCmp("oeCbObservedProperty").getValue());
+            console.log(chartpanel.procedures);
+
+            console.log('this is result data');
         },Ext.getCmp("gridpanel"));
 
         Ext.getCmp('chartpanel').on("clickCallback",function(panel, e, x, pts) {
             this.updateGridSelection([x]);
             panel.highlightRegion(x);
+            console.log('selection of point highlight');
         },Ext.getCmp('gridpanel'));
 
         /*Ext.getCmp('gridpanel').on("select",function(panel, grid, record, index, eOpts) {
@@ -81,6 +93,7 @@ Ext.define('istsos.view.ViewerPanel', {
                 rec = selected[selected.length-1];
                 end = rec.get('micro');
                 this.highlightRegion(begin,end);
+                console.log('this is selection change');
             }else if (selected.length==0) {
                 this.highlightRegion();
                 this.removeAnnotations();

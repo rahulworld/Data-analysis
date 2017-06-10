@@ -11,7 +11,12 @@
 Ext.define('istsos.view.ui.ProcessTimeSeries',
 {
     extend: 'Ext.panel.Panel',
-    requires: ['istsos.view.ProcedureChart', 'istsos.view.ProcedureGrid', 'istsos.view.ProcedureMap', 'istsos.view.ProcedureChooser'],
+    requires: [
+        'istsos.view.ProcedureChart',
+        'istsos.view.ProcedureGrid',
+        'istsos.view.ProcedureMap',
+        'istsos.view.ProcedureChooser'
+    ],
     border: 0,
     layout:
     {
@@ -705,7 +710,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         flex: 1,
                         region: 'east',
                         split: true,
-                        id: 'proceduremap',
+                        id: 'chartpanel1',
                         bodyCls: 'viewerChart',
                         width: 150,
                         collapsible: true,

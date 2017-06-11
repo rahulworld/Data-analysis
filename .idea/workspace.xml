@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="189038f5-21b3-485d-bcb7-bb011574aa77" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/Chart.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/Chart.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,14 +20,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProcessTimeSeries.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProcessTimeSeries.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="31" />
+            <state relative-caret-position="177">
+              <caret line="165" column="47" lean-forward="true" selection-start-line="165" selection-start-column="47" selection-end-line="165" selection-end-column="47" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Chart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/Chart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7">
+              <caret line="783" column="10" lean-forward="false" selection-start-line="783" selection-start-column="10" selection-end-line="783" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -90,7 +100,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewerPanel.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ViewerPanel.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="450">
@@ -105,8 +115,8 @@
       <file leaf-file-name="ProcessTimeSeries.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="712" column="40" lean-forward="false" selection-start-line="712" selection-start-column="40" selection-end-line="712" selection-end-column="40" />
+            <state relative-caret-position="1728">
+              <caret line="712" column="42" lean-forward="false" selection-start-line="712" selection-start-column="42" selection-end-line="712" selection-end-column="42" />
               <folding>
                 <element signature="e#3249#7991#0" expanded="false" />
                 <element signature="e#8017#34219#0" expanded="false" />
@@ -139,9 +149,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" />
         <option value="$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js" />
         <option value="$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js" />
+        <option value="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" />
       </list>
     </option>
   </component>
@@ -153,7 +163,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="53" />
-    <option name="y" value="-2164" />
+    <option name="y" value="-4" />
     <option name="width" value="1867" />
     <option name="height" value="1084" />
   </component>
@@ -317,32 +327,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="store" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="istsos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="istsos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="interface" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -453,15 +437,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1497016381313</updated>
-      <workItem from="1497016384575" duration="11337000" />
+      <workItem from="1497016384575" duration="18983000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11337000" />
+    <option name="totallyTimeSpent" value="18983000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="-2164" width="1867" height="1084" extended-state="6" />
+    <frame x="53" y="-4" width="1867" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16711302" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -624,16 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interface/admin/app/store/Offerings.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -684,10 +658,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="31" lean-forward="true" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ChartContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/Chart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1447165957000" expanded="true" signature="3151:3271" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/Chart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="783" column="10" lean-forward="false" selection-start-line="783" selection-start-column="10" selection-end-line="783" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="712" column="40" lean-forward="false" selection-start-line="712" selection-start-column="40" selection-end-line="712" selection-end-column="40" />
+        <state relative-caret-position="1728">
+          <caret line="712" column="42" lean-forward="false" selection-start-line="712" selection-start-column="42" selection-end-line="712" selection-end-column="42" />
           <folding>
             <element signature="e#3249#7991#0" expanded="false" />
             <element signature="e#8017#34219#0" expanded="false" />
@@ -698,10 +711,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="31" lean-forward="true" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+        <state relative-caret-position="177">
+          <caret line="165" column="47" lean-forward="true" selection-start-line="165" selection-start-column="47" selection-end-line="165" selection-end-column="47" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

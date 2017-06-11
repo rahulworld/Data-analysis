@@ -19,7 +19,16 @@
 Ext.define('istsos.view.Chart', {
     
     extend: 'istsos.view.ui.Chart',
-    
+
+    requires: [
+        'istsos.store.ObservedProperties',
+        'istsos.store.Offerings',
+        'istsos.store.Services',
+        'istsos.store.gridProceduresList',
+        'istsos.utils',
+        'istsos.view.Calc'
+    ],
+
     initComponent: function() {
         
         Ext.create('istsos.store.Offerings');

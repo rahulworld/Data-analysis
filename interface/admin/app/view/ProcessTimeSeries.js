@@ -14,75 +14,110 @@ Ext.define('istsos.view.ProcessTimeSeries', {
     extend: 'istsos.view.ui.ProcessTimeSeries',
     alias: 'widget.viewerpanel1',
 
-    requires: [
-        'istsos.store.SamplingMethod'
-    ],
-
     initComponent: function() {
         console.log('This is Time Series Page');
         var me = this;
         me.callParent(arguments);
-        Ext.create('istsos.store.SamplingMethod');
+
+        this.pchoose = Ext.getCmp('pchoose');
+        this.chartpanel = Ext.getCmp('chartpanel');
+
+        this.pchoose.on("procedureAdded",function(procedure) {
+            this.chartpanel.addProcedure(procedure);
+
+        },this);
+        
+        this.pchoose.on("procedureRemoved",function(procedure) {
+            this.chartpanel.removeProcedure(procedure);
+        },this);
+        
+        this.chartpanel.on('observedPropertyIsSet',function(chartpanel, observedProperty){
+            console.log(observedProperty);
+            console.log(chartpanel);
+        },this);
+
+        // this.chartpanel.on("clickCallback",function(panel, e, x, pts) {
+        //     this.updateGridSelection([x]);
+        //     panel.highlightRegion(x);
+        // },this.grideditor);
+        
+        
+        // this.chartpanel.on("seriesSelected",function(panel, e, x, y, pts) {
+        //     this.updateGridSelection([x,y]);
+        //     panel.highlightRegion(x,y);
+        // },this.grideditor);
 
 
-        Ext.getCmp('pchoose').on("serviceSelected",function(service) {
-            this.fit2service(service);
-            console.log('service selected method');
-        }
-        // ,Ext.getCmp('proceduremap')
-        );
+        // Ext.getCmp('pchoose').on("serviceSelected",function(service) {
+        //     this.fit2service(service);
+        //     console.log('service selected method');
+        // }
+        // // ,Ext.getCmp('proceduremap')
+        // );
 
-        Ext.getCmp('pchoose').on("offeringSelected",function(offering) {
-            this.fit2offering(offering);
-            console.log('offering selected method');
-        }
-        // ,Ext.getCmp('proceduremap')
-        );
+        // Ext.getCmp('pchoose').on("offeringSelected",function(offering) {
+        //     this.fit2offering(offering);
+        //     console.log('offering selected method');
+        // }
+        // // ,Ext.getCmp('proceduremap')
+        // );
 
-        Ext.getCmp('pchoose').on("procedureSelected",function(procedure) {
-            this.fit2procedure(procedure);
-            console.log('procedure selected method');
-        }
-        // ,Ext.getCmp('proceduremap')
-        );
+        // Ext.getCmp('pchoose').on("procedureSelected",function(procedure) {
+        //     this.fit2procedure(procedure);
+        //     console.log('procedure selected method');
+        // }
+        // // ,Ext.getCmp('proceduremap')
+        // );
 
-        // Ext.getCmp('proceduremap').on("procedureSelected",function(service, offering, procedure) {
-        //     this._addProcedure(service, offering, procedure);
-        // },Ext.getCmp('pchoose'));
+        // // Ext.getCmp('proceduremap').on("procedureSelected",function(service, offering, procedure) {
+        // //     this._addProcedure(service, offering, procedure);
+        // // },Ext.getCmp('pchoose'));
 
-        Ext.getCmp('pchoose').on("procedureAdded",function(procedure) {
-            this['chart'].addProcedure(procedure);
-            // this['map'].add2highlight(procedure);
-            // this['map'].fit2offering();
-        },{
-          chart: Ext.getCmp('chartpanel')
-          // map: Ext.getCmp('proceduremap')
-        });
+        // Ext.getCmp('pchoose').on("procedureAdded",function(procedure) {
+        //     this['chart'].addProcedure(procedure);
+        //     // this['map'].add2highlight(procedure);
+        //     // this['map'].fit2offering();
+        // },{
+        //   chart: Ext.getCmp('chartpanel')
+        //   // map: Ext.getCmp('proceduremap')
+        // });
 
-        Ext.getCmp('pchoose').on("procedureRemoved",function(procedure) {
-        // this['map'].removeHighlight(procedure);
-        this['chart'].removeProcedure(procedure);
-        // this['grid'].removeProcedure(procedure);
-        },{
-          chart: Ext.getCmp('chartpanel'),
-          // map: Ext.getCmp('proceduremap'),
-          // grid: Ext.getCmp('gridpanel')
-        });
+        // Ext.getCmp('pchoose').on("procedureRemoved",function(procedure) {
+        // // this['map'].removeHighlight(procedure);
+        // this['chart'].removeProcedure(procedure);
+        // // this['grid'].removeProcedure(procedure);
+        // },{
+        //   chart: Ext.getCmp('chartpanel'),
+        //   // map: Ext.getCmp('proceduremap'),
+        //   // grid: Ext.getCmp('gridpanel')
+        // });
 
-        Ext.getCmp('chartpanel').on("queueLoaded",function(chartpanel) {
-            this.initReadOnlyGrid(
-                chartpanel.procedures,
-                Ext.getCmp("oeCbObservedProperty").getValue());
-        }
-        // ,Ext.getCmp("gridpanel")
-        );
+        // Ext.getCmp('chartpanel').on("queueLoaded",function(chartpanel) {
+        //     this.initReadOnlyGrid(
+        //         chartpanel.procedures,
+        //         Ext.getCmp("oeCbObservedProperty").getValue());
+        // }
+        // // ,Ext.getCmp("gridpanel")
+        // );
 
-        Ext.getCmp('chartpanel').on("clickCallback",function(panel, e, x, pts) {
-            this.updateGridSelection([x]);
-            panel.highlightRegion(x);
-        }
-        // ,Ext.getCmp('gridpanel')
-        );
+        // Ext.getCmp('chartpanel').on("clickCallback",function(panel, e, x, pts) {
+        //     this.updateGridSelection([x]);
+        //     panel.highlightRegion(x);
+        // }
+        // // ,Ext.getCmp('gridpanel')
+        // );
+        // var dygraphs = {};
+        // dygraphs['chartpanel'] = new Dygraph(
+        // Ext.getCmp('chartpanel123');
+        // g= new Dygraph(
+        //     // containing div
+        //     Ext.getCmp('chartpanel123'),
+        //     // CSV or path to a CSV file.
+        //     "Date,Temperature\n" +
+        //     "2008-05-07,15\n" +
+        //     "2008-05-08,20\n" +
+        //     "2008-05-09,40\n"
+        // );
 
         /*Ext.getCmp('gridpanel').on("select",function(panel, grid, record, index, eOpts) {
             console.log("select:");
@@ -154,6 +189,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     integrate.setVisible(true);
                   break;
                 case 5:
+                    console.log('dygraph is running');
                     break;
                 case 6:
                     break;
@@ -174,5 +210,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             console.log("underlayCallback:");
             console.dir(arguments);
         });*/
+        // g= new Dygraph(
+        //     // containing div
+        //     Ext.getCmp('chartpanel123'),
+        //     // CSV or path to a CSV file.
+        //     "Date,Temperature\n" +
+        //     "2008-05-07,15\n" +
+        //     "2008-05-08,20\n" +
+        //     "2008-05-09,40\n"
+        // );
+
     }
+
 });

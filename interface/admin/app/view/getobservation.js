@@ -219,6 +219,7 @@ Ext.define('istsos.view.getobservation', {
                 this.istForm.loadRecord(json);
                 this.fireEvent("operationPost",json);
                 this.mask.hide();
+                console.log('Get Observation Cached');
             }
         });
     }

@@ -54,47 +54,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                     {
                         xtype: 'panel',
                         flex: 1,
-                        region: 'center',
-                        id: 'gridpanel',
+                        region: 'east',
+                        id: 'MethodsSelectionPanel',
                         items: [
-                        {
-                            border: true,
-                            height: 50,
-                            maxHeight: 100,
-                            maxWidth: 2000,
-                            minWidth: 0,
-                            bodyBorder: true,
-                            bodyPadding: 10,
-                            layout:
-                            {
-                                type: 'hbox'
-                            },
-                            labelWidth: 35,
-                            anchor: '100%',
-                            items: [
-                            {
-                                xtype: 'combobox',
-                                id: 'oeCbObservedProperty',
-                                name: 'observedproperty',
-                                fieldLabel: 'Property',
-                                labelWidth: 70,
-                                allowBlank: false,
-                                displayField: 'name',
-                                forceSelection: true,
-                                queryMode: 'local',
-                                valueField: 'definition',
-                                flex: 0.6,
-                                margin: '5 5 5 5'
-                            },
-                            {
-                                xtype: 'button',
-                                disabled: true,
-                                id: 'btnPlot',
-                                text: 'Preview',
-                                flex: 0.4,
-                                margin: '5 5 5 5'
-                            }]
-                        },
                         {
                             "xtype": "panel",
                             "border": true,
@@ -706,21 +668,17 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         }]
                     },
                     {
-                        xtype: 'panel',
-                        flex: 1,
-                        region: 'east',
-                        split: true,
-                        id: 'chartpanel1',
-                        bodyCls: 'viewerChart',
-                        width: 150,
-                        collapsible: true,
-                        hideCollapseTool: true
+
+                            xtype: 'procedurechart',
+                            flex:1,
+                            region: 'center',
+                            id: 'chartpanel'
                     }]
                 },
                 {
                     xtype: 'panel',
                     border: 0,
-                    id: 'chartpanel',
+                    id: 'chartpanel123',
                     layout:
                     {
                         type: 'fit'

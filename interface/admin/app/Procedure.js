@@ -193,6 +193,9 @@ Ext.define('istsos.Sensor', {
                         }
                     }
                 }
+                console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+                console.log(json.data[0]);
+                console.log(this.sensor);
             }
         });
         
@@ -224,6 +227,8 @@ Ext.define('istsos.Sensor', {
             records.push(row);
         }
         this.store.loadData(records);
+        console.log('LOAD OBSERVATION RECORDS STORE');
+        console.log(records);
         this.fireEvent("observationLoaded", this);
     },
     insertObservation: function(){
@@ -471,8 +476,14 @@ Ext.define('istsos.Sensor', {
         for (var i = 0; i < this.meta.outputs.length; i++) {
             if (this.meta.outputs[i]['definition']!=this.isodef) {
                 ret.push(this.meta.outputs[i]['definition']);
+                // console.log('GET OBSERVED PROPERTY IN REDER CHART');
+                // console.log(this.meta.outputs[i]['definition']);
+                // console.log(this.isodef);
             }
         }
+        console.log('GET OBSERVED PROPERTY IN REDER CHART');
+        console.log(ret);
+        console.log(this.isodef);
         return ret;
     },
     getObservedPropertiesName: function(){

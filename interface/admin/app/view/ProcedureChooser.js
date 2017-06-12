@@ -180,7 +180,7 @@ Ext.define('istsos.view.ProcedureChooser', {
                 "afterrender": {
                     fn: function(procedureDetailsPanel, layout, eOpts ){
 
-                        //console.log("Afterrender: " + procedureDetailsPanel.istsos.procedure.getName());
+                        console.log("Afterrender: " + procedureDetailsPanel.istsos.procedure.getName());
 
                         var v = Ext.get(procedureDetailsPanel.istsos.idVisible);
                         v.on("click",function(){
@@ -246,7 +246,7 @@ Ext.define('istsos.view.ProcedureChooser', {
 
                             window.open(Ext.String.format('{0}{1}?{2}', wa.basepath, this.istsos.procedure.service, params));
 
-                            //console.log(params);
+                            console.log(params);
 
 
                         },procedureDetailsPanel);
@@ -483,9 +483,11 @@ Ext.define('istsos.view.ProcedureChooser', {
                 var json = Ext.decode(response.responseText);
                 if (json.success) {
                     this.configsections = json.data;
+                    // console.log('THIS IS DATA'+this.configsections);
                 }
             }
         });
+
 
     },
     _offeringSelected: function(combo, records, eOpts){
@@ -495,7 +497,6 @@ Ext.define('istsos.view.ProcedureChooser', {
         pr.disable();
 
         this.fireEvent("offeringSelected", combo.getValue());
-
         Ext.Ajax.request({
             url: Ext.String.format('{0}/istsos/services/{1}/offerings/{2}/procedures/operations/memberslist',
                 wa.url,Ext.getCmp('cmbServices').getValue(),combo.getValue()),
@@ -514,6 +515,8 @@ Ext.define('istsos.view.ProcedureChooser', {
                     Ext.Msg.alert("Server message", "\"" + json['message'] + "\"<br/><br/>" +
                             "<small>Status response: " + response.statusText + "</small>");
                 }
+                console.log('OFFERINGS SELECTED AND PROCEDURE REQUESTED');
+                console.log(json.data);
             }
         });
     }

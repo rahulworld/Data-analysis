@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="189038f5-21b3-485d-bcb7-bb011574aa77" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/Procedure.js" afterPath="$PROJECT_DIR$/interface/admin/app/Procedure.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/Chart.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/Chart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChart.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js" afterPath="$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js" />
     </list>
@@ -20,115 +22,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProcessTimeSeries.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="165" column="47" lean-forward="true" selection-start-line="165" selection-start-column="47" selection-end-line="165" selection-end-column="47" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Chart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/Chart.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="783" column="10" lean-forward="false" selection-start-line="783" selection-start-column="10" selection-end-line="783" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewerPanel.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="30" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="30" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcedureChooser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcedureChooser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-270">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcedureChooser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2286">
-              <caret line="145" column="62" lean-forward="false" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="62" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1497080048738" expanded="true" signature="15009:15114" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="15165:15200" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="15488:15494" ph=" " />
-                <marker date="1497080048738" expanded="true" signature="15590:15623" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="15767:15773" ph=" " />
-                <marker date="1497080048738" expanded="true" signature="15861:15983" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="16034:16053" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="16332:16350" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="16469:16591" ph="..." />
-                <marker date="1497080048738" expanded="true" signature="16671:16701" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Offerings.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/store/Offerings.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewerPanel.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="25" column="31" lean-forward="true" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessTimeSeries.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1728">
-              <caret line="712" column="42" lean-forward="false" selection-start-line="712" selection-start-column="42" selection-end-line="712" selection-end-column="42" />
-              <folding>
-                <element signature="e#3249#7991#0" expanded="false" />
-                <element signature="e#8017#34219#0" expanded="false" />
-                <element signature="e#11015#14108#0" expanded="false" />
-                <element signature="e#14138#25968#0" expanded="false" />
-                <element signature="e#25998#34192#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcedureMap.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProcedureMap.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureMap.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="317">
@@ -437,16 +331,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1497016381313</updated>
-      <workItem from="1497016384575" duration="18983000" />
+      <workItem from="1497016384575" duration="21180000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18983000" />
+    <option name="totallyTimeSpent" value="21180000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="-4" width="1867" height="1084" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16711302" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -597,77 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureMap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="220" column="4" lean-forward="false" selection-start-line="220" selection-start-column="4" selection-end-line="220" selection-end-column="4" />
-          <folding>
-            <marker date="1447927234000" expanded="true" signature="4077:4095" ph="..." />
-            <marker date="1447927234000" expanded="true" signature="4906:4925" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/store/Offerings.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2286">
-          <caret line="145" column="62" lean-forward="false" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="62" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1497080048738" expanded="true" signature="15009:15114" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="15165:15200" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="15488:15494" ph=" " />
-            <marker date="1497080048738" expanded="true" signature="15590:15623" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="15767:15773" ph=" " />
-            <marker date="1497080048738" expanded="true" signature="15861:15983" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="16034:16053" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="16332:16350" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="16469:16591" ph="..." />
-            <marker date="1497080048738" expanded="true" signature="16671:16701" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcedureChooser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="30" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="31" lean-forward="true" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ChartContainer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -689,34 +511,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/interface/admin/app/view/Chart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7">
-          <caret line="783" column="10" lean-forward="false" selection-start-line="783" selection-start-column="10" selection-end-line="783" selection-end-column="10" />
+          <caret line="785" column="10" lean-forward="false" selection-start-line="785" selection-start-column="10" selection-end-line="785" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ViewerPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="30" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcedureChooser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureChooser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2286">
+          <caret line="145" column="62" lean-forward="false" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="62" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/store/Offerings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ViewerPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="31" lean-forward="true" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ui/ProcessTimeSeries.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1728">
-          <caret line="712" column="42" lean-forward="false" selection-start-line="712" selection-start-column="42" selection-end-line="712" selection-end-column="42" />
-          <folding>
-            <element signature="e#3249#7991#0" expanded="false" />
-            <element signature="e#8017#34219#0" expanded="false" />
-            <element signature="e#11015#14108#0" expanded="false" />
-            <element signature="e#14138#25968#0" expanded="false" />
-            <element signature="e#25998#34192#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="11970">
+          <caret line="677" column="22" lean-forward="false" selection-start-line="677" selection-start-column="22" selection-end-line="677" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcessTimeSeries.js">
+    <entry file="file://$PROJECT_DIR$/interface/admin/app/view/ProcedureMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="165" column="47" lean-forward="true" selection-start-line="165" selection-start-column="47" selection-end-line="165" selection-end-column="47" />
+        <state relative-caret-position="317">
+          <caret line="220" column="4" lean-forward="false" selection-start-line="220" selection-start-column="4" selection-end-line="220" selection-end-column="4" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <marker date="1447927234000" expanded="true" signature="4077:4095" ph="..." />
+            <marker date="1447927234000" expanded="true" signature="4906:4925" ph="..." />
           </folding>
         </state>
       </provider>

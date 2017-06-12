@@ -139,7 +139,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 "maxHeight": 40,
                                 "maxWidth": 150,
                                 "width": 100,
-                                "text": "Execute "
+                                "text": "Execute ",
+                                "id":"buttonExecute"
                             },
                             {
                                 "xtype": "button",
@@ -151,13 +152,15 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 "maxWidth": 150,
                                 "padding": "none",
                                 "width": 100,
-                                "text": "Save"
+                                "text": "Save",
+                                "id":"buttonSave"
                             },
                             {
                                 "xtype": "checkboxfield",
                                 "flex": 1,
                                 "fieldLabel": "",
-                                "boxLabel": "over write"
+                                "boxLabel": "over write",
+                                "id":"checkboxOverwrite"
                             }]
                         },
                         {
@@ -668,7 +671,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         }]
                     },
                     {
-
                             xtype: 'procedurechart',
                             flex:1,
                             region: 'center',
@@ -677,13 +679,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                 },
                 {
                     xtype: 'panel',
-                    border: 0,
-                    id: 'chartpanel123',
+                    id: 'chartpanelmethod',
                     layout:
                     {
                         type: 'fit'
                     },
-                    bodyCls: 'viewerChart',
                     region: 'center'
                 },
                 {

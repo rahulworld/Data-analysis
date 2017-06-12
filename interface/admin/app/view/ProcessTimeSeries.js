@@ -21,20 +21,31 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         this.pchoose = Ext.getCmp('pchoose');
         this.chartpanel = Ext.getCmp('chartpanel');
+        this.chartpanel1=Ext.getCmp('chartpanelmethod');
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
-
+            console.log('this procedure add and plot in graph HELLO WORLD');
+            // console.log(procedure);
         },this);
         
         this.pchoose.on("procedureRemoved",function(procedure) {
             this.chartpanel.removeProcedure(procedure);
         },this);
         
-        this.chartpanel.on('observedPropertyIsSet',function(chartpanel, observedProperty){
-            console.log(observedProperty);
-            console.log(chartpanel);
-        },this);
+        // this.chartpanel.on('observedPropertyIsSet',function(chartpanel, observedProperty){
+        //     console.log(observedProperty);
+        //     console.log(chartpanel);
+        // },this);
+        
+        // g= new Dygraph(
+        //     document.getElementById('chartpanelmethod-body'),
+        //     "Date,Temperature\n" +
+        //     "2008-05-07,15\n" +
+        //     "2008-05-08,20\n" +
+        //     "2008-05-09,40\n"
+        // );
+
 
         // this.chartpanel.on("clickCallback",function(panel, e, x, pts) {
         //     this.updateGridSelection([x]);
@@ -206,20 +217,32 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
         });
 
+        Ext.getCmp("buttonExecute").on("click",function(btn, e, eOpts){
+
+            var methods=Ext.getCmp("methodsCombox").getValue();
+            console.log(methods);
+            if(methods==2){
+                // console.log('BUTTON EXECUTE CLICKED'); 
+                var frequency=Ext.getCmp("edittextFrequency").getValue();
+                var timeSeriesMethods=Ext.getCmp("comboxSmapling").getValue();
+                var Limit=Ext.getCmp("comboxLimit").getValue();
+                var Quality=Ext.getCmp("comboxHowquality").getValue();
+                console.log(frequency+"  "+timeSeriesMethods+"   "+Limit+" "+Quality);
+            }
+        },this);
+        Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
+
+            console.log('BUTTON SAVE CLICKED');
+        },this);
+        Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){
+
+            console.log('checkboxOverwrite');
+        },this);
+
         /*Ext.getCmp('chartpanel').on("underlayCallback",function(panel, e, x, pts) {
             console.log("underlayCallback:");
             console.dir(arguments);
         });*/
-        // g= new Dygraph(
-        //     // containing div
-        //     Ext.getCmp('chartpanel123'),
-        //     // CSV or path to a CSV file.
-        //     "Date,Temperature\n" +
-        //     "2008-05-07,15\n" +
-        //     "2008-05-08,20\n" +
-        //     "2008-05-09,40\n"
-        // );
-
     }
 
 });

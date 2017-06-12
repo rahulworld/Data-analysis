@@ -444,6 +444,8 @@ Ext.define('istsos.view.Chart', {
         if (ps.data.length==1) {
             Ext.getCmp('oeCbEditableProcedures').setValue(ps.getAt(0));
         }
+        console.log(ps.getAt(0));
+    
         
         this._configurePlotPanel();
         

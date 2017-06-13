@@ -22,6 +22,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         this.pchoose = Ext.getCmp('pchoose');
         this.chartpanel = Ext.getCmp('chartpanel');
         this.chartpanel1=Ext.getCmp('chartpanelmethod');
+        var methodpanel=Ext.getCmp('MethodsSelectionPanel');
+        var methodserch=Ext.getCmp('methodsPanel');
+        // methodserch.disable();
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
@@ -156,7 +159,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
 
 
-        Ext.getCmp("methodsCombox").select(2);
+        Ext.getCmp("methodsCombox").select(0);
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
 
             var value = combo.getValue();
@@ -225,11 +228,35 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 // console.log('BUTTON EXECUTE CLICKED'); 
                 var frequency=Ext.getCmp("edittextFrequency").getValue();
                 var timeSeriesMethods=Ext.getCmp("comboxSmapling").getValue();
+                var fillCombox=Ext.getCmp("comboxFill").getValue();
                 var Limit=Ext.getCmp("comboxLimit").getValue();
                 var Quality=Ext.getCmp("comboxHowquality").getValue();
-                console.log(frequency+"  "+timeSeriesMethods+"   "+Limit+" "+Quality);
+                console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
+                // console.log(this.rederChart.chartdata);
+                // console.log('CHECK WA URL');
+                // console.log(wa.url);
+
             }
+                 Ext.Ajax.request({
+                            url: 'http://localhost/html/istsos/test.py',
+                                method: 'POST',
+                                success: function (response) {
+                                                      // response.responseText);
+                                                      // Ext.Msg.alert("Info","UserName from Server : "+jsonResp);
+                                                      console.log('this success response');
+                                                      var text = response.responseText;
+                                                      console.log(text);
+                                              },
+                                  failure: function (response) {
+                                                    console.log('this success response');
+                                                  // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                                                  // Ext.Msg.alert("Error",jsonResp.error);
+                                                    var text = response.responseText;
+                                                    console.log(text);
+                    }
+                });
         },this);
+        // this.on("queueLoaded",this.rederChart, this);
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
 
             console.log('BUTTON SAVE CLICKED');
@@ -244,5 +271,4 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             console.dir(arguments);
         });*/
     }
-
 });

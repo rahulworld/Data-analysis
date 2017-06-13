@@ -194,6 +194,11 @@ Ext.define('istsos.Sensor', {
                     }
                 }
                 console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+                console.log(Ext.String.format(
+                '{0}/istsos/services/{1}/operations/getobservation/' +
+                'offerings/{2}/procedures/{3}/observedproperties/{4}/' +
+                'eventtime/{5}/{6}', wa.url, this.service,  this.offering,
+                this.sensor, this.getObservedProperties().join(','), from, to));
                 console.log(json.data[0]);
                 console.log(this.sensor);
             }

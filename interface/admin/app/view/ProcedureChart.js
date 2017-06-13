@@ -28,6 +28,7 @@ Ext.define('istsos.view.ProcedureChart', {
             ['AVG'],['SUM'],['COUNT'],['MAX'],['MIN']
         ]);
         this.procedures = {};
+        // this.chartdata = [];
 
         me.callParent(arguments);
 
@@ -202,6 +203,28 @@ Ext.define('istsos.view.ProcedureChart', {
         }
         console.log('PROCEDURE PROPERTY CHART DATA');
         console.log(this.chartdata);
+
+        // var fh = fopen("http://localhost/html/istsos/test.txt", 3); // Open the file for writing
+
+        // if(fh!=-1) // If the file has been successfully opened
+        // {
+        //     var str = this,chartdata;
+        //     console.log('WRITING FILE IN TEXT');
+        //     fwrite(fh, str); // Write the string to a file
+        //     fclose(fh); // Close the file 
+        // }
+
+        // /// write to file
+        // var txtFile = "http://localhost/html/istsos/test.txt";
+        // var file = new File(txtFile);
+        // var str = "My string of text";
+        
+        // file.open("w"); // open file with write access
+        // file.writeln("First line of text");
+        // file.writeln("Second line of text " + str);
+        // file.write(str);
+        // file.close();
+
         var initChart = true;
         if (initChart) {
             Ext.getCmp("btnRangeDay").toggle(false,true);

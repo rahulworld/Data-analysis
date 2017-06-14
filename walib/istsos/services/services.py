@@ -614,6 +614,130 @@ class waGetobservation(waResourceService):
                 "%s %s - Response: %s" % (
                     response.status_code, e, response.content))
 
+class resampling(waResourceService):
+    """class to handle SOS observations, support only the GET method"""
+    def __init__(self, waEnviron):
+        waResourceService.__init__(self, waEnviron)
+
+    def executeGet(self):
+        """
+        Method for executing a Get requests that create a new SOS procedure
+
+        .. note::  This method return a Json object with
+                   ObservationCollection members
+
+        get the parameters:
+        /istsos/services/{demo}/operations/{getobservation}/offerings/
+            {temporary}/procedures/{P_BED&P_TRE}/observations/{rain}/
+           eventtime/{last}
+
+        The response is:
+        >>> {
+                "message" : "abcderfghilmnopqrstuvz",
+                "total": 4,
+                "data" : [
+                    {
+                        "samplingTime": {...},
+                        "featureOfInterest": {...},
+                        "observedProperty": {...},
+                        "result": {...},
+                        "procedure": {...}
+                    },{
+                        "samplingTime": {...},
+                        "featureOfInterest": {...},
+                        "observedProperty": {...},
+                        "result": {...},
+                        "procedure": {...}
+                    },...
+                ],
+                "success": true
+            }
+        """
+        import json
+        json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
+        parsed_json=json.loads(json_data)
+        return parsed_json
+        # try:
+        #     offerings = self.pathinfo[6]
+        #     procedures = self.pathinfo[8].replace("&", ",")
+        #     observations = self.pathinfo[10].replace("&", ",")
+        #     try:
+        #         eventtime = [self.pathinfo[12], self.pathinfo[13]]
+        #     except:
+        #         eventtime = [self.pathinfo[12]]
+        # except:
+        #     raise Exception("ERROR in pathinfo scanning")
+
+        # import lib.requests as requests
+
+        # headers = {}
+        # if 'HTTP_AUTHORIZATION' in self.waEnviron:
+        #     headers['Authorization'] = self.waEnviron['HTTP_AUTHORIZATION']
+
+        # rparams = {
+        #     "request": "GetObservation",
+        #     "service": "SOS",
+        #     "version": "1.0.0",
+        #     "observedProperty": observations,
+        #     "responseFormat": "application/json",
+        #     "offering": offerings
+        # }
+
+        # if self.waEnviron['parameters'] and (
+        #         'qualityIndex' in self.waEnviron['parameters']
+        #         and 'False' in self.waEnviron['parameters']['qualityIndex']):
+        #     rparams["qualityIndex"] = "False"
+
+        # else:
+        #     rparams["qualityIndex"] = "True"
+
+        # if not procedures == "*":
+        #     rparams.update({
+        #         "procedure": procedures
+        #     })
+
+        # if not eventtime[0] == "last":
+        #     rparams.update({
+        #         "eventTime": "/".join(eventtime)
+        #     })
+
+        # if self.waEnviron['parameters'] and (
+        #         'aggregatefunction' in self.waEnviron['parameters']):
+        #     rparams.update({
+        #         "aggregatefunction": (
+        #             self.waEnviron['parameters']["aggregatefunction"]),
+        #         "aggregateinterval": (
+        #             self.waEnviron['parameters']["aggregateinterval"])
+        #     })
+        #     if 'aggregatenodata' in self.waEnviron['parameters']:
+        #         rparams.update({
+        #             "aggregatenodata": (
+        #                 self.waEnviron['parameters']["aggregatenodata"])
+        #         })
+
+        #     if 'aggregatenodataqi' in self.waEnviron['parameters']:
+        #         rparams.update({
+        #             "aggregatenodataqi": (
+        #                 self.waEnviron['parameters']["aggregatenodataqi"])
+        #         })
+
+        # response = requests.get(
+        #     self.serviceconf.serviceurl["url"],
+        #     params=rparams,
+        #     headers=headers
+        # )
+
+        # # build the response
+        # try:
+        #     response.raise_for_status()
+        #     obsjson = response.json()
+        #     self.setData(obsjson["ObservationCollection"]["member"])
+        #     self.setMessage("GetObservation requested successfully executed")
+        # except Exception as e:
+        #     self.setException(
+        #         "GetObservation request failed - Communication: "
+        #         "%s %s - Response: %s" % (
+        #             response.status_code, e, response.content))
 
 def parse_and_get_ns(file):
     events = "start", "start-ns"

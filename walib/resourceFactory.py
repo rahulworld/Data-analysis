@@ -29,7 +29,7 @@ def initResource(waEnviron):
     # ---------------
     pathinfo = copy.deepcopy(waEnviron['pathinfo'])
     resource = pathinfo.pop(0)
-    #print >> sys.stderr, resource
+    print >> sys.stderr, pathinfo
 
     if resource == "istsos":
 
@@ -57,6 +57,9 @@ def initResource(waEnviron):
             elif resource == "validatedb":
                 from walib.istsos import istsos
                 return istsos.waValidatedb(waEnviron)
+            elif resource == "oat":
+                from walib.istsos import istsos
+                return istsos.resamplingData(waEnviron)
             ''' checking if not need any more
             elif resource == "initialization":
                 from walib.istsos import istsos
@@ -274,7 +277,6 @@ def initResource(waEnviron):
                     #print >> sys.stderr, resource
                     resource = pathinfo.pop(0)
                     if resource == "getobservation":
-                        #print >> sys.stderr, resource
                         from walib.istsos.services import services
                         return services.waGetobservation(waEnviron)
                     elif resource == "insertobservation":
@@ -285,6 +287,9 @@ def initResource(waEnviron):
                         print >> sys.stderr, resource
                         from walib.istsos.services import services
                         return services.waFastInsert(waEnviron)
+                    elif resource == "seeobservation":
+                        from walib.istsos.services import services
+                        return services.waGetobservation(waEnviron)
 
                 # ---------------------------------------
                 # Entering istsos.services.logs
@@ -299,6 +304,11 @@ def initResource(waEnviron):
                 elif resource == "status":
                     from walib.istsos.services.status import status
                     return status.waStatus(waEnviron)
+
+    elif resource == "oat":
+        from walib.istsos.services import services
+        print >> sys.stderr, resource
+        return services.resampling(waEnviron)
 
     elif resource == "user":
         from walib import users

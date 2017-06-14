@@ -193,6 +193,28 @@ class waAbout(waIstsos):
         self.setData(data)
         self.setMessage("istSOS \"About\" information successfully retrived")
 
+class resamplingData(waIstsos):
+
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executeGet(self):
+        import json
+        from pandas import read_csv
+        from pandas import datetime
+        # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
+        # parsed_json=json.loads(json_data)
+        # print(parsed_json['103']['class'])
+        # data = {}
+        # data["istsos_version"] = ""
+        # data["latest_istsos_version"] = ""
+        # data["latest_istsos_changelog"] = ""
+        # data["download_url"] = "https://sourceforge.net/projects/istsos"
+        # data["istsos_message"] = "updates not found"
+        # data["istsos_update"] = False
+        self.setData(parsed_json)
+        self.setMessage("istSOS \"About\" information successfully retrived")
+
 
 class waValidatedb(waIstsos):
     def __init__(self, waEnviron):

@@ -30,7 +30,7 @@ import application_wnslib
 def application(environ, start_response):
 
     path = environ['PATH_INFO'].strip()[1:].split("/")    
-    
+    print >> sys.stderr, path
     if path[0] == 'wa':
         return application_walib.executeWa(environ, start_response)
         

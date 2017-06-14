@@ -237,24 +237,27 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 // console.log(wa.url);
 
             }
-                 Ext.Ajax.request({
-                            url: 'http://localhost/html/istsos/test.py',
-                                method: 'POST',
-                                success: function (response) {
-                                                      // response.responseText);
-                                                      // Ext.Msg.alert("Info","UserName from Server : "+jsonResp);
-                                                      console.log('this success response');
-                                                      var text = response.responseText;
-                                                      console.log(text);
-                                              },
-                                  failure: function (response) {
-                                                    console.log('this success response');
-                                                  // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                                                  // Ext.Msg.alert("Error",jsonResp.error);
-                                                    var text = response.responseText;
-                                                    console.log(text);
+            // this.resampling1();
+            // istsos.sensor.resampling1();
+                Ext.Ajax.request({
+                url: Ext.String.format('{0}/istsos/operations/oat', wa.url),
+                scope: this,
+                method: "GET",
+                success: function(response){
+                    var json = Ext.decode(response.responseText);
+                    console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+                    console.log('this success response');
+                    var text1 = response.responseText;
+                    console.log(text1);
+                },
+                failure: function (response) {
+                    console.log('this failure response');
+                  // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                  // Ext.Msg.alert("Error",jsonResp.error);
+                    var text2 = response.responseText;
+                    console.log(text2);
                     }
-                });
+            });
         },this);
         // this.on("queueLoaded",this.rederChart, this);
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){

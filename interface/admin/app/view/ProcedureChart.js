@@ -193,6 +193,17 @@ Ext.define('istsos.view.ProcedureChart', {
         console.log('SORTING ARRAY BY DATES CHART STORE');
         console.log(sorted);
         console.log(this.chartStore);
+        // Ext.Msg.show(
+        // {
+        //     title: 'Enter values:',
+        //     width: 8000,
+        //     height:2000,
+        //     buttons: Ext.Msg.OKCANCEL,
+        //     msg: this.chartStore,
+        // });
+
+
+
         this.chartdata = [];
         for (var i = 0; i < sorted.length; i++) {
             var rec = [];
@@ -203,6 +214,10 @@ Ext.define('istsos.view.ProcedureChart', {
         }
         console.log('PROCEDURE PROPERTY CHART DATA');
         console.log(this.chartdata);
+        var elemt = Ext.JSON.encode(this.chartdata);
+        console.log(elemt);
+        var elemt1 = Ext.JSON.encode(this.chartStore);
+        console.log(elemt1);
 
         // var fh = fopen("http://localhost/html/istsos/test.txt", 3); // Open the file for writing
 

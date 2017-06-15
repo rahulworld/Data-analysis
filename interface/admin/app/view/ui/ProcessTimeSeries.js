@@ -13,9 +13,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
     extend: 'Ext.panel.Panel',
     requires: [
         'istsos.view.ProcedureChart',
-        'istsos.view.ProcedureGrid',
-        'istsos.view.ProcedureMap',
-        'istsos.view.ProcedureChooser'
+        'istsos.view.ProcedureChooser',
+        'istsos.view.TimeSeriesChart'
     ],
     border: 0,
     layout:
@@ -671,30 +670,24 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         }]
                     },
                     {
+                            xtype: 'timeserieschart',
+                            id: 'serieschartpanel',
+                            flex:1,
+                            width:600,
+                            height:400,
+                            region:'center'
+                    }]
+                },
+                {
                             xtype: 'procedurechart',
                             flex:1,
                             region: 'center',
                             id: 'chartpanel'
-                    }]
-                },
-                {
-                    xtype: 'panel',
-                    id: 'chartpanelmethod',
-                    layout:
-                    {
-                        type: 'fit'
-                    },
-                    region: 'center'
                 },
                 {
                     xtype: 'textarea',
                     fieldLabel: 'History',
                     region: 'south'
-                },
-                {
-                    // xtype: 'textarea',
-                    // fieldLabel: 'History',
-                    // region: 'center'
                 }]
             },
             {

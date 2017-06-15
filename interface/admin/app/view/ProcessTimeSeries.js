@@ -21,7 +21,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         this.pchoose = Ext.getCmp('pchoose');
         this.chartpanel = Ext.getCmp('chartpanel');
-        this.chartpanel1=Ext.getCmp('chartpanelmethod');
+        this.serieschartpanel = Ext.getCmp('serieschartpanel');
+
+        // this.chartpanel1=Ext.getCmp('chartpanelmethod');
+        // timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
+        
+        
         var methodpanel=Ext.getCmp('MethodsSelectionPanel');
         var methodserch=Ext.getCmp('methodsPanel');
         // methodserch.disable();
@@ -123,15 +128,80 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // var dygraphs = {};
         // dygraphs['chartpanel'] = new Dygraph(
         // Ext.getCmp('chartpanel123');
+        
+
+
         // g= new Dygraph(
-        //     // containing div
-        //     Ext.getCmp('chartpanel123'),
-        //     // CSV or path to a CSV file.
+        //     timeSeriesGraph,
         //     "Date,Temperature\n" +
         //     "2008-05-07,15\n" +
         //     "2008-05-08,20\n" +
         //     "2008-05-09,40\n"
         // );
+
+
+        // this.on("resize",function(panel, adjWidth, adjHeight, eOpts){
+        //     if(this.chart){
+        //         this.chart.resize();
+        //     }
+        // });
+        // var initChart = true;
+        // if (initChart) {
+        //     // Ext.getCmp("btnRangeDay").toggle(false,true);
+        //     // Ext.getCmp("btnRangeWeek").toggle(false,true);
+        //     // Ext.getCmp("btnRangeAll").toggle(true,true);
+        //     this.chart = new Dygraph(
+        //         this.timeSeriesGraph,
+        //                     "Date,Temperature\n" +
+        //                     "2008-05-07,15\n" +
+        //                     "2008-05-08,20\n" +
+        //                     "2008-05-09,40\n",
+        //         {
+        //             labels: this.labels,
+        //             colors: this.colors,
+        //             strokeWidth: 2,
+        //             digitsAfterDecimal: 6,
+        //             connectSeparatedPoints: true,
+        //             //visibility: visibility,
+        //             legend: 'always',
+        //             showRangeSelector: true,
+        //             showRoller: true,
+        //             rangeSelectorHeight: 30,
+        //             rangeSelectorPlotStrokeColor: 'black',
+        //             rangeSelectorPlotFillColor: 'green',
+        //             labelsDivStyles: {
+        //                 'padding': '4px',
+        //                 'border': '1px solid black',
+        //                 'borderRadius': '3px',
+        //                 'boxShadow': '4px 4px 4px #888',
+        //                 'right': '10px'
+        //             },
+        //             // labelsDivWidth: "100%",
+        //             axisLineColor: 'green',
+        //             axisLabelFontSize: 12,
+        //             axisLabelWidth: 150,
+        //             xAxisLabelWidth: 150,
+        //             highlightCircleSize: 4
+        //         }
+        //         );
+        // }else if (!Ext.isEmpty(this.chart)) {
+        //     this.chart.updateOptions({
+        //         file:"Date,Temperature\n" +
+        //             "2008-05-07,15\n" +
+        //             "2008-05-08,20\n" +
+        //             "2008-05-09,40\n",
+        //         visibility: visibility,
+        //         labels: this.labels
+        //     });
+        // }
+
+
+
+
+        // Ext.get('timeSeriesGraph').removeCls("viewerChart");
+        // Ext.get('timeSeriesGraph').unmask();
+
+
 
         /*Ext.getCmp('gridpanel').on("select",function(panel, grid, record, index, eOpts) {
             console.log("select:");

@@ -109,7 +109,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         'abbr': 6,
-                                        'name': 'integrate'
+                                        'name': 'regularization'
                                     },
                                     {
                                         'abbr': 7,

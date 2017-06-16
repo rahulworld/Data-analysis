@@ -26,7 +26,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // this.chartpanel1=Ext.getCmp('chartpanelmethod');
         // timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
         
-        
+
         var methodpanel=Ext.getCmp('MethodsSelectionPanel');
         var methodserch=Ext.getCmp('methodsPanel');
         // methodserch.disable();
@@ -294,42 +294,122 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             var methods=Ext.getCmp("methodsCombox").getValue();
             console.log(methods);
-            if(methods==2){
+            if (methods == 2)
+            {
                 // console.log('BUTTON EXECUTE CLICKED'); 
-                var frequency=Ext.getCmp("edittextFrequency").getValue();
-                var timeSeriesMethods=Ext.getCmp("comboxSmapling").getValue();
-                var fillCombox=Ext.getCmp("comboxFill").getValue();
-                var Limit=Ext.getCmp("comboxLimit").getValue();
-                var Quality=Ext.getCmp("comboxHowquality").getValue();
+                var frequency = Ext.getCmp("edittextFrequency").getValue();
+                var timeSeriesMethods = Ext.getCmp("comboxSmapling").getValue();
+                var fillCombox = Ext.getCmp("comboxFill").getValue();
+                var Limit = Ext.getCmp("comboxLimit").getValue();
+                var Quality = Ext.getCmp("comboxHowquality").getValue();
+                console.log(frequency + "  " + timeSeriesMethods + "   " + fillCombox + "    " + Limit + " " + Quality);
+                // console.log(this.rederChart.chartdata);
+                // console.log('CHECK WA URL');
+                // console.log(wa.url);
+                // 
+                // if (Ext.isEmpty(this.mask))
+                // {
+                //     this.mask = new Ext.LoadMask(this.body,
+                //     {
+                //         msg: "Please wait..."
+                //     });
+                // }
+                // this.mask.show();
+                Ext.Ajax.request(
+                {
+                    url: Ext.String.format('{0}/istsos/operations/oat/resample', wa.url),
+                    scope: this,
+                    method: 'POST',
+                    jsonData:
+                    {
+                        "frequency" : frequency,
+                        "timeSeriesMethods":timeSeriesMethods,
+                        "fill":fillCombox,
+                        "limit":Limit,
+                        "Quality":Quality,
+                        "seriesdata" : "data"
+                    },
+                    success: function(response)
+                    {
+                        this.mask.hide();
+                        var json = Ext.decode(response.responseText);
+                        if (json['success'])
+                        {
+                            Ext.MessageBox.show(
+                            {
+                                title: 'Test success',
+                                msg: "Database: " + json['data']['database'] + "<br/><br/>" + "<small>" + json['message'] + "</small>",
+                                buttons: Ext.MessageBox.OK,
+                                icon: Ext.Msg.INFO,
+                                animateTarget: 'btnTestConnection'
+                            });
+                        }
+                        else
+                        {
+                            Ext.MessageBox.show(
+                            {
+                                title: 'Test failure',
+                                msg: json['message'],
+                                buttons: Ext.MessageBox.OK,
+                                icon: Ext.Msg.WARNING,
+                                animateTarget: 'btnTestConnection'
+                            });
+                        }
+                    }
+                });
+            }
+            if(methods==6){
+                // console.log('BUTTON EXECUTE CLICKED'); 
+                var frequency= Ext.getCmp("edittextFrequency").getValue();
+                var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
+                var fillCombox= Ext.getCmp("comboxFill").getValue();
+                var Limit= Ext.getCmp("comboxLimit").getValue();
+                var Quality= Ext.getCmp("comboxHowquality").getValue();
                 console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
                 // console.log(this.rederChart.chartdata);
                 // console.log('CHECK WA URL');
                 // console.log(wa.url);
-
-            }
-            // this.resampling1();
-            // istsos.sensor.resampling1();
-                Ext.Ajax.request({
-                url: Ext.String.format('{0}/istsos/operations/oat', wa.url),
-                scope: this,
-                method: "GET",
-                success: function(response){
-                    var json = Ext.decode(response.responseText);
-                    console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-                    console.log('this success response');
-                    var text1 = response.responseText;
-                    console.log(text1);
-                },
-                failure: function (response) {
-                    console.log('this failure response');
-                  // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                  // Ext.Msg.alert("Error",jsonResp.error);
-                    var text2 = response.responseText;
-                    console.log(text2);
-                    }
-            });
+                    Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/regularization', wa.url),
+                    scope: this,
+                    method: "GET",
+                    success: function(response){
+                        var json = Ext.decode(response.responseText);
+                        console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+                        console.log('this success response');
+                        var text1 = response.responseText;
+                        console.log(text1);
+                    },
+                    failure: function (response) {
+                        console.log('this failure response');
+                      // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                      // Ext.Msg.alert("Error",jsonResp.error);
+                        var text2 = response.responseText;
+                        console.log(text2);
+                        }
+                    });
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat', wa.url),
+                //     scope: this,
+                //     method: "GET",
+                //     success: function(response){
+                //         var json = Ext.decode(response.responseText);
+                //         console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+                //         console.log('this success response');
+                //         var text1 = response.responseText;
+                //         console.log(text1);
+                //     },
+                //     failure: function (response) {
+                //         console.log('this failure response');
+                //       // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //       // Ext.Msg.alert("Error",jsonResp.error);
+                //         var text2 = response.responseText;
+                //         console.log(text2);
+                //         }
+                //     });
+                }
         },this);
-        // this.on("queueLoaded",this.rederChart, this);
+
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
 
             console.log('BUTTON SAVE CLICKED');

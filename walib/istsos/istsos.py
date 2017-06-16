@@ -25,6 +25,7 @@ import sys
 import os
 import xml.etree.ElementTree as ET
 import urllib2
+from walib.oat.oatlib import method
 
 
 class waIstsos(resource.waResourceAdmin):
@@ -194,6 +195,77 @@ class waAbout(waIstsos):
         self.setMessage("istSOS \"About\" information successfully retrived")
 
 class resamplingData(waIstsos):
+
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        res = {}
+        try:
+            from pandas import read_csv
+            from pandas import datetime
+            from datetime import datetime
+            import pandas as pd
+            import json
+
+            # freq = self.gui.resampleFreq.text()
+            # how = self.gui.resampleHow.currentText()
+            # fill = self.gui.resampleFill.currentText()
+
+            if fill == '':
+                fill = None
+
+            limit = self.gui.resampleLimit.value()
+            if limit == -1:
+                limit = None
+
+            # quality = self.gui.resampleQual.currentText()
+
+            # self.history['params']['frequency'] = freq
+            # self.history['params']['how'] = how
+            # self.history['params']['fill'] = fill
+            # self.history['params']['limit'] = limit
+            # self.history['params']['how_quality'] = quality
+
+            # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
+            #                                                    how_quality=quality), detailedresult=True)
+            res = method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
+
+            data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'battle_deaths': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
+            df = pd.DataFrame(data, columns = ['date', 'battle_deaths'])
+            df['date'] = pd.to_datetime(df['date'])
+            df.index = df['date']
+            del df['date']
+            resdata=df.resample('D', how='sum').to_json()
+            # def validatedb(user, password, dbname, host, port=5432, service=None):
+            test_conn = validatedb(
+                self.json["user"],
+                self.json["password"],
+                self.json["dbname"],
+                self.json["host"],
+                self.json["port"])
+            res["database"] = "active"
+
+        except:
+            res["database"] = "inactive"
+    
+    def resammpling(Frequency,samplingMethod,Limit,fill,Quality,seriesData):
+
+        # parsed_json=json.loads(resdata)
+        # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
+        # parsed_json=json.loads(json_data)
+        # print(parsed_json['103']['class'])
+        # data = {}
+        # data["istsos_version"] = ""
+        # data["latest_istsos_version"] = ""
+        # data["latest_istsos_changelog"] = ""
+        # data["download_url"] = "https://sourceforge.net/projects/istsos"
+        # data["istsos_message"] = "updates not found"
+        # data["istsos_update"] = False
+        self.setData(resdata)
+        self.setMessage("this is resampling data")
+
+class regularization(waIstsos):
 
     def __init__(self, waEnviron):
         waIstsos.__init__(self, waEnviron)

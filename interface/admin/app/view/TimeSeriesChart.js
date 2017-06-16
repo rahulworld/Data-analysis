@@ -25,16 +25,16 @@ Ext.define('istsos.view.TimeSeriesChart', {
         this.procedures = {};
         chart=Ext.getCmp('chartCnt12');
         var myDiv = document.getElementsByClassName('chartCnt12');
-        var g=new Dygraph(
-            myDiv,
-            "Date,Temperature\n" +
-            "2008-05-07,15\n" +
-            "2008-05-08,20\n" +
-            "2008-05-09,40\n",
-            {
+        // var g=new Dygraph(
+        //     myDiv,
+        //     "Date,Temperature\n" +
+        //     "2008-05-07,15\n" +
+        //     "2008-05-08,20\n" +
+        //     "2008-05-09,40\n",
+        //     {
                 
-            }
-        );
+        //     }
+        // );
         me.callParent(arguments);
         // this.addEvents('queueLoaded','observedPropertyIsSet','clickCallback','pointClickCallback', 'seriesSelected', 'underlayCallback');
     }

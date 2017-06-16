@@ -57,9 +57,21 @@ def initResource(waEnviron):
             elif resource == "validatedb":
                 from walib.istsos import istsos
                 return istsos.waValidatedb(waEnviron)
+
+            # ---------------------------------------
+            # Entering istsos.operation.oat
+            # ---------------------------------------
             elif resource == "oat":
-                from walib.istsos import istsos
-                return istsos.resamplingData(waEnviron)
+                resource = pathinfo.pop(0)
+
+                if resource == "resample":
+                    from walib.istsos import istsos
+                    return istsos.resamplingData(waEnviron)
+                elif resource == "regularization":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                    
+
             ''' checking if not need any more
             elif resource == "initialization":
                 from walib.istsos import istsos

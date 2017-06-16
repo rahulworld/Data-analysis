@@ -194,7 +194,7 @@ Ext.define('istsos.Sensor', {
                     }
                 }
                 console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-                console.log(json.data[0]);
+                console.log(json.data[1]);
                 console.log(this.sensor);
             }
         });

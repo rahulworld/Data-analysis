@@ -13,9 +13,10 @@
 Ext.define('istsos.view.ProcessTimeSeries', {
     extend: 'istsos.view.ui.ProcessTimeSeries',
     alias: 'widget.viewerpanel1',
-
+    mixins: {
+        dataAccess: 'istsos.view.ProcedureChart'
+    },
     initComponent: function() {
-        console.log('This is Time Series Page');
         var me = this;
         me.callParent(arguments);
 
@@ -27,14 +28,15 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
         
 
-        var methodpanel=Ext.getCmp('MethodsSelectionPanel');
+        var methodpanel=Ext.getCmp('methodstabs');
         var methodserch=Ext.getCmp('methodsPanel');
-        // methodserch.disable();
+        methodserch.disable();
+        methodpanel.disable();
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
-            console.log('this procedure add and plot in graph HELLO WORLD');
-            // console.log(procedure);
+            methodserch.enable();
+            methodpanel.enable();
         },this);
         
         this.pchoose.on("procedureRemoved",function(procedure) {
@@ -294,67 +296,51 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             var methods=Ext.getCmp("methodsCombox").getValue();
             console.log(methods);
+            console.log('METHOD IS NOT RUNNING');
             if (methods == 2)
             {
-                // console.log('BUTTON EXECUTE CLICKED'); 
-                var frequency = Ext.getCmp("edittextFrequency").getValue();
-                var timeSeriesMethods = Ext.getCmp("comboxSmapling").getValue();
-                var fillCombox = Ext.getCmp("comboxFill").getValue();
-                var Limit = Ext.getCmp("comboxLimit").getValue();
-                var Quality = Ext.getCmp("comboxHowquality").getValue();
-                console.log(frequency + "  " + timeSeriesMethods + "   " + fillCombox + "    " + Limit + " " + Quality);
-                // console.log(this.rederChart.chartdata);
-                // console.log('CHECK WA URL');
-                // console.log(wa.url);
-                // 
-                // if (Ext.isEmpty(this.mask))
-                // {
-                //     this.mask = new Ext.LoadMask(this.body,
-                //     {
-                //         msg: "Please wait..."
-                //     });
-                // }
-                // this.mask.show();
-                Ext.Ajax.request(
-                {
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+                // console.log(resdata1);
+                // console.log(resdata2);
+                var frequency= Ext.getCmp("edittextFrequency").getValue();
+                var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
+                var fillCombox= Ext.getCmp("comboxFill").getValue();
+                var Limit= Ext.getCmp("comboxLimit").getValue();
+                var Quality= Ext.getCmp("comboxHowquality").getValue();
+                var textHistory=Ext.getCmp('textAreaHistory');
+                // istsos.view.ProcessTimeSeries.dataAccess();
+
+                console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
+                textHistory.setValue("frequency: "+frequency+"  How: "+timeSeriesMethods+"  fill: "+fillCombox+"  Limit: "+Limit+"  Quality: "+Quality);
+                Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/resample', wa.url),
                     scope: this,
-                    method: 'POST',
-                    jsonData:
-                    {
-                        "frequency" : frequency,
-                        "timeSeriesMethods":timeSeriesMethods,
+                    method:"POST",
+                    jsonData:{
+                        "freq":frequency,
+                        "sampling":timeSeriesMethods,
                         "fill":fillCombox,
                         "limit":Limit,
                         "Quality":Quality,
-                        "seriesdata" : "data"
+                        "index1": resdata1,
+                        "values1": resdata2
+                        // "seriesdata":data
                     },
-                    success: function(response)
-                    {
-                        this.mask.hide();
-                        var json = Ext.decode(response.responseText);
-                        if (json['success'])
-                        {
-                            Ext.MessageBox.show(
-                            {
-                                title: 'Test success',
-                                msg: "Database: " + json['data']['database'] + "<br/><br/>" + "<small>" + json['message'] + "</small>",
-                                buttons: Ext.MessageBox.OK,
-                                icon: Ext.Msg.INFO,
-                                animateTarget: 'btnTestConnection'
-                            });
+                    success: function(response){
+                        var json1 = Ext.decode(response.responseText);
+                        for (var i = 0; i < json.data.length; i++) {
+                                console.log(json.data['value']);
                         }
-                        else
-                        {
-                            Ext.MessageBox.show(
-                            {
-                                title: 'Test failure',
-                                msg: json['message'],
-                                buttons: Ext.MessageBox.OK,
-                                icon: Ext.Msg.WARNING,
-                                animateTarget: 'btnTestConnection'
-                            });
-                        }
+                        console.log(json1);
+                    },
+                    failure: function (response) {
+                        console.log('this failure response');
+                      // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                      // Ext.Msg.alert("Error",jsonResp.error);
+                        var text2 = response.responseText;
+                        console.log(text2);
                     }
                 });
             }
@@ -365,20 +351,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var fillCombox= Ext.getCmp("comboxFill").getValue();
                 var Limit= Ext.getCmp("comboxLimit").getValue();
                 var Quality= Ext.getCmp("comboxHowquality").getValue();
-                console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
-                // console.log(this.rederChart.chartdata);
-                // console.log('CHECK WA URL');
-                // console.log(wa.url);
                     Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/regularization', wa.url),
                     scope: this,
                     method: "GET",
                     success: function(response){
-                        var json = Ext.decode(response.responseText);
+                        var json1 = Ext.decode(response.responseText);
                         console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
                         console.log('this success response');
                         var text1 = response.responseText;
-                        console.log(text1);
+                        console.log(json1);
                     },
                     failure: function (response) {
                         console.log('this failure response');
@@ -388,25 +370,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         console.log(text2);
                         }
                     });
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat', wa.url),
-                //     scope: this,
-                //     method: "GET",
-                //     success: function(response){
-                //         var json = Ext.decode(response.responseText);
-                //         console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-                //         console.log('this success response');
-                //         var text1 = response.responseText;
-                //         console.log(text1);
-                //     },
-                //     failure: function (response) {
-                //         console.log('this failure response');
-                //       // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //       // Ext.Msg.alert("Error",jsonResp.error);
-                //         var text2 = response.responseText;
-                //         console.log(text2);
-                //         }
-                //     });
                 }
         },this);
 

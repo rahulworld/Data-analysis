@@ -52,7 +52,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                     items: [
                     {
                         xtype: 'panel',
-                        flex: 1,
+                        flex: 0.6,
                         region: 'east',
                         id: 'MethodsSelectionPanel',
                         items: [
@@ -63,6 +63,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                             "height": 50,
                             "maxHeight": 100,
                             "maxWidth": 2000,
+                            "flex":1,
                             "minWidth": 0,
                             "layout": "hbox",
                             "bodyBorder": true,
@@ -71,7 +72,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                             {
                                 "xtype": "combobox",
                                 "id":"methodsCombox",
-                                "flex": 1,
+                                "flex": 0,
                                 "labelWidth": 50,
                                 "fieldLabel": "Methods",
                                 "valueField": "abbr",
@@ -151,12 +152,14 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 "maxWidth": 150,
                                 "padding": "none",
                                 "width": 100,
+                                "hidden":true,
                                 "text": "Save",
                                 "id":"buttonSave"
                             },
                             {
                                 "xtype": "checkboxfield",
                                 "flex": 1,
+                                "hidden":true,
                                 "fieldLabel": "",
                                 "boxLabel": "over write",
                                 "id":"checkboxOverwrite"
@@ -164,12 +167,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         },
                         {
                             xtype: 'fieldcontainer',
+                            id:'methodstabs',
                             layout:
                             {
                                 type: 'fit'
                             },
-                            flex: 1,
-                            width: 700,
+                            flex: 0.5,
+                            width: 500,
                             maxWidth: 1000,
                             minWidth: 400,
                             items: [
@@ -177,14 +181,15 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'digitalPanel',
                                 type: 'vbox',
-                                height: 160,
-                                width: 700,
+                                border:false,
+                                flex:1,
                                 items: [
                                 {
                                     xtype: 'panel',
                                     margin: 5,
                                     flex: 1,
                                     height: 50,
+                                    border:false,
                                     layout:
                                     {
                                         type: 'hbox',
@@ -193,11 +198,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'spinnerfield',
+                                        flex: 1,
                                         fieldLabel: 'low cutoff freq.',
                                         margin: '5 0 0 5'
                                     },
                                     {
                                         xtype: 'spinnerfield',
+                                        flex: 1,
                                         margin: '5 0 0 5',
                                         fieldLabel: 'high cutoff freq.'
                                     }]
@@ -207,6 +214,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     margin: 5,
                                     flex: 1,
                                     height: 50,
+                                    border:false,
                                     layout:
                                     {
                                         type: 'hbox',
@@ -230,10 +238,10 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                             {
                                 xtype: 'panel',
                                 id:'exeedancePanel',
+                                flex:1,
                                 height: 100,
-                                border: true,
+                                border: false,
                                 hidden: true,
-                                width: 696,
                                 layout:
                                 {
                                     type: 'vbox',
@@ -244,6 +252,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     height: 40,
                                     margin: '5 0 0 5',
+                                    flex:1,
                                     layout:
                                     {
                                         type: 'hbox',
@@ -254,6 +263,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'textfield',
                                         margin: '0 10 0 0',
                                         width: '',
+                                        flex:1,
                                         height: 30,
                                         fieldLabel: 'exceedance values',
                                         labelWidth: 120
@@ -261,6 +271,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'textfield',
                                         height: 30,
+                                        flex:1,
                                         fieldLabel: 'exceedance probability',
                                         labelWidth: 140
                                     }]
@@ -269,6 +280,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     margin: 5,
                                     height: 50,
+                                    flex:1,
                                     layout:
                                     {
                                         type: 'hbox',
@@ -280,6 +292,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'combobox',
                                         margin: '0 15 0 0',
                                         height: 50,
+                                        flex:1,
                                         fieldLabel: 'exceedance time unit',
                                         labelWidth: 130
                                     },
@@ -296,14 +309,16 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 "xtype": "panel",
                                 "id":"resamplePanel",
                                 "height": 109,
-                                "width": "none",
-                                "bodyBorder": true,
+                                "flex":1,
+                                "bodyBorder": false,
+                                "border":false,
                                 "hidden":true,
                                 "items": [
                                 {
                                     "xtype": "panel",
                                     "border": false,
                                     "padding": 5,
+                                    "flex":1,
                                     "layout":
                                     {
                                         "type": "hbox",
@@ -313,6 +328,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         "xtype": "textfield",
                                         "id": "edittextFrequency",
+                                        "flex":1,
                                         "margin": "0 0 10 10",
                                         "width": "",
                                         "fieldLabel": "Frequency",
@@ -322,10 +338,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "xtype": "combobox",
                                         "margins": "",
                                         "id": "comboxSmapling",
+                                        "flex":1,
                                         "margin": "0 0 10 10",
                                         "fieldLabel": "Sampling Method",
-                                        "labelWidth": 120,
+                                        "labelWidth": 100,
                                         "value": "mean",
+                                        "flex": 1,
                                         store: Ext.create('Ext.data.Store',
                                         {
                                             fields: ['abbr', 'name'],
@@ -378,6 +396,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     "xtype": "panel",
                                     "border": false,
+                                    "flex":1,
                                     "margin": 10,
                                     "layout":
                                     {
@@ -390,6 +409,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "id": "comboxFill",
                                         "margin": "0 5 5 0",
                                         "fieldLabel": "Fill",
+                                        "flex":1,
                                         "labelWidth": 30,
                                         "value": "bfill",
                                         store: Ext.create('Ext.data.Store',
@@ -424,6 +444,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'spinnerfield',
                                         margin: '0 5 5 0',
                                         fieldLabel: 'Limit',
+                                        "flex":1,
                                         labelWidth: 50,
                                         "id": "comboxLimit",
                                         "value": -1,
@@ -445,7 +466,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             if (!me.readOnly)
                                             {
                                                 var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                me.setValue((val + me.step) + ' ');
+                                                if(val>-1){
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
                                             }
                                         }
                                     },
@@ -454,6 +477,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "id": "comboxHowquality",
                                         "margin": "0 5 5 0",
                                         "fieldLabel": "How Quality",
+                                        "flex":1,
                                         "labelWidth": 80,
                                         "value": "mean",
                                         store: Ext.create('Ext.data.Store',
@@ -670,24 +694,27 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                         }]
                     },
                     {
+                            xtype: 'procedurechart',
+                            flex:1,
+                            region: 'center',
+                            id: 'chartpanel'
+                    }]
+                },
+                {
                             xtype: 'timeserieschart',
                             id: 'serieschartpanel',
                             flex:1,
                             width:600,
                             height:400,
                             region:'center'
-                    }]
                 },
                 {
-                            xtype: 'procedurechart',
-                            flex:1,
-                            region: 'center',
-                            id: 'chartpanel'
-                },
-                {
-                    xtype: 'textarea',
+                    xtype: 'textareafield',
                     fieldLabel: 'History',
-                    region: 'south'
+                    labelWidth: 50,
+                    id:'textAreaHistory',
+                    region:'south',
+                    margin:'0 5 5 10'
                 }]
             },
             {

@@ -98,7 +98,7 @@ Ext.define('istsos.view.ui.ProcedureChart', {
     }
     return true;
 },
-                                            flex: 0.08
+                                            flex: 0.2
                                         },
                                         {
                                             xtype: 'label',

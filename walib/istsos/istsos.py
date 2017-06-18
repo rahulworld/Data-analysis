@@ -20,6 +20,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #
 # =============================================================================
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
+
 from walib import resource, utils, databaseManager, configManager
 import sys
 import os
@@ -27,12 +30,19 @@ import xml.etree.ElementTree as ET
 import urllib2
 from walib.oat.oatlib import method
 
+import pandas as pd
+import numpy as np
+
+try:
+    from oatlib import oat_algorithms as oa
+except:
+    import oat_algorithms as oa
+
 
 class waIstsos(resource.waResourceAdmin):
     def __init__(self, waEnviron):
         resource.waResourceAdmin.__init__(self, waEnviron)
         pass
-
 
 class waStatus(waIstsos):
     """
@@ -194,76 +204,95 @@ class waAbout(waIstsos):
         self.setData(data)
         self.setMessage("istSOS \"About\" information successfully retrived")
 
-class resamplingData(waIstsos):
+class Resample1():
+    """ Resample time serie frequency"""
+    def __init__(self, freq='1H', how=None, fill=None, limit=None, how_quality=None):
+        """ Initialize
 
+        Args:
+            freq (str): Offset Aliases sting (A=year,M=month,W=week,D=day,H=hour,T=minute,S=second; e.g.: 1H10T)
+            how (str): sampling method ('mean','max','min',first','last','median','sum'), default is 'mean'
+            fill (str): if not null it defines the method for filling no-data ('bfill'= backward fill or ‘ffill’=forward fill), default=None
+            limit (int): if not null defines the maximum numbers of allowed consecutive no-data valuas to be filled
+            how_quality (str): sampling method ('mean','max','min',first','last','median','sum') for observation quality index (default is like 'how')
+        """
+        self.freq = freq
+        self.how = how
+        self.fill = fill
+        self.limit = limit
+        self.how_quality = False
+
+    def execute1(self, dataframe):
+        """  Resample the data """
+        
+        # temp_oat = set()
+        df = dataframe
+        if self.how_quality:
+            temp_oat = df.resample(rule=self.freq,how={'data': self.how, 'quality': self.how_quality},fill_method=self.fill, limit=self.limit)
+        else:
+            temp_oat = df.resample(rule=self.freq,how=self.how,fill_method=self.fill, limit=self.limit)
+
+        return temp_oat
+
+
+class resamplingData(waIstsos):
     def __init__(self, waEnviron):
         waIstsos.__init__(self, waEnviron)
 
     def executePost(self):
         res = {}
-        try:
-            from pandas import read_csv
-            from pandas import datetime
-            from datetime import datetime
-            import pandas as pd
-            import json
+        from pandas import read_csv
+        from pandas import datetime
+        from datetime import datetime
+        import pandas as pd
+        # import json
+        freq=self.json['freq']
+        how=self.json['sampling']
+        fill=self.json['fill']
+        limit=self.json['limit']
+        quality=self.json['Quality']
+        index1=self.json['index1']
+        values1=self.json['values1']
+        if freq=="":
+            fill='1H'
+        # self.oat.ts=self.json['data']['']
+        if fill == '':
+            fill = None
 
-            # freq = self.gui.resampleFreq.text()
-            # how = self.gui.resampleHow.currentText()
-            # fill = self.gui.resampleFill.currentText()
+        if limit == -1:
+            limit = None
 
-            if fill == '':
-                fill = None
+        # quality = self.gui.resampleQual.currentText()
 
-            limit = self.gui.resampleLimit.value()
-            if limit == -1:
-                limit = None
+        # self.history['params']['frequency'] = freq
+        # self.history['params']['how'] = how
+        # self.history['params']['fill'] = fill
+        # self.history['params']['limit'] = limit
+        # self.history['params']['how_quality'] = quality
 
-            # quality = self.gui.resampleQual.currentText()
+        # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
+        #                                                    how_quality=quality), detailedresult=True)
+        # rea=method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
+        # res['resulth']=rea.execute(self,df,detailedresult=True)
+        # res=process(method.Resample(freq=freq, how=how, fill=fill,
+        #     limit=limit, how_quality=quality), detailedresult=True)
+        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'value': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
+        data1 = {'date': index1, 'value':values1}
+        df = pd.DataFrame(data1,columns = ['date','value'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        # df.data=df['value']
+        del df['date']
 
-            # self.history['params']['frequency'] = freq
-            # self.history['params']['how'] = how
-            # self.history['params']['fill'] = fill
-            # self.history['params']['limit'] = limit
-            # self.history['params']['how_quality'] = quality
+        resample=Resample1(freq=freq, how=how, fill=fill, limit=int(limit), how_quality=quality)
+        res['resampled']=resample.execute1(df).to_json()
+        # resdata=df.resample('D', how='sum').to_json()
+        # res["resampled"]=resdata
 
-            # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
-            #                                                    how_quality=quality), detailedresult=True)
-            res = method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
+        self.setData(res['resampled'])
+        self.setMessage("resampling is successfully working")
 
-            data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'battle_deaths': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-            df = pd.DataFrame(data, columns = ['date', 'battle_deaths'])
-            df['date'] = pd.to_datetime(df['date'])
-            df.index = df['date']
-            del df['date']
-            resdata=df.resample('D', how='sum').to_json()
-            # def validatedb(user, password, dbname, host, port=5432, service=None):
-            test_conn = validatedb(
-                self.json["user"],
-                self.json["password"],
-                self.json["dbname"],
-                self.json["host"],
-                self.json["port"])
-            res["database"] = "active"
 
-        except:
-            res["database"] = "inactive"
-    
-    def resammpling(Frequency,samplingMethod,Limit,fill,Quality,seriesData):
-
-        # parsed_json=json.loads(resdata)
-        # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
-        # parsed_json=json.loads(json_data)
-        # print(parsed_json['103']['class'])
-        # data = {}
-        # data["istsos_version"] = ""
-        # data["latest_istsos_version"] = ""
-        # data["latest_istsos_changelog"] = ""
-        # data["download_url"] = "https://sourceforge.net/projects/istsos"
-        # data["istsos_message"] = "updates not found"
-        # data["istsos_update"] = False
-        self.setData(resdata)
-        self.setMessage("this is resampling data")
 
 class regularization(waIstsos):
 
@@ -276,8 +305,8 @@ class regularization(waIstsos):
         from datetime import datetime
         import pandas as pd
         import json
-        data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'battle_deaths': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-        df = pd.DataFrame(data, columns = ['date', 'battle_deaths'])
+        data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'values': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
+        df = pd.DataFrame(data, columns = ['date', 'values'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
         del df['date']

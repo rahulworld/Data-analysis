@@ -189,12 +189,12 @@ Ext.define('istsos.Sensor', {
                     for (var i = 0; i < json.data.length; i++) {
                         if (json.data[i]['name']==this.sensor) {
                             this.loadObservation(json.data[i]);
+                            console.log(json.data[i]);
                             break;
                         }
                     }
                 }
                 console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-                console.log(json.data[1]);
                 console.log(this.sensor);
             }
         });

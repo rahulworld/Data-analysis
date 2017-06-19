@@ -28,6 +28,7 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                     xtype: 'panel',
                     border: 0,
                     style: 'background-color: white;',
+                    id:'chartdraw',
                     layout: {
                         type: 'fit'
                     },
@@ -37,10 +38,11 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                         {
                             xtype: 'panel',
                             border: 0,
-                            id: 'chartCnt12',
+                            id: "chartCnt12",
                             layout: {
                                 type: 'fit'
                             },
+                            bodyCls: 'viewerChart',
                             title: ''
                         }
                     ]

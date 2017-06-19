@@ -328,8 +328,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         "xtype": "textfield",
                                         "id": "edittextFrequency",
-                                        "flex":1,
-                                        "margin": "0 0 10 10",
+                                        "flex":0.5,
+                                        "margin": "0 0 10 5",
                                         "width": "",
                                         "fieldLabel": "Frequency",
                                         "labelWidth": 70
@@ -338,7 +338,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "xtype": "combobox",
                                         "margins": "",
                                         "id": "comboxSmapling",
-                                        "flex":1,
+                                        "flex":0.5,
                                         "margin": "0 0 10 10",
                                         "fieldLabel": "Sampling Method",
                                         "labelWidth": 100,
@@ -381,16 +381,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "valueField": "abbr",
                                         "displayField": "name",
                                         queryMode: 'local',
-                                        forceSelection: true,
-                                        listeners:
-                                        {
-                                            // render: 'onComboboxRender'
-                                            change: function(field, newValue, oldValue)
-                                            {
-                                                console.log(newValue);
-                                            },
-                                            scope: this
-                                        }
+                                        forceSelection: true
                                     }]
                                 },
                                 {
@@ -409,7 +400,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "id": "comboxFill",
                                         "margin": "0 5 5 0",
                                         "fieldLabel": "Fill",
-                                        "flex":1,
+                                        "flex":0.5,
                                         "labelWidth": 30,
                                         "value": "bfill",
                                         store: Ext.create('Ext.data.Store',
@@ -429,22 +420,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "valueField": "abbr",
                                         "displayField": "name",
                                         queryMode: 'local',
-                                        forceSelection: true,
-                                        listeners:
-                                        {
-                                            // render: 'onComboboxRender'
-                                            change: function(field, newValue, oldValue)
-                                            {
-                                                console.log(newValue);
-                                            },
-                                            scope: this
-                                        }
+                                        forceSelection: true
                                     },
                                     {
                                         xtype: 'spinnerfield',
                                         margin: '0 5 5 0',
                                         fieldLabel: 'Limit',
-                                        "flex":1,
+                                        "flex":0.5,
                                         labelWidth: 50,
                                         "id": "comboxLimit",
                                         "value": -1,
@@ -477,7 +459,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "id": "comboxHowquality",
                                         "margin": "0 5 5 0",
                                         "fieldLabel": "How Quality",
-                                        "flex":1,
+                                        "flex":0.6,
                                         "labelWidth": 80,
                                         "value": "mean",
                                         store: Ext.create('Ext.data.Store',
@@ -517,16 +499,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         "valueField": "abbr",
                                         "displayField": "name",
                                         queryMode: 'local',
-                                        forceSelection: true,
-                                        listeners:
-                                        {
-                                            // render: 'onComboboxRender'
-                                            change: function(field, newValue, oldValue)
-                                            {
-                                                console.log(newValue);
-                                            },
-                                            scope: this
-                                        }
+                                        forceSelection: true
                                     }]
                                 }]
                             },
@@ -690,7 +663,157 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         }]
                                     }]
                                 }]
-                            }]
+                            },
+                            {
+                                "xtype": "panel",
+                                "id":"regularizationPanel",
+                                "height": 109,
+                                "flex":1,
+                                "bodyBorder": false,
+                                "border":false,
+                                "hidden":true,
+                                "items": [
+                                {
+                                    "xtype": "panel",
+                                    "border": false,
+                                    "padding": 5,
+                                    "flex":1,
+                                    "layout":
+                                    {
+                                        "type": "hbox",
+                                        "align": "middle"
+                                    },
+                                    "items": [
+                                    {
+                                        "xtype": "textfield",
+                                        "id": "edittextFrequencyreg",
+                                        "flex":0.5,
+                                        "margin": "0 0 10 10",
+                                        "width": "",
+                                        "fieldLabel": "Frequency",
+                                        "labelWidth": 70
+                                    },
+                                    {
+                                        "xtype": "combobox",
+                                        "margins": "",
+                                        "id": "comboxmethodreg",
+                                        "flex":0.5,
+                                        "margin": "0 0 10 10",
+                                        "fieldLabel": "Method",
+                                        "labelWidth": 100,
+                                        "value": "mean",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'backfill',
+                                                'name': 'backfill'
+                                            },
+                                            {
+                                                'abbr': 'pad',
+                                                'name': 'pad'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
+                                    }]
+                                },
+                                {
+                                    "xtype": "panel",
+                                    "border": false,
+                                    "flex":1,
+                                    "margin": 10,
+                                    "layout":
+                                    {
+                                        "type": "hbox",
+                                        "align": "middle"
+                                    },
+                                    "items": [
+                                    {
+                                        "xtype": "combobox",
+                                        "id": "comboxFillreg",
+                                        "margin": "0 5 5 0",
+                                        "fieldLabel": "How",
+                                        "flex":0.5,
+                                        "labelWidth": 30,
+                                        "value": "end",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'start',
+                                                'name': 'start'
+                                            },
+                                            {
+                                                'abbr': 'end',
+                                                'name': 'end'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
+                                    },
+                                    {
+                                        "xtype": "combobox",
+                                        "id": "comboxHowqualityregNormalize",
+                                        "margin": "0 5 5 0",
+                                        "fieldLabel": "Normalize",
+                                        "flex":0.5,
+                                        "labelWidth": 80,
+                                        "value": "mean",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'bool',
+                                                'name': 'bool'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        "value":"",
+                                        queryMode: 'local',
+                                        forceSelection: true
+                                    },
+                                    {
+                                        "xtype": "combobox",
+                                        "id": "comboxHowqualityreg",
+                                        "margin": "0 5 5 0",
+                                        "fieldLabel": "fill value",
+                                        "flex":0.5,
+                                        "labelWidth": 80,
+                                        "value": "mean",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'scalar',
+                                                'name': 'scalar'
+                                            },
+                                            {
+                                                'abbr': 'optional',
+                                                'name': 'optional'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
+                                    }]
+                                }]
+                            }
+                            ]
                         }]
                     },
                     {

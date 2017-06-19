@@ -23,19 +23,31 @@ Ext.define('istsos.view.TimeSeriesChart', {
     initComponent: function() {
         var me = this;
         this.procedures = {};
-        chart=Ext.getCmp('chartCnt12');
-        var myDiv = document.getElementsByClassName('chartCnt12');
+        this.chart1=Ext.getCmp('chartdraw');
+        // chart.disable();
+        console.log(this.chart1);
+        // var myDiv = document.getElementsByClassName('chartCnt12');
         // var g=new Dygraph(
-        //     myDiv,
-        //     "Date,Temperature\n" +
-        //     "2008-05-07,15\n" +
-        //     "2008-05-08,20\n" +
-        //     "2008-05-09,40\n",
-        //     {
-                
-        //     }
+        //     document.getElementById("chartCnt12"),
+            // "Date,Temperature\n" +
+            // "2008-05-07,15\n" +
+            // "2008-05-08,20\n" +
+            // "2008-05-09,40\n"
         // );
+        // 
+        g4 = new Dygraph(
+            document.getElementById("chartCnt12"),
+            "Date,Temperature\n" +
+            "2008-05-07,15\n" +
+            "2008-05-08,20\n" +
+            "2008-05-09,40\n",
+            {
+              rollPeriod: 7,
+              showRoller: true,
+              errorBars: true,
+              valueRange: [50,125]
+            }
+        );
         me.callParent(arguments);
-        // this.addEvents('queueLoaded','observedPropertyIsSet','clickCallback','pointClickCallback', 'seriesSelected', 'underlayCallback');
     }
 });

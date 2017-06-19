@@ -242,6 +242,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var exeedance = Ext.getCmp('exeedancePanel');
             var resample = Ext.getCmp('resamplePanel');
             var integrate = Ext.getCmp('integratePanel');
+            var regularization = Ext.getCmp('regularizationPanel');
 
             switch (value) {
                 case 0:
@@ -249,35 +250,45 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     exeedance.setVisible(false);
                     resample.setVisible(false);
                     integrate.setVisible(false);
+                    regularization.setVisible(false);
                   break;
                 case 1:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(true);
                     resample.setVisible(false);
                     integrate.setVisible(false);
+                    regularization.setVisible(false);
                   break;
                 case 2:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(true);
                     integrate.setVisible(false);
+                    regularization.setVisible(false);
                   break;
                 case 3:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
                     integrate.setVisible(true);
+                    regularization.setVisible(false);
                   break;
                 case 4:
                     digital_filter.setVisible(true);
                     exeedance.setVisible(true);
                     resample.setVisible(true);
                     integrate.setVisible(true);
+                    regularization.setVisible(false);
                   break;
                 case 5:
                     console.log('dygraph is running');
                     break;
                 case 6:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(true);
                     break;
                 case 7:
                     break;
@@ -330,17 +341,24 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        for (var i = 0; i < json.data.length; i++) {
-                                console.log(json.data['value']);
-                        }
-                        console.log(json1);
+                        // for (var i = 0; i < json1.data.length; i++) {
+                        // }
+                                console.log(json1.data);
+                                console.log(JSON.parse(json1.data));
+                                var test=JSON.parse(json1.data);
+                                // for(var i=0;i<test.length;i++){
+
+                                // }
+                                var x=Object.keys(test['value']);
+                                var y=Object.values(test['value']);
+                                console.log(x,y);
+                        // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        // Ext.Msg.alert("Info","UserName from Server : "+jsonResp.username);
+                        // console.log(json1);
                     },
                     failure: function (response) {
-                        console.log('this failure response');
-                      // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                      // Ext.Msg.alert("Error",jsonResp.error);
-                        var text2 = response.responseText;
-                        console.log(text2);
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
                     }
                 });
             }

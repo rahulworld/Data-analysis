@@ -42,7 +42,6 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                             layout: {
                                 type: 'fit'
                             },
-                            bodyCls: 'viewerChart',
                             title: ''
                         }
                     ]

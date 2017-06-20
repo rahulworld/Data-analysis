@@ -131,10 +131,11 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // dygraphs['chartpanel'] = new Dygraph(
         // Ext.getCmp('chartpanel123');
         
+        // document.getElementById("chartCntt-body"),
+        // console.log(Ext.getCmp("chartCntt"));
 
-
-        // g= new Dygraph(
-        //     timeSeriesGraph,
+        // this.g= new Dygraph(
+        //     Ext.get("chartCntt-body"),
         //     "Date,Temperature\n" +
         //     "2008-05-07,15\n" +
         //     "2008-05-08,20\n" +
@@ -343,8 +344,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var json1 = Ext.decode(response.responseText);
                         // for (var i = 0; i < json1.data.length; i++) {
                         // }
-                                console.log(json1.data);
-                                console.log(JSON.parse(json1.data));
+                                // console.log(json1.data);
+                                // console.log(JSON.parse(json1.data));
                                 var test=JSON.parse(json1.data);
                                 // for(var i=0;i<test.length;i++){
 

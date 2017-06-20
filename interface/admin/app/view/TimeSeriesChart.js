@@ -22,13 +22,13 @@ Ext.define('istsos.view.TimeSeriesChart', {
 
     initComponent: function() {
         var me = this;
-        this.procedures = {};
-        this.chart1=Ext.getCmp('chartdraw');
+        // this.procedures = {};
+        // this.chart1=Ext.getCmp('chartdraw');
         // chart.disable();
         console.log(this.chart1);
         // var myDiv = document.getElementsByClassName('chartCnt12');
         // var g=new Dygraph(
-        //     document.getElementById("chartCnt12"),
+        //     document.getElementById("chartCnt12-body"),
             // "Date,Temperature\n" +
             // "2008-05-07,15\n" +
             // "2008-05-08,20\n" +
@@ -36,7 +36,7 @@ Ext.define('istsos.view.TimeSeriesChart', {
         // );
         // 
         g4 = new Dygraph(
-            document.getElementById("chartCnt12"),
+            document.getElementById("chartCnt12-body"),
             "Date,Temperature\n" +
             "2008-05-07,15\n" +
             "2008-05-08,20\n" +

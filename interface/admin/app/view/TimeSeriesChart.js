@@ -25,7 +25,7 @@ Ext.define('istsos.view.TimeSeriesChart', {
         // this.procedures = {};
         // this.chart1=Ext.getCmp('chartdraw');
         // chart.disable();
-        console.log(this.chart1);
+        // console.log(this.chart1);
         // var myDiv = document.getElementsByClassName('chartCnt12');
         // var g=new Dygraph(
         //     document.getElementById("chartCnt12-body"),
@@ -35,19 +35,19 @@ Ext.define('istsos.view.TimeSeriesChart', {
             // "2008-05-09,40\n"
         // );
         // 
-        g4 = new Dygraph(
-            document.getElementById("chartCnt12-body"),
-            "Date,Temperature\n" +
-            "2008-05-07,15\n" +
-            "2008-05-08,20\n" +
-            "2008-05-09,40\n",
-            {
-              rollPeriod: 7,
-              showRoller: true,
-              errorBars: true,
-              valueRange: [50,125]
-            }
-        );
+        // g4 = new Dygraph(
+        //     document.getElementById("chartCnt12-body"),
+        //     "Date,Temperature\n" +
+        //     "2008-05-07,15\n" +
+        //     "2008-05-08,20\n" +
+        //     "2008-05-09,40\n",
+        //     {
+        //       rollPeriod: 7,
+        //       showRoller: true,
+        //       errorBars: true,
+        //       valueRange: [50,125]
+        //     }
+        // );
         me.callParent(arguments);
     }
 });

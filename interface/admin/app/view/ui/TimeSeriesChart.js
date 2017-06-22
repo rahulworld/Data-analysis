@@ -38,7 +38,7 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                         {
                             xtype: 'panel',
                             border: 0,
-                            id: "chartCnt12",
+                            id: "chartSeries",
                             layout: {
                                 type: 'fit'
                             },

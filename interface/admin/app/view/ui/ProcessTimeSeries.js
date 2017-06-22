@@ -824,37 +824,18 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                     }]
                 },
                 {
-                            // xtype: 'timeserieschart',
-                            // id: 'serieschartpanel',
-                            // flex:1,
-                            // width:600,
-                            // height:400,
-                            // region:'center'
-                    xtype: 'panel',
-                    border: 0,
-                    style: 'background-color: white;',
-                    id:'chartdraw',
-                    layout: {
-                        type: 'fit'
-                    },
-                    title: '',
-                    region: 'center',
-                    items: [
-                        {
-                            xtype: 'panel',
-                            border: 0,
-                            id: "chartCntt",
-                            layout: {
-                                type: 'fit'
-                            },
-                            title: ''
-                        }
-                    ]
+                            xtype: 'timeserieschart',
+                            id: 'serieschartpanel',
+                            flex:1,
+                            width:600,
+                            height:400,
+                            region:'center'
                 },
                 {
                     xtype: 'textareafield',
                     fieldLabel: 'History',
                     labelWidth: 50,
+                    margin:15,
                     id:'textAreaHistory',
                     region:'south',
                     margin:'0 5 5 10'

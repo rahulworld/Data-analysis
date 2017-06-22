@@ -269,7 +269,9 @@ Ext.define('istsos.view.ProcedureChart', {
             rec = rec.concat(vals);
             this.chartdata.push(rec);
         }
-
+        console.log(this.chartdata);
+        console.log(sorted);
+        console.log(this.chartStore);
         var initChart = true;
         if (initChart) {
             Ext.getCmp("btnRangeDay").toggle(false,true);

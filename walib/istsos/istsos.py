@@ -301,17 +301,21 @@ class regularization(waIstsos):
         waIstsos.__init__(self, waEnviron)
 
     def executeGet(self):
-        from pandas import read_csv
-        from pandas import datetime
-        from datetime import datetime
-        import pandas as pd
-        import json
-        data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'values': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-        df = pd.DataFrame(data, columns = ['date', 'values'])
-        df['date'] = pd.to_datetime(df['date'])
-        df.index = df['date']
-        del df['date']
-        resdata=df.resample('D', how='sum').to_json()
+        ############################
+        #     Resampling Code
+        ############################
+        # from pandas import read_csv
+        # from pandas import datetime
+        # from datetime import datetime
+        # import pandas as pd
+        # import json
+        # data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'values': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
+        # df = pd.DataFrame(data, columns = ['date', 'values'])
+        # df['date'] = pd.to_datetime(df['date'])
+        # df.index = df['date']
+        # del df['date']
+        # resdata=df.resample('D', how='sum').to_json()
+
         # parsed_json=json.loads(resdata)
         # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
         # parsed_json=json.loads(json_data)
@@ -323,8 +327,17 @@ class regularization(waIstsos):
         # data["download_url"] = "https://sourceforge.net/projects/istsos"
         # data["istsos_message"] = "updates not found"
         # data["istsos_update"] = False
-        self.setData(resdata)
-        self.setMessage("this is resampling data")
+        ############################
+        #     Regularisation Code
+        ############################
+        import pandas as pd
+        from dateutil.parser import parse as parse_time
+        times = ['2011-01-01 00:00:00', '2011-01-01 00:53:00', '2011-01-01 02:00:00']
+        times = [parse_time(t) for t in times]
+        x = pd.DataFrame([1.1, 2.3, 5.2], index=pd.DatetimeIndex(times))
+        x.asfreq(pd.datetools.Hour(), method='pad')
+        self.setData(x)
+        self.setMessage("this is regularisation successfully")
 
 
 class waValidatedb(waIstsos):

@@ -294,6 +294,55 @@ class resamplingData(waIstsos):
         self.setMessage("resampling is successfully working")
 
 
+class DigitalFilter(Method):
+    """ """
+
+    def __init__(self, fs, lowcut, highcut=0.0, order=5, btype='lowpass'):
+        """bandpass Butterworth filter
+
+        Args:
+            lowcut (float): low cutoff frequency
+            highcut (float): high cutoff frequency
+            fs (float): sampling frequency
+            order (int): the filter order
+            btype (str): band type, one of ['lowpass', 'highpass', 'bandpass', 'bandstop']
+
+        Returns:
+            A new OAT object with filitered data
+        """
+        super(DigitalFilter, self).__init__()
+
+        self.lowcut = lowcut
+        self.highcut = highcut
+        self.fs = fs
+        self.order = order
+        self.btype = btype
+
+    def execute(self, oat, detailedresult=False):
+        """ Apply bandpass Butterworth filter to an OAT object """
+        try:
+            from scipy.signal import butter, lfilter, lfilter_zi
+        except:
+            raise ImportError("scipy.signal module is required for this method")
+
+        nyq = 0.5 * self.fs
+        low = self.lowcut / nyq
+        high = self.highcut / nyq
+        b, a = butter(self.order, [low, high], btype=self.btype)
+        #y = lfilter(b, a, oat.ts['data'])
+        zi = lfilter_zi(b, a)
+        y, zo = lfilter(b, a, oat.ts['data'], zi=zi * oat.ts['data'][0])
+
+        #copy oat and return the modified copy
+        temp_oat = oat.copy()
+        temp_oat.ts['data'] = y
+
+        self.result['type'] = "sensor"
+        self.result['data'] = temp_oat
+
+        return self.returnResult(detailedresult)
+
+
 
 class regularization(waIstsos):
 

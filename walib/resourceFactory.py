@@ -70,6 +70,46 @@ def initResource(waEnviron):
                 elif resource == "regularization":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
+                elif resource == "digital_filter":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "exeedance":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "hydro_events":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "hydro_indicies":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "quality":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "data_values":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "hydro_separation":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "integrate":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "compare":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "subtract":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "fill":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "statistics":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                elif resource == "hydrogreaves":
+                    from walib.istsos import istsos
+                    return istsos.regularization(waEnviron)
+                
                     
 
             ''' checking if not need any more

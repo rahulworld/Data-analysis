@@ -75,7 +75,7 @@ def initResource(waEnviron):
                     return istsos.regularization(waEnviron)
                 elif resource == "exeedance":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.exeedance(waEnviron)
                 elif resource == "hydro_events":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)

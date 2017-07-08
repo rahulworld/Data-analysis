@@ -293,8 +293,66 @@ class resamplingData(waIstsos):
         self.setData(res['resampled'])
         self.setMessage("resampling is successfully working")
 
+class exeedance(waIstsos):
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
 
-class DigitalFilter(Method):
+    def executePost(self):
+        res = {}
+        from pandas import read_csv
+        from pandas import datetime
+        from datetime import datetime
+        import pandas as pd
+        # import json
+        freq=self.json['freq']
+        how=self.json['sampling']
+        fill=self.json['fill']
+        limit=self.json['limit']
+        quality=self.json['Quality']
+        index1=self.json['index1']
+        values1=self.json['values1']
+        if freq=="":
+            fill='1H'
+        # self.oat.ts=self.json['data']['']
+        if fill == '':
+            fill = None
+
+        if limit == -1:
+            limit = None
+
+        # quality = self.gui.resampleQual.currentText()
+
+        # self.history['params']['frequency'] = freq
+        # self.history['params']['how'] = how
+        # self.history['params']['fill'] = fill
+        # self.history['params']['limit'] = limit
+        # self.history['params']['how_quality'] = quality
+
+        # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
+        #                                                    how_quality=quality), detailedresult=True)
+        # rea=method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
+        # res['resulth']=rea.execute(self,df,detailedresult=True)
+        # res=process(method.Resample(freq=freq, how=how, fill=fill,
+        #     limit=limit, how_quality=quality), detailedresult=True)
+        # aonao = pd.DataFrame({'AO':AO, 'NAO':NAO})
+        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'value': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
+        data1 = {'date': index1, 'value':values1}
+        df = pd.DataFrame(data1,columns = ['date','value'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        # df.data=df['value']
+        del df['date']
+
+        resample=Resample1(freq=freq, how=how, fill=fill, limit=int(limit), how_quality=quality)
+        res['resampled']=resample.execute1(df).to_json()
+        # resdata=df.resample('D', how='sum').to_json()
+        # res["resampled"]=resdata
+
+        self.setData(res['resampled'])
+        self.setMessage("resampling is successfully working")
+
+
+class DigitalFilter():
     """ """
 
     def __init__(self, fs, lowcut, highcut=0.0, order=5, btype='lowpass'):

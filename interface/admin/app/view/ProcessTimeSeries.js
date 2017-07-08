@@ -288,6 +288,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                 // for(var i=0;i<test.length;i++){
 
                                 // }
+                                // Mask the container with loading message
+                                Ext.get('chartSeries').mask("Initializing chart..");
                                 var x=Object.keys(test['value']);
                                 var y=Object.values(test['value']);
                                 console.log(x,y);
@@ -341,11 +343,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         },this);
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
-
             console.log('BUTTON SAVE CLICKED');
         },this);
         Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){
-
             console.log('checkboxOverwrite');
         },this);
 

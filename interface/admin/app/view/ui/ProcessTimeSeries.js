@@ -261,6 +261,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'textfield',
+                                        id:'exeeValues',
                                         margin: '0 10 0 0',
                                         width: '',
                                         flex:1,
@@ -270,6 +271,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'textfield',
+                                        id:'exeeProbability',
                                         height: 30,
                                         flex:1,
                                         fieldLabel: 'exceedance probability',
@@ -290,14 +292,51 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'combobox',
+                                        id:'exeeTime',
                                         margin: '0 15 0 0',
                                         height: 50,
                                         flex:1,
                                         fieldLabel: 'exceedance time unit',
-                                        labelWidth: 130
+                                        labelWidth: 130,
+                                        "value": "hours",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'days',
+                                                'name': 'days'
+                                            },
+                                            {
+                                                'abbr': 'seconds',
+                                                'name': 'seconds'
+                                            },
+                                            {
+                                                'abbr': 'minutes',
+                                                'name': 'minutes'
+                                            },
+                                            {
+                                                'abbr': 'hours',
+                                                'name': 'hours'
+                                            },
+                                            {
+                                                'abbr': 'days',
+                                                'name': 'days'
+                                            },
+                                            {
+                                                'abbr': 'years',
+                                                'name': 'years'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
                                     },
                                     {
                                         xtype: 'checkboxfield',
+                                        id:'exeeUnder',
                                         flex: 1,
                                         height: 50,
                                         fieldLabel: '',

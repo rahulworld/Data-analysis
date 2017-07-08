@@ -254,21 +254,13 @@ class resamplingData(waIstsos):
         index1=self.json['index1']
         values1=self.json['values1']
         if freq=="":
-            fill='1H'
-        # self.oat.ts=self.json['data']['']
+            freq='1H'
+
         if fill == '':
             fill = None
 
         if limit == -1:
             limit = None
-
-        # quality = self.gui.resampleQual.currentText()
-
-        # self.history['params']['frequency'] = freq
-        # self.history['params']['how'] = how
-        # self.history['params']['fill'] = fill
-        # self.history['params']['limit'] = limit
-        # self.history['params']['how_quality'] = quality
 
         # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
         #                                                    how_quality=quality), detailedresult=True)
@@ -289,67 +281,139 @@ class resamplingData(waIstsos):
         res['resampled']=resample.execute1(df).to_json()
         # resdata=df.resample('D', how='sum').to_json()
         # res["resampled"]=resdata
+        
 
         self.setData(res['resampled'])
         self.setMessage("resampling is successfully working")
 
-class exeedance(waIstsos):
+class Exceedance():
+    """ """
+    def __init__(self, values=None, perc=None, etu='days', under=False):
+        """ Exceedance probability calculation
+
+        Args:
+            values (list): list of excedance values to calculate the excedance probability
+            perc (list): list of exceedance probability to calculate the excedance values
+            etu (string): excedance time unit, allowed ['seconds','minutes','hours','days','years'], default='days'
+            under (bool): caluclate the probability for which values are exceeded (False) or are not exceeded (“True”)
+
+        Returns:
+            A list of (values,probability,time) tuples, output excedance time is returned according specified *etu* value
+        """
+        if values and not isinstance(values, (list, tuple)):
+            raise TypeError("values must be a list")
+        if not perc and isinstance(perc, (list, tuple)):
+            raise TypeError("perc must be a list")
+        if values is None and perc is None:
+            raise IOError("one of values or perc list are required")
+
+        if not etu in ['seconds', 'minutes', 'hours', 'days', 'years']:
+            raise TypeError("etu accpted values are: 'seconds','minutes','hours','days','years'")
+
+        self.values = values
+        self.perc = perc
+        self.etu = etu
+        self.under = under
+        self.prob = []
+        self.time_f = []
+
+    def execute1(self, dataframe):
+        df = dataframe
+        # result1={}
+        """ """
+        try:
+            import scipy.stats as sp
+        except:
+            raise ImportError("scipy module is required for this method")
+
+        if df.index.freq:
+            freq = df.index.freq.delta.total_seconds()
+        else:
+            freq = (df.index[1] - df.index[0]).seconds
+
+        if self.etu == 'seconds':
+            res = freq
+        elif self.etu == 'minutes':
+            res = freq / 60
+        elif self.etu == 'hours':
+            res = freq / 3600
+        elif self.etu == 'days':
+            res = freq / (3600 * 24)
+        elif self.etu == 'years':
+            res = freq / (365 * 3600 * 24)
+
+        data = df["data"].dropna().values
+
+        # result1['type'] = "dict list"
+
+        if self.values:
+            for v in self.values:
+                perc = sp.percentileofscore(data, v)
+                if not self.under:
+                    perc = 100 - perc
+                self.prob.append(perc)
+                self.time_f.append(df.size * res * (perc / 100))
+            temp = np.column_stack([np.array(self.values), np.array(self.prob), np.array(self.time_f)])
+        elif self.perc:
+            self.vals = np.array(np.percentile(a=data, q=self.perc, axis=None))
+            temp = np.column_stack([np.array(self.perc), np.array(self.vals)])
+
+        # result1['data'] = []
+
+        for elem in temp:
+            if len(elem) > 2:
+                temp['data'].append({"value": elem[0], "percentage": elem[1], "frequency": elem[2]})
+            else:
+                temp['data'].append({"percentage": 100 - elem[0], "value": elem[1]})
+
+        # result1['type'] = 'dict list'
+        # resdata=df.resample('D', how='sum')
+        # return resdata
+        
+        return temp
+
+class ExceedanceData(waIstsos):
+    """
+        Run exceedance filter
+    """
     def __init__(self, waEnviron):
         waIstsos.__init__(self, waEnviron)
 
     def executePost(self):
-        res = {}
-        from pandas import read_csv
-        from pandas import datetime
-        from datetime import datetime
-        import pandas as pd
-        # import json
-        freq=self.json['freq']
-        how=self.json['sampling']
-        fill=self.json['fill']
-        limit=self.json['limit']
-        quality=self.json['Quality']
+        res={}
+        val = self.json['exceevalues']
+        if len(val) != 0:
+            values = map(float, val.split(','))
+        else:
+            values = None
+
+        perc = self.json['exceeperc']
+
+        if len(perc) != 0:
+            perc = map(float, perc.split(','))
+        else:
+            perc = None
+
+        etu = self.json['etu']
+        under = self.json['exceeunder']
         index1=self.json['index1']
-        values1=self.json['values1']
-        if freq=="":
-            fill='1H'
-        # self.oat.ts=self.json['data']['']
-        if fill == '':
-            fill = None
+        value1=self.json['values1']
 
-        if limit == -1:
-            limit = None
-
-        # quality = self.gui.resampleQual.currentText()
-
-        # self.history['params']['frequency'] = freq
-        # self.history['params']['how'] = how
-        # self.history['params']['fill'] = fill
-        # self.history['params']['limit'] = limit
-        # self.history['params']['how_quality'] = quality
-
-        # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
-        #                                                    how_quality=quality), detailedresult=True)
-        # rea=method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
-        # res['resulth']=rea.execute(self,df,detailedresult=True)
-        # res=process(method.Resample(freq=freq, how=how, fill=fill,
-        #     limit=limit, how_quality=quality), detailedresult=True)
-        # aonao = pd.DataFrame({'AO':AO, 'NAO':NAO})
-        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'value': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-        data1 = {'date': index1, 'value':values1}
-        df = pd.DataFrame(data1,columns = ['date','value'])
+        data1 = {'date': index1, 'data':value1}
+        df = pd.DataFrame(data1,columns = ['date','data'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
         # df.data=df['value']
         del df['date']
 
-        resample=Resample1(freq=freq, how=how, fill=fill, limit=int(limit), how_quality=quality)
-        res['resampled']=resample.execute1(df).to_json()
+        exeedance=Exceedance(perc=perc, values=values, etu=etu, under=under)
+        res['exceedance']=exeedance.execute1(df)
         # resdata=df.resample('D', how='sum').to_json()
-        # res["resampled"]=resdata
+        # res["exceedance"]=resdata
 
-        self.setData(res['resampled'])
-        self.setMessage("resampling is successfully working")
+        self.setData(res['exceedance'])
+        self.setMessage("exceedance is successfully working")
+
 
 
 class DigitalFilter():

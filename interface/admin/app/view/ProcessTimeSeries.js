@@ -245,8 +245,79 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         Ext.getCmp("buttonExecute").on("click",function(btn, e, eOpts){
 
             var methods=Ext.getCmp("methodsCombox").getValue();
-            console.log(methods);
-            console.log('METHOD IS NOT RUNNING');
+
+            var textHistory=Ext.getCmp('textAreaHistory');
+            var textViewer=Ext.getCmp('ResultViewer');
+            var Resulttext=Ext.getCmp('Resulttextpanel');
+            var chartPlot=Ext.getCmp('chartSeries');
+
+            if (methods == 1)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var exceeValues= Ext.getCmp("exeeValues").getValue();
+                var exceeProbability= Ext.getCmp("exeeProbability").getValue();
+                var exceeTime= Ext.getCmp("exeeTime").getValue();
+                var exceeUnder= Ext.getCmp("exeeUnder").getValue();
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+
+                textHistory.setValue("Filter Exeedance Params:  Exeedance Values: "+exceeValues+"  Exeedance Probability: "+exceeProbability+"  Exeedance Time: "+exceeTime+"  Exeedance Under: "+exceeUnder);
+
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/exceedance', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "exceevalues":exceeValues,
+                        "exceeperc":exceeProbability,
+                        "etu":exceeTime,
+                        "exceeunder":exceeUnder,
+                        "index1": resdata1,
+                        "values1": resdata2
+                    },
+                    success: function(response){
+                        var json1 = Ext.decode(response.responseText);
+                        // for (var i = 0; i < json1.data.length; i++) {
+                        // }
+                                // console.log(json1.data);
+                                // console.log(JSON.parse(json1.data));
+                                // var test=JSON.parse(json1.data);
+                                // for(var i=0;i<test.length;i++){
+                                console.log(json1);
+                                // }
+                                // Mask the container with loading message
+                                // Ext.get('chartSeries').mask("Initializing chart..");
+                                // var x=Object.keys(test['value']);
+                                // var y=Object.values(test['value']);
+                                // console.log(x,y);
+                                // this.chartdata = [];
+                                // for (var i = 0; i < x.length; i++) {
+                                //     var rec = [];
+                                //     rec.push(parseInt(x[i]));
+                                //     var vals = y[i];
+                                //     rec = rec.concat(vals);
+                                //     this.chartdata.push(rec);
+                                // }
+                                // this.rederChart1(this.chartdata);
+                                // console.log(this.chartdata);
+                        // var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        // Ext.Msg.alert("Info","UserName from Server : "+jsonResp.username);
+                        // console.log(json1);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
+                
+
+            }
             if (methods == 2)
             {
                 var resdata=this.dataAccess();
@@ -261,6 +332,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var Quality= Ext.getCmp("comboxHowquality").getValue();
                 var textHistory=Ext.getCmp('textAreaHistory');
                 // istsos.view.ProcessTimeSeries.dataAccess();
+                
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
 
                 console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
                 textHistory.setValue("frequency: "+frequency+"  How: "+timeSeriesMethods+"  fill: "+fillCombox+"  Limit: "+Limit+"  Quality: "+Quality);

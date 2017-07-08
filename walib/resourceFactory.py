@@ -73,9 +73,9 @@ def initResource(waEnviron):
                 elif resource == "digital_filter":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
-                elif resource == "exeedance":
+                elif resource == "exceedance":
                     from walib.istsos import istsos
-                    return istsos.exeedance(waEnviron)
+                    return istsos.ExceedanceData(waEnviron)
                 elif resource == "hydro_events":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)

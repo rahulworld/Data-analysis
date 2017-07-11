@@ -38,6 +38,12 @@ try:
 except:
     import oat_algorithms as oa
 
+import json
+result1 = {
+            "type": None,
+            "data": None
+            }
+
 
 class waIstsos(resource.waResourceAdmin):
     def __init__(self, waEnviron):
@@ -319,8 +325,6 @@ class Exceedance():
 
     def execute1(self, dataframe):
         df = dataframe
-        # result1={}
-        """ """
         try:
             import scipy.stats as sp
         except:
@@ -330,6 +334,7 @@ class Exceedance():
             freq = df.index.freq.delta.total_seconds()
         else:
             freq = (df.index[1] - df.index[0]).seconds
+        # freq=600
 
         if self.etu == 'seconds':
             res = freq
@@ -341,11 +346,8 @@ class Exceedance():
             res = freq / (3600 * 24)
         elif self.etu == 'years':
             res = freq / (365 * 3600 * 24)
-
         data = df["data"].dropna().values
-
-        # result1['type'] = "dict list"
-
+        result1['type'] = "dict list"
         if self.values:
             for v in self.values:
                 perc = sp.percentileofscore(data, v)
@@ -357,20 +359,19 @@ class Exceedance():
         elif self.perc:
             self.vals = np.array(np.percentile(a=data, q=self.perc, axis=None))
             temp = np.column_stack([np.array(self.perc), np.array(self.vals)])
-
-        # result1['data'] = []
-
+        result1['data'] = []
         for elem in temp:
+            #print(elem)
             if len(elem) > 2:
-                temp['data'].append({"value": elem[0], "percentage": elem[1], "frequency": elem[2]})
+                result1['data'].append({"value": elem[0], "percentage": elem[1], "frequency": elem[2]})
             else:
-                temp['data'].append({"percentage": 100 - elem[0], "value": elem[1]})
+                result1['data'].append({"percentage": 100 - elem[0], "value": elem[1]})
 
-        # result1['type'] = 'dict list'
-        # resdata=df.resample('D', how='sum')
-        # return resdata
-        
-        return temp
+        result1['type'] = 'dict list'
+        result2 = json.dumps(result1)
+        # print(result2)
+        return result1['data']
+
 
 class ExceedanceData(waIstsos):
     """
@@ -403,66 +404,62 @@ class ExceedanceData(waIstsos):
         df = pd.DataFrame(data1,columns = ['date','data'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
-        # df.data=df['value']
         del df['date']
 
         exeedance=Exceedance(perc=perc, values=values, etu=etu, under=under)
         res['exceedance']=exeedance.execute1(df)
-        # resdata=df.resample('D', how='sum').to_json()
-        # res["exceedance"]=resdata
-
         self.setData(res['exceedance'])
         self.setMessage("exceedance is successfully working")
 
 
 
-class DigitalFilter():
-    """ """
+# class DigitalFilter():
+#     """ """
 
-    def __init__(self, fs, lowcut, highcut=0.0, order=5, btype='lowpass'):
-        """bandpass Butterworth filter
+#     def __init__(self, fs, lowcut, highcut=0.0, order=5, btype='lowpass'):
+#         """bandpass Butterworth filter
 
-        Args:
-            lowcut (float): low cutoff frequency
-            highcut (float): high cutoff frequency
-            fs (float): sampling frequency
-            order (int): the filter order
-            btype (str): band type, one of ['lowpass', 'highpass', 'bandpass', 'bandstop']
+#         Args:
+#             lowcut (float): low cutoff frequency
+#             highcut (float): high cutoff frequency
+#             fs (float): sampling frequency
+#             order (int): the filter order
+#             btype (str): band type, one of ['lowpass', 'highpass', 'bandpass', 'bandstop']
 
-        Returns:
-            A new OAT object with filitered data
-        """
-        super(DigitalFilter, self).__init__()
+#         Returns:
+#             A new OAT object with filitered data
+#         """
+#         super(DigitalFilter, self).__init__()
 
-        self.lowcut = lowcut
-        self.highcut = highcut
-        self.fs = fs
-        self.order = order
-        self.btype = btype
+#         self.lowcut = lowcut
+#         self.highcut = highcut
+#         self.fs = fs
+#         self.order = order
+#         self.btype = btype
 
-    def execute(self, oat, detailedresult=False):
-        """ Apply bandpass Butterworth filter to an OAT object """
-        try:
-            from scipy.signal import butter, lfilter, lfilter_zi
-        except:
-            raise ImportError("scipy.signal module is required for this method")
+#     def execute(self, oat, detailedresult=False):
+#         """ Apply bandpass Butterworth filter to an OAT object """
+#         try:
+#             from scipy.signal import butter, lfilter, lfilter_zi
+#         except:
+#             raise ImportError("scipy.signal module is required for this method")
 
-        nyq = 0.5 * self.fs
-        low = self.lowcut / nyq
-        high = self.highcut / nyq
-        b, a = butter(self.order, [low, high], btype=self.btype)
-        #y = lfilter(b, a, oat.ts['data'])
-        zi = lfilter_zi(b, a)
-        y, zo = lfilter(b, a, oat.ts['data'], zi=zi * oat.ts['data'][0])
+#         nyq = 0.5 * self.fs
+#         low = self.lowcut / nyq
+#         high = self.highcut / nyq
+#         b, a = butter(self.order, [low, high], btype=self.btype)
+#         #y = lfilter(b, a, oat.ts['data'])
+#         zi = lfilter_zi(b, a)
+#         y, zo = lfilter(b, a, oat.ts['data'], zi=zi * oat.ts['data'][0])
 
-        #copy oat and return the modified copy
-        temp_oat = oat.copy()
-        temp_oat.ts['data'] = y
+#         #copy oat and return the modified copy
+#         temp_oat = oat.copy()
+#         temp_oat.ts['data'] = y
 
-        self.result['type'] = "sensor"
-        self.result['data'] = temp_oat
+#         self.result['type'] = "sensor"
+#         self.result['data'] = temp_oat
 
-        return self.returnResult(detailedresult)
+#         return self.returnResult(detailedresult)
 
 
 

@@ -250,6 +250,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var textViewer=Ext.getCmp('ResultViewer');
             var Resulttext=Ext.getCmp('Resulttextpanel');
             var chartPlot=Ext.getCmp('chartSeries');
+            var ExeeTextView=Ext.getCmp('ResultViewer');
 
             if (methods == 1)
             {
@@ -257,12 +258,17 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var frequency;
+                                var percentage;
+                                var value;
 
                 //Taking Input
                 var exceeValues= Ext.getCmp("exeeValues").getValue();
                 var exceeProbability= Ext.getCmp("exeeProbability").getValue();
                 var exceeTime= Ext.getCmp("exeeTime").getValue();
                 var exceeUnder= Ext.getCmp("exeeUnder").getValue();
+
+                var exeeResult="";
 
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
@@ -283,32 +289,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        // for (var i = 0; i < json1.data.length; i++) {
-                        // }
-                                // console.log(json1.data);
-                                // console.log(JSON.parse(json1.data));
-                                // var test=JSON.parse(json1.data);
+                        console.log(json1);
+                        for (var i = 0; i < json1["data"].length; i++) {
+                                frequency=json1["data"][i][frequency];
+                                percentage=json1["data"][i][percentage];
+                                value=json1["data"][i][value];
+                                exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                        }
                                 // for(var i=0;i<test.length;i++){
-                                console.log(json1);
                                 // }
-                                // Mask the container with loading message
-                                // Ext.get('chartSeries').mask("Initializing chart..");
-                                // var x=Object.keys(test['value']);
-                                // var y=Object.values(test['value']);
-                                // console.log(x,y);
-                                // this.chartdata = [];
-                                // for (var i = 0; i < x.length; i++) {
-                                //     var rec = [];
-                                //     rec.push(parseInt(x[i]));
-                                //     var vals = y[i];
-                                //     rec = rec.concat(vals);
-                                //     this.chartdata.push(rec);
-                                // }
-                                // this.rederChart1(this.chartdata);
-                                // console.log(this.chartdata);
-                        // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                        // Ext.Msg.alert("Info","UserName from Server : "+jsonResp.username);
-                        // console.log(json1);
+                        ExeeTextView.setValue(exeeResult);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);

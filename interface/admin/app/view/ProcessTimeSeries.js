@@ -59,12 +59,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var dataValues = Ext.getCmp('DataValuesPanel');
             var quality = Ext.getCmp('qualityPanel');
             var statistics = Ext.getCmp('StataticsPanel');
-            var hydro_indices = Ext.getCmp('fillPanel1');
-            var hydro_events = Ext.getCmp('fillPanel1');
-            var hargreaves = Ext.getCmp('fillPanel1');
-            var compare = Ext.getCmp('fillPanel1');
-            var subtract = Ext.getCmp('fillPanel1');
-            var hydro_separation = Ext.getCmp('fillPanel1');
+            var hydro_indices = Ext.getCmp('HydroIndicesPanel');
+            var hydro_events = Ext.getCmp('HydroEventsPanel');
+            var hargreaves = Ext.getCmp('hargreavesPanel');
+            var compare = Ext.getCmp('ComparePanel');
+            var subtract = Ext.getCmp('SubtractPanel');
+            var hydro_separation = Ext.getCmp('HydroSeparationPanel');
             switch (value) {
                 case 0:
                     digital_filter.setVisible(true);

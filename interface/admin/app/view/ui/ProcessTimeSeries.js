@@ -1583,6 +1583,565 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         ]
                                     }
                                 ]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'hargreavesPanel',
+                                flex:1,
+                                height: 400,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height: 100,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            flex: 1,
+                                            height: 100,
+                                            alignTarget: 'center',
+                                            text: 'press Execute to run the process'
+                                        }
+                                    ]
+                                }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'HydroEventsPanel',
+                                flex:1,
+                                height: 400,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height: 40,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            width: '',
+                                            height: 40,
+                                            fieldLabel: 'Days prior the peak'
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            margin: 0,
+                                            height: 40,
+                                            fieldLabel: 'Days following the peak'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height: 60,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            width: '',
+                                            height: 40,
+                                            fieldLabel: 'Min days between peak'
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            margin: 0,
+                                            height: 40,
+                                            fieldLabel: 'Minimun value for a peak',
+                                            labelPad: 0
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height: 40,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            height: 40,
+                                            fieldLabel: 'Name of time series'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height: 40,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'checkboxfield',
+                                            flex: 0.15,
+                                            margins: '10',
+                                            height: 40,
+                                            fieldLabel: '',
+                                            boxLabel: 'time'
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 40,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    margins: '0',
+                                                    height: 40,
+                                                    flex: 1,
+                                                    fieldLabel: 'Begin'
+                                                },
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    flex: 1,
+                                                    height: 40,
+                                                    fieldLabel: 'End'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'HydroIndicesPanel',
+                                flex:1,
+                                height: 400,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height:50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            width: '',
+                                            height:50,
+                                            fieldLabel: 'alphanumeric code'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            margin: 0,
+                                            height:50,
+                                            fieldLabel: 'indices to calculate'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height:50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            width: '',
+                                            height:50,
+                                            fieldLabel: 'component'
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            margin: 0,
+                                            height:50,
+                                            fieldLabel: 'classification',
+                                            labelPad: 0
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height:50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'checkboxfield',
+                                            flex: 1,
+                                            height:50,
+                                            fieldLabel: '',
+                                            boxLabel: 'median'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            flex: 1,
+                                            height:50,
+                                            fieldLabel: 'drain area'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height:50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'checkboxfield',
+                                            flex: 0.15,
+                                            margins: '10',
+                                            height:50,
+                                            fieldLabel: '',
+                                            boxLabel: 'period'
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height:50,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    margins: '0',
+                                                    height:50,
+                                                    flex: 1,
+                                                    fieldLabel: 'Begin'
+                                                },
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    flex: 1,
+                                                    height:50,
+                                                    fieldLabel: 'End'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'HydroSeparationPanel',
+                                flex:1,
+                                height: 250,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height: 50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            height: 40,
+                                            width: '',
+                                            fieldLabel: 'mode'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height: 50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 40,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    margins: '0',
+                                                    height: 40,
+                                                    flex: 0.7,
+                                                    fieldLabel: 'alpha'
+                                                },
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    flex: 0.7,
+                                                    height: 40,
+                                                    fieldLabel: 'bfl_max'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                ]
+                            },
+
+                            {
+                                xtype: 'panel',
+                                id:'SubtractPanel',
+                                flex:1,
+                                height: 250,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'container',
+                                    frame: false,
+                                    height: 50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            height: 50,
+                                            flex: 0,
+                                            margin: 0,
+                                            fieldLabel: 'sensor'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    frame: false,
+                                    height: 50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            height: 50,
+                                            flex: 0,
+                                            margin: 0,
+                                            fieldLabel: 'align method'
+                                        }
+                                    ]
+                                }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'ComparePanel',
+                                flex:1,
+                                height: 250,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    frame: false,
+                                    height: 50,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 1,
+                                            height: 50,
+                                            margin: 0,
+                                            fieldLabel: 'time units'
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            height: 50,
+                                            fieldLabel: 'exponent'
+                                        },
+                                        {
+                                            xtype: 'checkboxfield',
+                                            flex: 1,
+                                            height: 50,
+                                            fieldLabel: '',
+                                            boxLabel: 'align'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    margin: 10,
+                                    height: 100,
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 50,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'BIAS'
+                                                },
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'NASH_SUTCLIFFE'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 50,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'STANDARD_ERROR'
+                                                },
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'COEFFICIENT_OF_EFFICIENCY'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 50,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'RELATIVE_BIAS'
+                                                },
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'INDEX_OF_AGREEMENT'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            flex: 1,
+                                            height: 50,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'stretch'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'RELATIVE_STANDARD_ERROR'
+                                                },
+                                                {
+                                                    xtype: 'checkboxfield',
+                                                    flex: 1,
+                                                    height: 50,
+                                                    fieldLabel: '',
+                                                    boxLabel: 'VOLUMETRIC_EFFICIENCY'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                ]
                             }
 
 

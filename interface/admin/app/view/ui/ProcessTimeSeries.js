@@ -114,7 +114,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         'abbr': 7,
-                                        'name': 'data values'
+                                        'name': 'hydro separation'
                                     },
                                     {
                                         'abbr': 8,
@@ -127,6 +127,22 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         'abbr': 10,
                                         'name': 'statistics'
+                                    },
+                                    {
+                                        'abbr': 11,
+                                        'name': 'fill'
+                                    },
+                                    {
+                                        'abbr': 12,
+                                        'name': 'quality'
+                                    },
+                                    {
+                                        'abbr': 13,
+                                        'name': 'data values'
+                                    },
+                                    {
+                                        'abbr': 14,
+                                        'name': 'Hargreaves'
                                     }]
                                 })
                             },
@@ -200,13 +216,57 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'spinnerfield',
                                         flex: 1,
                                         fieldLabel: 'low cutoff freq.',
-                                        margin: '5 0 0 5'
+                                        id:'digLowcutOff',
+                                        margin: '5 0 0 5',
+
+                                        value: 0.00,
+                                        step: -0.10,
+                                        // override onSpinUp (using step isn't neccessary)
+                                        onSpinUp: function()
+                                        {
+                                            var me = this;
+                                            if (!me.readOnly)
+                                            {
+                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                me.setValue((val - me.step) + ' ');
+                                            }
+                                        },
+                                        // override onSpinDown
+                                        onSpinDown: function()
+                                        {
+                                            var me = this;
+                                            if (!me.readOnly)
+                                            {
+                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                me.setValue((val + me.step) + ' ');
+                                            }
+                                        }
                                     },
                                     {
                                         xtype: 'spinnerfield',
                                         flex: 1,
+                                        id:'digHigcutOff',
                                         margin: '5 0 0 5',
-                                        fieldLabel: 'high cutoff freq.'
+                                        fieldLabel: 'high cutoff freq.',
+                                        value: 0.00,
+                                        step: -0.10,
+                                        // override onSpinUp (using step isn't neccessary)
+                                        onSpinUp: function()
+                                        {
+                                            var me = this;
+                                                var val = parseInt(me.getValue());
+                                                me.setValue((val - me.step));
+                                        },
+                                        // override onSpinDown
+                                        onSpinDown: function()
+                                        {
+                                            var me = this;
+                                            if (!me.readOnly)
+                                            {
+                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                me.setValue((val + me.step) + ' ');
+                                            }
+                                        }
                                     }]
                                 },
                                 {
@@ -223,15 +283,58 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'spinnerfield',
+                                        id:'digOrder',
                                         flex: 1,
                                         padding: '5 0 0 5',
-                                        fieldLabel: 'Order'
+                                        fieldLabel: 'Order',
+                                        value: 0,
+                                        step: -1,
+                                        // override onSpinUp (using step isn't neccessary)
+                                        onSpinUp: function()
+                                        {
+                                            var me = this;
+                                            if (!me.readOnly)
+                                            {
+                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                me.setValue((val - me.step) + ' ');
+                                            }
+                                        },
+                                        // override onSpinDown
+                                        onSpinDown: function()
+                                        {
+                                            var me = this;
+                                            if (!me.readOnly)
+                                            {
+                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                me.setValue((val + me.step) + ' ');
+                                            }
+                                        }
                                     },
                                     {
                                         xtype: 'combobox',
+                                        id:'digiType',
                                         flex: 1,
                                         padding: '5 0 0 5',
-                                        fieldLabel: 'filter type'
+                                        fieldLabel: 'filter type',
+                                        "value": "highpass",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'highpass',
+                                                'name': 'highpass'
+                                            },
+                                            {
+                                                'abbr': 'lowpass',
+                                                'name': 'lowpass'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
                                     }]
                                 }]
                             },
@@ -343,6 +446,125 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         boxLabel: 'Under'
                                     }]
                                 }]
+                            },
+                            {
+                                xtype: 'panel',
+                                id:'fillPanel1',
+                                flex:1,
+                                height: 200,
+                                hidden: true,
+                                border:false,
+                                layout:
+                                {
+                                    type: 'vbox',
+                                    align: 'stretch'
+                                },
+                                items: [
+                                {
+                                    xtype: 'panel',
+                                    border:false,
+                                    height: 60,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            labelWidth:150,
+                                            id:'fillConsucutive',
+                                            height: 40,
+                                            margin: 5,
+                                            fieldLabel: 'consucutive no data allowed',
+                                            value: -1,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    if(val>0){
+                                                        me.setValue((val + me.step) + ' ');
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    height: 60,
+                                    border:false,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'stretch'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 0.5,
+                                            height: 40,
+                                            margin: 5,
+                                            id:'fillMethod',
+                                            labelWidth:150,
+                                            fieldLabel: 'filling no data method',
+                                            value: "bfill",
+                                            flex: 1,
+                                            store: Ext.create('Ext.data.Store',
+                                            {
+                                                fields: ['abbr', 'name'],
+                                                data: [
+                                                {
+                                                    'abbr': 'bfill',
+                                                    'name': 'bfill'
+                                                },
+                                                {
+                                                    'abbr': 'ffill',
+                                                    'name': 'ffill'
+                                                },
+                                                {
+                                                    'abbr': 'time',
+                                                    'name': 'time'
+                                                },
+                                                {
+                                                    'abbr': 'spline',
+                                                    'name': 'spline'
+                                                },
+                                                {
+                                                    'abbr': 'linear',
+                                                    'name': 'linear'
+                                                },
+                                                {
+                                                    'abbr': 'quardatic',
+                                                    'name': 'quardatic'
+                                                },
+                                                {
+                                                    'abbr': 'cubic',
+                                                    'name': 'cubic'
+                                                }]
+                                            }),
+                                            matchFieldWidth: false,
+                                            valueField: "abbr",
+                                            displayField: "name",
+                                            queryMode: 'local',
+                                            forceSelection: true
+                                        }
+                                    ]
+                                }
+                                ]
                             },
                             {
                                 "xtype": "panel",
@@ -548,7 +770,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 height: 206,
                                 padding: 10,
                                 margin: 10,
-                                width: 668,
                                 border:false,
                                 hidden:true,
                                 layout:
@@ -572,7 +793,38 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'combobox',
                                         id:'timeUnitsCombox',
                                         flex: 1,
-                                        fieldLabel: 'time units'
+                                        fieldLabel: 'time units',
+                                        "value": "seconds",
+                                        store: Ext.create('Ext.data.Store',
+                                        {
+                                            fields: ['abbr', 'name'],
+                                            data: [
+                                            {
+                                                'abbr': 'seconds',
+                                                'name': 'seconds'
+                                            },
+                                            {
+                                                'abbr': 'minutes',
+                                                'name': 'minutes'
+                                            },
+                                            {
+                                                'abbr': 'hours',
+                                                'name': 'hours'
+                                            },
+                                            {
+                                                'abbr': 'days',
+                                                'name': 'days'
+                                            },
+                                            {
+                                                'abbr': 'years',
+                                                'name': 'years'
+                                            }]
+                                        }),
+                                        "matchFieldWidth": false,
+                                        "valueField": "abbr",
+                                        "displayField": "name",
+                                        queryMode: 'local',
+                                        forceSelection: true
                                     }]
                                 },
                                 {
@@ -599,6 +851,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         height: 80,
                                         flex: 1,
+                                        id:'UseTimePanel',
                                         layout:
                                         {
                                             type: 'hbox',
@@ -609,7 +862,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'panel',
                                             flex: 2,
-                                            height: 80,
+                                            height: 100,
                                             layout:
                                             {
                                                 type: 'vbox',
@@ -618,21 +871,24 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             border: false,
                                             items: [
                                             {
-                                                xtype: 'spinnerfield',
+                                                "xtype": "textfield",
+                                                "id": "edittextintegrateBegin",
                                                 flex: 1,
-                                                margin: '0 10 0 0',
-                                                height: 40,
+                                                height: 30,
+                                                margin: '5 5 0 0',
                                                 fieldLabel: 'Begin',
                                                 labelWidth: 50
                                             },
                                             {
-                                                xtype: 'spinnerfield',
+                                                "xtype": "textfield",
+                                                "id": "edittextintegrateEnd",
                                                 flex: 1,
-                                                height: 40,
-                                                margin: '5 10 0 0',
+                                                height: 30,
+                                                margin: '5 5 0 0',
                                                 fieldLabel: 'End',
                                                 labelWidth: 50
-                                            }]
+                                            }
+                                            ]
                                         },
                                         {
                                             xtype: 'panel',
@@ -647,10 +903,33 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             items: [
                                             {
                                                 xtype: 'spinnerfield',
+                                                id:'integrateTimezone',
                                                 flex: 0,
                                                 height: 40,
                                                 fieldLabel: 'Timezone',
-                                                labelWidth: 70
+                                                labelWidth: 70,
+                                                value: 0,
+                                                step: -1,
+                                                // override onSpinUp (using step isn't neccessary)
+                                                onSpinUp: function()
+                                                {
+                                                    var me = this;
+                                                    if (!me.readOnly)
+                                                    {
+                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                        me.setValue((val - me.step) + ' ');
+                                                    }
+                                                },
+                                                // override onSpinDown
+                                                onSpinDown: function()
+                                                {
+                                                    var me = this;
+                                                    if (!me.readOnly)
+                                                    {
+                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                        me.setValue((val + me.step) + ' ');
+                                                    }
+                                                }
                                             }]
                                         }]
                                     }]
@@ -679,22 +958,75 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                         {
                                             xtype: 'spinnerfield',
+                                            id:'integratefactor',
                                             margins: '',
-                                            flex: 0.7,
+                                            flex: 1,
                                             height: 40,
                                             margin: '0 10 0 0',
                                             fieldLabel: 'factor',
-                                            labelWidth: 50
+                                            labelWidth: 50,
+                                            value: 0,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'combobox',
-                                            flex: 0.7,
+                                            flex: 1,
                                             height: 40,
                                             margin: '0 10 0 0',
-                                            fieldLabel: 'flow'
+                                            fieldLabel: 'flow',
+                                            labelWidth: 35,
+                                            id:'comboxIntegrateFlow',
+                                            value: 'trapz',
+                                            store: Ext.create('Ext.data.Store',
+                                            {
+                                                fields: ['abbr', 'name'],
+                                                data: [
+                                                {
+                                                    'abbr': 'trapz',
+                                                    'name': 'trapz'
+                                                },
+                                                {
+                                                    'abbr': 'cumtrapz',
+                                                    'name': 'cumtrapz'
+                                                },
+                                                {
+                                                    'abbr': 'simps',
+                                                    'name': 'simps'
+                                                },
+                                                {
+                                                    'abbr': 'romb',
+                                                    'name': 'romb'
+                                                }]
+                                            }),
+                                            "matchFieldWidth": false,
+                                            "valueField": "abbr",
+                                            "displayField": "name",
+                                            queryMode: 'local',
+                                            forceSelection: true
                                         },
                                         {
                                             xtype: 'checkboxfield',
+                                            id:'integratedateastext',
                                             flex: 1,
                                             height: 40,
                                             fieldLabel: '',

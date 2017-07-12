@@ -30,146 +30,19 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         var methodpanel=Ext.getCmp('methodstabs');
         var methodserch=Ext.getCmp('buttonExecute');
-        methodserch.disable();
-        methodpanel.disable();
+        // methodserch.disable();
+        // methodpanel.disable();
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
-            methodserch.enable();
-            methodpanel.enable();
+            // methodserch.enable();
+            // methodpanel.enable();
         },this);
         
         this.pchoose.on("procedureRemoved",function(procedure) {
             this.chartpanel.removeProcedure(procedure);
         },this);
         
-        // this.chartpanel.on('observedPropertyIsSet',function(chartpanel, observedProperty){
-        //     console.log(observedProperty);
-        //     console.log(chartpanel);
-        // },this);
-        
-        // g= new Dygraph(
-        //     document.getElementById('chartpanelmethod-body'),
-        //     "Date,Temperature\n" +
-        //     "2008-05-07,15\n" +
-        //     "2008-05-08,20\n" +
-        //     "2008-05-09,40\n"
-        // );
-
-
-        // this.chartpanel.on("clickCallback",function(panel, e, x, pts) {
-        //     this.updateGridSelection([x]);
-        //     panel.highlightRegion(x);
-        // },this.grideditor);
-        
-        
-        // this.chartpanel.on("seriesSelected",function(panel, e, x, y, pts) {
-        //     this.updateGridSelection([x,y]);
-        //     panel.highlightRegion(x,y);
-        // },this.grideditor);
-
-
-        // Ext.getCmp('pchoose').on("serviceSelected",function(service) {
-        //     this.fit2service(service);
-        //     console.log('service selected method');
-        // }
-        // // ,Ext.getCmp('proceduremap')
-        // );
-
-        // Ext.getCmp('pchoose').on("offeringSelected",function(offering) {
-        //     this.fit2offering(offering);
-        //     console.log('offering selected method');
-        // }
-        // // ,Ext.getCmp('proceduremap')
-        // );
-
-        // Ext.getCmp('pchoose').on("procedureSelected",function(procedure) {
-        //     this.fit2procedure(procedure);
-        //     console.log('procedure selected method');
-        // }
-        // // ,Ext.getCmp('proceduremap')
-        // );
-
-        // // Ext.getCmp('proceduremap').on("procedureSelected",function(service, offering, procedure) {
-        // //     this._addProcedure(service, offering, procedure);
-        // // },Ext.getCmp('pchoose'));
-
-        // Ext.getCmp('pchoose').on("procedureAdded",function(procedure) {
-        //     this['chart'].addProcedure(procedure);
-        //     // this['map'].add2highlight(procedure);
-        //     // this['map'].fit2offering();
-        // },{
-        //   chart: Ext.getCmp('chartpanel')
-        //   // map: Ext.getCmp('proceduremap')
-        // });
-
-        // Ext.getCmp('pchoose').on("procedureRemoved",function(procedure) {
-        // // this['map'].removeHighlight(procedure);
-        // this['chart'].removeProcedure(procedure);
-        // // this['grid'].removeProcedure(procedure);
-        // },{
-        //   chart: Ext.getCmp('chartpanel'),
-        //   // map: Ext.getCmp('proceduremap'),
-        //   // grid: Ext.getCmp('gridpanel')
-        // });
-
-        // Ext.getCmp('chartpanel').on("queueLoaded",function(chartpanel) {
-        //     this.initReadOnlyGrid(
-        //         chartpanel.procedures,
-        //         Ext.getCmp("oeCbObservedProperty").getValue());
-        // }
-        // // ,Ext.getCmp("gridpanel")
-        // );
-
-        // Ext.getCmp('chartpanel').on("clickCallback",function(panel, e, x, pts) {
-        //     this.updateGridSelection([x]);
-        //     panel.highlightRegion(x);
-        // }
-        // // ,Ext.getCmp('gridpanel')
-        // );
-        // var dygraphs = {};
-        // dygraphs['chartpanel'] = new Dygraph(
-        // Ext.getCmp('chartpanel123');
-        
-        
-        // document.getElementById("chartCntt-body"),
-        // console.log(Ext.getCmp("chartCntt"));
-
-        // this.g= new Dygraph(
-        //     Ext.get("chartCntt-body"),
-        //     "Date,Temperature\n" +
-        //     "2008-05-07,15\n" +
-        //     "2008-05-08,20\n" +
-        //     "2008-05-09,40\n"
-        // );
-
-
-        /*Ext.getCmp('gridpanel').on("select",function(panel, grid, record, index, eOpts) {
-            console.log("select:");
-            console.dir(arguments);
-        },Ext.getCmp('chartpanel'));*/
-
-        // Ext.getCmp('gridpanel').on("selectionchange",function(panel, grid, selected, eOpts) {
-        //
-        //     if (selected.length==1) {
-        //         //this.addAnnotation(selected[0].get('micro'));
-        //         this.highlightRegion(selected[0].get('micro'));
-        //     }else if (selected.length>1) {
-        //         var rec, begin, end;
-        //         rec = selected[0];
-        //         begin = rec.get('micro');
-        //         rec = selected[selected.length-1];
-        //         end = rec.get('micro');
-        //         this.highlightRegion(begin,end);
-        //     }else if (selected.length==0) {
-        //         this.highlightRegion();
-        //         this.removeAnnotations();
-        //     }
-        // },Ext.getCmp('chartpanel'));
-
-
-
-
         Ext.getCmp("methodsCombox").select(0);
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
 
@@ -182,7 +55,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var resample = Ext.getCmp('resamplePanel');
             var integrate = Ext.getCmp('integratePanel');
             var regularization = Ext.getCmp('regularizationPanel');
-
+            var fill = Ext.getCmp('fillPanel1');
+            var dataValues = Ext.getCmp('fillPanel');
+            var quality = Ext.getCmp('fillPanel');
+            var statistics = Ext.getCmp('fillPanel');
+            var hydro_indices = Ext.getCmp('fillPanel');
+            var hydro_events = Ext.getCmp('fillPanel');
+            var hargreaves = Ext.getCmp('fillPanel');
+            var compare = Ext.getCmp('fillPanel');
+            var subtract = Ext.getCmp('fillPanel');
+            var hydro_separation = Ext.getCmp('fillPanel');
             switch (value) {
                 case 0:
                     digital_filter.setVisible(true);
@@ -190,6 +72,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(false);
                     integrate.setVisible(false);
                     regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                   break;
                 case 1:
                     digital_filter.setVisible(false);
@@ -197,6 +89,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(false);
                     integrate.setVisible(false);
                     regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                   break;
                 case 2:
                     digital_filter.setVisible(false);
@@ -204,6 +106,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(true);
                     integrate.setVisible(false);
                     regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                   break;
                 case 3:
                     digital_filter.setVisible(false);
@@ -211,16 +123,50 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(false);
                     integrate.setVisible(true);
                     regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                   break;
                 case 4:
-                    digital_filter.setVisible(true);
-                    exeedance.setVisible(true);
-                    resample.setVisible(true);
-                    integrate.setVisible(true);
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
                     regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(true);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                   break;
                 case 5:
-                    console.log('dygraph is running');
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(true);
+                    hydro_separation.setVisible(false);
                     break;
                 case 6:
                     digital_filter.setVisible(false);
@@ -228,16 +174,152 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resample.setVisible(false);
                     integrate.setVisible(false);
                     regularization.setVisible(true);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                     break;
                 case 7:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(true);
                     break;
                 case 8:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(true);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                     break;
                 case 9:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(true);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                     break;
                 case 10:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(true);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                     break;
                 case 11:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(true);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
+                    break;
+                case 12:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(true);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
+                    break;
+                case 13:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(true);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(false);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
+                    break;
+                case 14:
+                    digital_filter.setVisible(false);
+                    exeedance.setVisible(false);
+                    resample.setVisible(false);
+                    integrate.setVisible(false);
+                    regularization.setVisible(false);
+                    fill.setVisible(false);
+                    dataValues.setVisible(false);
+                    quality.setVisible(false);
+                    statistics.setVisible(false);
+                    hydro_indices.setVisible(false);
+                    hydro_events.setVisible(false);
+                    hargreaves.setVisible(true);
+                    compare.setVisible(false);
+                    subtract.setVisible(false);
+                    hydro_separation.setVisible(false);
                     break;
             }
         });
@@ -251,6 +333,61 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var Resulttext=Ext.getCmp('Resulttextpanel');
             var chartPlot=Ext.getCmp('chartSeries');
             var ExeeTextView=Ext.getCmp('ResultViewer');
+
+            if (methods == 0)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var digLow= Ext.getCmp("digLowcutOff").getValue();
+                var digHigh= Ext.getCmp("digHigcutOff").getValue();
+                var digOrder= Ext.getCmp("digOrder").getValue();
+                var digiType= Ext.getCmp("digiType").getValue();
+                // intgTimePanel.disable();
+                // if(intgUseTime==){
+                //     intgTimePanel.enable()
+                // }
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Digital Filter Params:  Integrate Low cut-off: "+digLow+"  High cut-off: "+digHigh+"  Order: "+digOrder+"  Type: "+digiType);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
 
             if (methods == 1)
             {
@@ -377,6 +514,170 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     }
                 });
             }
+            if (methods == 3)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+                var frequency;
+                var percentage;
+                var value;
+
+                //Taking Input
+                var intgTimeUnit= Ext.getCmp("timeUnitsCombox").getValue();
+                var intgHow= Ext.getCmp("comboxIntegrateFlow").getValue();
+                var intgFactor= Ext.getCmp("integratefactor").getValue();
+
+                var intgUseTime= Ext.getCmp("checkUsetime").getValue();
+                var intgTimePanel= Ext.getCmp("UseTimePanel");
+                // intgTimePanel.disable();
+                // if(intgUseTime==){
+                //     intgTimePanel.enable()
+                // }
+                
+                // var intgFlow= Ext.getCmp("comboxIntegrateFlow").getValue();
+                var intgDateAsText= Ext.getCmp("integratedateastext").getValue();
+                var intgBegin= Ext.getCmp("edittextintegrateBegin").getValue();
+                var intgEnd= Ext.getCmp("edittextintegrateEnd").getValue();
+                var intgTimeZone= Ext.getCmp("integrateTimezone").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Integrate Params:  Integrate Time Unit: "+intgTimeUnit+"  Use Time: "+intgUseTime+"  Begin Time: "+intgBegin+"  End Time: "+intgEnd+"  TimeZone: "+intgTimeZone+"  How: "+intgHow+"  Factor: "+intgFactor+"  DateAsText: "+intgDateAsText);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 4)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 5)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
             if(methods==6){
                 // console.log('BUTTON EXECUTE CLICKED'); 
                 var frequency= Ext.getCmp("edittextFrequency").getValue();
@@ -403,7 +704,400 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         console.log(text2);
                         }
                     });
-                }
+            }
+
+            if (methods == 7)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 8)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 9)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 10)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 11)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 12)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 13)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
+            if (methods == 14)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
         },this);
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){

@@ -56,15 +56,15 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var integrate = Ext.getCmp('integratePanel');
             var regularization = Ext.getCmp('regularizationPanel');
             var fill = Ext.getCmp('fillPanel1');
-            var dataValues = Ext.getCmp('fillPanel');
-            var quality = Ext.getCmp('fillPanel');
-            var statistics = Ext.getCmp('fillPanel');
-            var hydro_indices = Ext.getCmp('fillPanel');
-            var hydro_events = Ext.getCmp('fillPanel');
-            var hargreaves = Ext.getCmp('fillPanel');
-            var compare = Ext.getCmp('fillPanel');
-            var subtract = Ext.getCmp('fillPanel');
-            var hydro_separation = Ext.getCmp('fillPanel');
+            var dataValues = Ext.getCmp('DataValuesPanel');
+            var quality = Ext.getCmp('qualityPanel');
+            var statistics = Ext.getCmp('StataticsPanel');
+            var hydro_indices = Ext.getCmp('fillPanel1');
+            var hydro_events = Ext.getCmp('fillPanel1');
+            var hargreaves = Ext.getCmp('fillPanel1');
+            var compare = Ext.getCmp('fillPanel1');
+            var subtract = Ext.getCmp('fillPanel1');
+            var hydro_separation = Ext.getCmp('fillPanel1');
             switch (value) {
                 case 0:
                     digital_filter.setVisible(true);

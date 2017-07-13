@@ -483,30 +483,31 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var json1 = Ext.decode(response.responseText);
                         // for (var i = 0; i < json1.data.length; i++) {
                         // }
-                                // console.log(json1.data);
-                                // console.log(JSON.parse(json1.data));
-                                var test=JSON.parse(json1.data);
-                                // for(var i=0;i<test.length;i++){
-
+                                console.log(json1['data']);
+                                // console.log(JSON.parse(json1['data']));
+                                // var test=JSON.parse(json1.data);
+                                // for(var i=0;i<json1['data'].length;i++){
+                                //     console.log(json1['data'][i][0]+"   "+json1['data'][i][1])
                                 // }
+                                
+
+
                                 // Mask the container with loading message
                                 Ext.get('chartSeries').mask("Initializing chart..");
-                                var x=Object.keys(test['value']);
-                                var y=Object.values(test['value']);
-                                console.log(x,y);
+                                
+                                // var x=Object.keys(test['value']);
+                                // var y=Object.values(test['value']);
+                                // console.log(x,y);
                                 this.chartdata = [];
-                                for (var i = 0; i < x.length; i++) {
+                                for (var i = 0; i < json1['data'].length; i++) {
                                     var rec = [];
-                                    rec.push(parseInt(x[i]));
-                                    var vals = y[i];
+                                    rec.push(parseInt(json1['data'][i][0]));
+                                    var vals = json1['data'][i][1];
                                     rec = rec.concat(vals);
                                     this.chartdata.push(rec);
                                 }
-                                this.rederChart1(this.chartdata);
                                 console.log(this.chartdata);
-                        // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                        // Ext.Msg.alert("Info","UserName from Server : "+jsonResp.username);
-                        // console.log(json1);
+                                this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);

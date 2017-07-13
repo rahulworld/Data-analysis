@@ -39,6 +39,9 @@ except:
     import oat_algorithms as oa
 
 import json
+import numpy as np
+
+
 result1 = {
             "type": None,
             "data": None
@@ -251,6 +254,7 @@ class resamplingData(waIstsos):
         from pandas import datetime
         from datetime import datetime
         import pandas as pd
+        import time
         # import json
         freq=self.json['freq']
         how=self.json['sampling']
@@ -280,16 +284,31 @@ class resamplingData(waIstsos):
         df = pd.DataFrame(data1,columns = ['date','value'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
-        # df.data=df['value']
         del df['date']
 
         resample=Resample1(freq=freq, how=how, fill=fill, limit=int(limit), how_quality=quality)
-        res['resampled']=resample.execute1(df).to_json()
-        # resdata=df.resample('D', how='sum').to_json()
-        # res["resampled"]=resdata
-        
+        resdata=resample.execute1(df)
 
-        self.setData(res['resampled'])
+        values = np.array(resdata['value'])
+        times = resdata.index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
+
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
+
+        times_timestamp = map(convert_to_timestamp, times_string)
+
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i]]
+            data4.append(a)
+
+        # dictionary = {'data': data4}
+
+        self.setData(data4)
         self.setMessage("resampling is successfully working")
 
 class Exceedance():

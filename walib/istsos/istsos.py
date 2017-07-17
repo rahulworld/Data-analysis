@@ -32,14 +32,14 @@ from walib.oat.oatlib import method
 
 import pandas as pd
 import numpy as np
+import json
+
 
 try:
     from oatlib import oat_algorithms as oa
 except:
     import oat_algorithms as oa
 
-import json
-import numpy as np
 
 
 result1 = {
@@ -502,7 +502,6 @@ class regularization(waIstsos):
         # df.index = df['date']
         # del df['date']
         # resdata=df.resample('D', how='sum').to_json()
-
         # parsed_json=json.loads(resdata)
         # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
         # parsed_json=json.loads(json_data)
@@ -525,6 +524,94 @@ class regularization(waIstsos):
         x.asfreq(pd.datetools.Hour(), method='pad')
         self.setData(x)
         self.setMessage("this is regularisation successfully")
+
+class HargreavesETo():
+    """ """
+    def __init__(self):
+        self.prob = []
+        self.time_f = []
+
+    def execute1(self, dataframe):
+        """ execute method """
+        import numpy as np
+        import pandas as pd
+        df = dataframe
+        temp_oat = df.groupby(pd.TimeGrouper(freq='D')).agg({'data': lambda x: (0.0023 * (x.mean() + 17.8) * (x.max() - x.min()) ** 0.5),'quality': np.min})
+        return temp_oat
+
+class HargreavesETo1():
+    """ """
+    def __init__(self):
+        self.prob = []
+        self.time_f = []
+    def execute1(self, dataframe):
+        """ execute method """
+        df = dataframe
+        temp_oat = df.groupby(pd.TimeGrouper(freq='D')).agg({'data': lambda x: (0.0023 * (x.mean() + 17.8) * (x.max() - x.min()) ** 0.5),'quality': np.min})
+        return temp_oat
+
+
+class Hargreaves(waIstsos):
+    """
+        Run HargreavesETo method
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        # from pandas import read_csv
+        # from pandas import datetime
+        # from datetime import datetime
+        # import pandas as pd
+        # import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+        
+        # haygreaves=HargreavesETo()
+        # resdata=haygreaves.execute1(df)
+
+        # res={}
+        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
+        # #data1 = {'date': index1, 'value':values1}
+        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        # df['date'] = pd.to_datetime(df['date'])
+        # df.index = df['date']
+        # # df.data=df['value']
+        # del df['date']
+        haygreaves=HargreavesETo1()
+        resdata=haygreaves.execute1(df)
+        values = np.array(resdata['data'])
+        times = resdata.index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
+
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
+
+        times_timestamp = map(convert_to_timestamp, times_string)
+
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i]]
+            data4.append(a)
+
+        # dictionary = {'data': data4}
+
+        self.setData(data4)
+        self.setMessage("resampling is successfully working")
 
 
 class waValidatedb(waIstsos):

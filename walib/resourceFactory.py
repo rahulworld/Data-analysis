@@ -106,9 +106,9 @@ def initResource(waEnviron):
                 elif resource == "statistics":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
-                elif resource == "hydrogreaves":
+                elif resource == "hargreaves":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.Hargreaves(waEnviron)
                 
                     
 

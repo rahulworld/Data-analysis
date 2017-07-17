@@ -712,47 +712,59 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+                // var hsmode= Ext.getCmp("hsmode").getValue();
+                // var hsalpha= Ext.getCmp("hsalpha").getValue();
+                // var bsalpha= Ext.getCmp("bsalpha").getValue();
+                var hsmode
+                var hsalpha
+                var bsalpha
 
                 var exeeResult="";
 
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
+                textHistory.setValue("Filter Hydro Separation Params:  mode: "+hsmode+"  alpha: "+hsalpha+"  bsalpha"+bsalpha);
 
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/hydrosaparation', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        'Hsmode':hsmode,
+                        'Hsalpha':hsalpha,
+                        'bsalpha':bsalpha,
+                        'index1': resdata1,
+                        'values1': resdata2,
+                        'qual': resdata3
+                    },
+                    success: function(response){
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1);
+                        // console.log(response.responseText);
+
+                        Ext.get('chartSeries').mask("Initializing chart..");
+                        this.chartdata = [];
+                        for (var i = 0; i < json1['data'].length; i++) {
+                            var rec = [];
+                            rec.push(parseInt(json1['data'][i][0]));
+                            var vals = json1['data'][i][1];
+                            rec = rec.concat(vals);
+                            this.chartdata.push(rec);
+                        }
+                        console.log(this.chartdata);
+                        this.rederChart1(this.chartdata);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 8)
@@ -859,47 +871,48 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+                var dataSta= Ext.getCmp("dataSta").getValue();
+                var quaSta= Ext.getCmp("quaSta").getValue();
+                var timeSta= Ext.getCmp("timeUseSta").getValue();
+                var beginSta= Ext.getCmp("beginSta").getValue();
+                var endSta= Ext.getCmp("endSta").getValue();
+                var timezoneSta= Ext.getCmp("timezoneSta").getValue();
 
                 var exeeResult="";
 
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+                textHistory.setValue("Filter Statistics Params: data: "+dataSta+"  quality: "+quaSta+"  time: "+timeSta+"  beginSta: "+beginSta+"  end: "+endSta+"  timezone: "+timezoneSta);
 
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/statistics', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "dataSta":dataSta,
+                        "quaSta":quaSta,
+                        "timeSta":timeSta,
+                        "beginSta":beginSta,
+                        "endSta": endSta,
+                        "timezoneSta": timezoneSta,
+                        "index1": resdata1,
+                        "values1": resdata2,
+                        "qual": resdata3
+                    },
+                    success: function(response){
+                        ExeeTextView.setValue(response.responseText);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 11)

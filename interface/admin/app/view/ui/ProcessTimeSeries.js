@@ -1481,7 +1481,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'StataticsPanel',
                                 flex:1,
-                                height: 400,
+                                height: 300,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1493,7 +1493,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'panel',
                                         frame: false,
-                                        height: 100,
+                                        height: 40,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1502,12 +1502,14 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'checkboxfield',
                                                 flex: 1,
+                                                id:'dataSta',
                                                 fieldLabel: '',
                                                 boxLabel: 'Data'
                                             },
                                             {
                                                 xtype: 'checkboxfield',
                                                 flex: 1,
+                                                id:'quaSta',
                                                 fieldLabel: '',
                                                 boxLabel: 'Quality'
                                             }
@@ -1516,7 +1518,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'panel',
                                         margin: 10,
-                                        height: 400,
+                                        height: 80,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1524,7 +1526,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                             {
                                                 xtype: 'checkboxfield',
-                                                height: 50,
+                                                id:'timeUseSta',
+                                                width: 50,
                                                 flex: 0.2,
                                                 fieldLabel: '',
                                                 boxLabel: 'Use time'
@@ -1532,7 +1535,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'panel',
                                                 flex: 1,
-                                                height: 50,
+                                                id:'timeUse',
+                                                height: 100,
                                                 layout: {
                                                     type: 'hbox',
                                                     align: 'stretch'
@@ -1541,29 +1545,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     {
                                                         xtype: 'panel',
                                                         flex: 2,
-                                                        height: 50,
-                                                        layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
-                                                        items: [
-                                                            {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                height: 50,
-                                                                fieldLabel: 'Begin'
-                                                            },
-                                                            {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                height: 50,
-                                                                fieldLabel: 'End'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        xtype: 'panel',
-                                                        flex: 1,
                                                         height: 100,
                                                         layout: {
                                                             type: 'vbox',
@@ -1572,7 +1553,33 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                         items: [
                                                             {
                                                                 xtype: 'spinnerfield',
+                                                                flex: 1,
+                                                                id:'beginSta',
+                                                                height: 50,
+                                                                fieldLabel: 'Begin'
+                                                            },
+                                                            {
+                                                                xtype: 'spinnerfield',
+                                                                flex: 1,
+                                                                id:'endSta',
+                                                                height: 50,
+                                                                fieldLabel: 'End'
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        xtype: 'panel',
+                                                        flex: 1,
+                                                        height: 50,
+                                                        layout: {
+                                                            type: 'vbox',
+                                                            align: 'stretch'
+                                                        },
+                                                        items: [
+                                                            {
+                                                                xtype: 'spinnerfield',
                                                                 flex: 0,
+                                                                id:'timezoneSta',
                                                                 height: 50,
                                                                 fieldLabel: 'Timezone'
                                                             }
@@ -1610,6 +1617,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'label',
                                             flex: 1,
                                             height: 100,
+                                            margin:20,
                                             alignTarget: 'center',
                                             text: 'press Execute to run the process'
                                         }

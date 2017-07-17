@@ -242,7 +242,98 @@ class Resample1():
             temp_oat = df.resample(rule=self.freq,how=self.how,fill_method=self.fill, limit=self.limit)
 
         return temp_oat
+class Statistics():
+    """ compute base statistics: count, min, max, mean, std, 25%, 50% 75 percentile"""
 
+    def __init__(self, data=True, quality=False, tbounds=[None, None]):
+        """ Initialize the class
+
+        Args:
+            data (bool): if True compute statistics of data (default is True)
+            quality (bool): if True compute statistics of quality (default is False)
+            tbounds (list): a list or tuple of string (iso856) with upper and lower time limits for statistic calculation.
+                            bounds are closed bounds (t0 >= t <= t1)
+        """
+        self.quality = quality
+        self.data = data
+        self.tbounds = tbounds
+    def execute(self, dataframe):
+        """ Compute statistics """
+        df=dataframe
+        self.elab = {}
+
+        if self.tbounds == [None, None] or self.tbounds is None:
+            if self.data is True and self.quality is False:
+                self.elab['data'] = df['data'].describe().to_dict()
+            elif self.data is True and self.quality is True:
+                self.elab['data'] = df.describe().to_dict()
+            elif self.data is False and self.quality is True:
+                self.elab['data'] = df['quality'].describe().to_dict()
+            else:
+                raise Exception("data and quality cannot be both False")
+        else:
+            if self.data is True and self.quality is False:
+                self.elab['data'] = df.ix[self.tbounds[0]:self.tbounds[1]]['data'].describe().to_dict()
+            elif self.data is True and self.quality is True:
+                self.elab['data'] = df.ix[self.tbounds[0]:self.tbounds[1]].describe().to_dict()
+            elif self.data is False and self.quality is True:
+                self.elab['data'] = df.ix[self.tbounds[0]:self.tbounds[1]]['quality'].describe().to_dict()
+            else:
+                raise Exception("data and quality cannot be both False")
+        # resdat = 'dict'
+        resdata= self.elab
+        return resdata
+
+class Statisticsmethod(waIstsos):
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    """
+        Execute hydro graph separator
+    """
+    def executePost(self):
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        data = self.json['dataSta']
+        quality = self.json['quaSta']
+        timeSta = self.json['timeSta']
+        beginSta = self.json['beginSta']
+        endSta = self.json['endSta']
+        timezoneSta = self.json['timezoneSta']
+
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+
+        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
+        # #data1 = {'date': index1, 'value':values1}
+        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        # df['date'] = pd.to_datetime(df['date'])
+        # df.index = df['date']
+        # # df.data=df['value']
+        # del df['date']
+        tbounds = [None, None]
+        if timeSta:
+            timezone = ''
+            if timezone >= 0:
+                timez = "+" + "%02d:00" % (timezone)
+            else:
+                timez = "-" + "%02d:00" % (abs(timezone))
+            begin_pos = '' + timez
+            end_pos = '' + timez
+            tbounds = [begin_pos, end_pos]
+
+        stat=Statistics(data=data, quality=quality, tbounds=tbounds)
+        st=stat.execute(df)
+        self.setData(st['data'])
+        self.setMessage("Statistics is successfully working")
 
 class resamplingData(waIstsos):
     def __init__(self, waEnviron):
@@ -524,6 +615,142 @@ class regularization(waIstsos):
         x.asfreq(pd.datetools.Hour(), method='pad')
         self.setData(x)
         self.setMessage("this is regularisation successfully")
+
+
+class HydroGraphSep():
+    """ Class to assign constant weight values """
+
+    def __init__(self, mode, alpha=0.98, bfl_max=0.50):
+        """Perform hydrogram separation
+
+        Args:
+            mode (str): the method for hydrograph separation.
+            Alleowed modes are:
+            * TPDF: Two Parameter Digital Filter (Eckhardt, K., 2005. How to Construct Recursive Digital Filters
+              for Baseflow Separation. Hydrological Processes, 19(2):507-515).
+            * SPDF: Single Parameter Digital Filter (Nathan, R.J. and T.A. McMahon, 1990. Evaluation of Automated
+              Techniques for Baseflow and Recession Analysis. Water Resources Research, 26(7):1465-1473).
+
+        Returns:
+            a tuple of two oat.Sensor objects (baseflow,runoff)
+        """
+        if not mode in ['TPDF', 'SPDF']:
+            raise ValueError("stat parameter shall be one of: 'VAR','SD','CV','WT','SQRWT'")
+
+        self.mode = mode
+        self.alpha = alpha
+        self.bfl_max = bfl_max
+
+    def execute(self, dataframe):
+        """ Compute statistics """
+        df=dataframe
+
+        """ apply selected mode for hysep """
+
+        #if 'use' in oat.ts.columns:
+            #del oat.ts['use']
+
+        flux = df
+        base = df
+
+        #print (base.ts.ix[0]['data'])
+
+        base['quality'] = np.zeros(base['quality'].size)
+        base['data'] = np.zeros(base['data'].size)
+        runoff = base
+        base.ix[0, 'data'] = flux.ix[0, 'data']
+
+        #print (len(flux.ts.index))
+
+        if self.mode == 'TPDF':
+            a = (1 - self.bfl_max) * self.alpha
+            b = (1 - self.alpha) * self.bfl_max
+            c = (1 - self.alpha * self.bfl_max)
+            for i in range(1, len(flux.index)):
+                #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
+                    #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
+                base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
+                    + b * flux.ix[i, 'data']) / c
+                if base.ix[i, 'data'] > flux.ix[i, 'data']:
+                    base.ix[i, 'data'] = flux.ix[i, 'data']
+                runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
+
+        elif self.mode == 'SPDF':
+            a = (1 + self.alpha) / 2
+            for i in range(1, len(flux.index)):
+                #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
+                    #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
+                runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
+                    + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
+                if runoff.ix[i, 'data'] < 0:
+                    runoff.ix[i, 'data'] = 0
+                if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
+                    runoff.ix[i, 'data'] = flux.ix[i, 'data']
+                base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
+
+        base.name = "{}_base".format('base')
+        runoff.name = "{}_runoff".format('runoff')
+
+#         self.result['type'] = "sensor list"
+#         self.result['data'] = [base, runoff]
+#         return self.returnResult(detailedresult)
+        return base
+
+class HSMethod(waIstsos):
+    """
+        Run HargreavesETo method
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+        # mode = self.json['hsmode']
+        # alpha =self.json['hsalpha']
+        # bfl = self.json['hsbfl']
+        
+        mode = 'TPDF'
+        alpha = 0.98
+        bfl = 0.50
+
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+        
+        HS=HydroGraphSep(mode, alpha=alpha, bfl_max=bfl)
+        resdata=HS.execute(df)
+
+        values = np.array(resdata['data'])
+        times = resdata.index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
+
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
+
+        times_timestamp = map(convert_to_timestamp, times_string)
+
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i]]
+            data4.append(a)
+
+        # dictionary = {'data': data4}
+
+        self.setData(data4)
+        self.setMessage("resampling is successfully working")
+
 
 class Fill():
     """ """

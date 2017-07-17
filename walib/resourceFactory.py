@@ -88,9 +88,9 @@ def initResource(waEnviron):
                 elif resource == "data_values":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
-                elif resource == "hydro_separation":
+                elif resource == "hydrosaparation":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.HSMethod(waEnviron)
                 elif resource == "integrate":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
@@ -105,7 +105,7 @@ def initResource(waEnviron):
                     return istsos.fillMethod(waEnviron)
                 elif resource == "statistics":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.Statisticsmethod(waEnviron)
                 elif resource == "hargreaves":
                     from walib.istsos import istsos
                     return istsos.Hargreaves(waEnviron)

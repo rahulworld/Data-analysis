@@ -908,6 +908,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
@@ -924,24 +928,28 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     scope: this,
                     method:"POST",
                     jsonData:{
-                        "fillMehod":exceeValues,
-                        "fillConsucutive":exceeProbability,
+                        "fillMethod1":fillMethod,
+                        "fillConsucutive1":fillConsucutive,
                         "index1": resdata1,
                         "values1": resdata2,
-                        "qual": quality
+                        "qual": resdata3
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
                         console.log(json1);
-                        // for (var i = 0; i < json1["data"].length; i++) {
-                        //         frequency=json1["data"][i][frequency];
-                        //         percentage=json1["data"][i][percentage];
-                        //         value=json1["data"][i][value];
-                        //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                        // }
-                        //         // for(var i=0;i<test.length;i++){
-                        //         // }
-                        // ExeeTextView.setValue(exeeResult);
+                        // console.log(response.responseText);
+
+                        Ext.get('chartSeries').mask("Initializing chart..");
+                        this.chartdata = [];
+                        for (var i = 0; i < json1['data'].length; i++) {
+                            var rec = [];
+                            rec.push(parseInt(json1['data'][i][0]));
+                            var vals = json1['data'][i][1];
+                            rec = rec.concat(vals);
+                            this.chartdata.push(rec);
+                        }
+                        console.log(this.chartdata);
+                        this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);

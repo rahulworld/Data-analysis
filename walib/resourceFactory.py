@@ -102,7 +102,7 @@ def initResource(waEnviron):
                     return istsos.regularization(waEnviron)
                 elif resource == "fill":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.fillMethod(waEnviron)
                 elif resource == "statistics":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)

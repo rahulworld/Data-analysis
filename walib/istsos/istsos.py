@@ -690,6 +690,7 @@ class HydroGraphSep():
 #         self.result['data'] = [base, runoff]
 #         return self.returnResult(detailedresult)
         return runoff
+
 class HSMethod(waIstsos):
     """
         Run HargreavesETo method
@@ -743,6 +744,147 @@ class HSMethod(waIstsos):
 
         self.setData(resdata)
         self.setMessage("resampling is successfully working")
+
+
+class  QualityStat():
+    """ Class to assign constant values """
+
+    def __init__(self, value, vbounds=[(None, None)], tbounds=[(None, None)], statflag='WT'):
+        """Assign a constant value to the time series
+
+        Args:
+            value (float): the value to be assigned
+            vbounds (list): a list of tuples with upper and lower value limits for assignment.
+                bounds are closed bounds (min >= x <= max)
+                e.g: [(None,0.2),(0.5,1.5),(11,None)] will apply:
+                if data is lower then 0.2 # --> (None,0.2)
+                or data is between 0.5 and 1.5 # --> (0.5,1.5)
+                or data is higher then 11 # --> (11,None)
+            tbounds (list): a list of tuples with upper and lower time limits for assignment.
+                bounds are closed bounds (t0 >= t <= t1)
+
+        Returns:
+            a new oat.Sensor object with assigned constant value based on conditions
+        """
+        if not statflag in ['VAR', 'SD', 'CV', 'WT', 'SQRWT']:
+            raise ValueError("stat parameter shall be one of: 'VAR','SD','CV','WT','SQRWT'")
+
+        self.value = value
+        self.statflag = statflag
+
+        if not vbounds:
+            self.vbounds = [(None, None)]
+        else:
+            self.vbounds = vbounds
+
+        if not tbounds:
+            self.tbounds = [(None, None)]
+        else:
+            self.tbounds = tbounds
+
+    def execute(self, dataframe):
+        """ aaply statistics acording to conditions """
+        df=dataframe
+        #apply the vaue to all observations
+        if self.vbounds == [(None, None)] and self.tbounds == [(None, None)]:
+            df['quality'] = df['quality'].apply(lambda d: self.value)
+            
+        #apply value to combination of time intervals and vaue intervals (periods and tresholds)
+        elif self.tbounds and self.vbounds:
+            tmin = df.index.min()
+            tmax = df.index.max()
+            vmin = df['data'].min()
+            vmax = df['data'].max()
+            for t in self.tbounds:
+                t0 = t[0] or tmin
+                t1 = t[1] or tmax
+                for v in self.vbounds:
+                    v0 = v[0] or vmin
+                    v1 = v[1] or vmax
+                    df.loc[
+                                (df.index >= t0) & (df.index <= t1)
+                                & (df['data'] >= v0) & (df['data'] <= v1),
+                                'quality'
+                            ] = self.value
+
+        # df.statflag = self.statflag
+        resdata=df
+        return resdata
+
+class QualityMethod(waIstsos):
+    """
+        Run data values method
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        value = self.json['qvalue']
+        stat = self.json['qstat']
+        time12 = self.json['qtime']
+        dvbegin = self.json['qbegin']
+
+        dvend = self.json['qend']
+        dvtimezone = self.json['qtimezone']
+
+        dvlow = self.json['qlow']
+        dvhigh = self.json['qhigh']
+
+        tbounds = [(None, None)]
+        vbounds = [(None, None)]
+
+        # if time12:
+        #     if dvtimezone >= 0:
+        #         timez = "+" + "%02d:00" % (dvtimezone)
+        #     else:
+        #         timez = "-" + "%02d:00" % (abs(dvtimezone))
+        #     begin_pos = dvbegin + timez
+        #     end_pos = dvend + timez
+        #     tbounds = [(begin_pos, end_pos)]
+
+        # if value:
+        #     min_val = dvlow
+        #     max_val = dvhigh
+        #     vbounds = [(min_val, max_val)]
+
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+
+        setQualityStat=QualityStat(value=value, vbounds=vbounds, tbounds=tbounds,statflag=stat)
+        resdata=setQualityStat.execute(df)
+        # return resdata
+        values = np.array(resdata['data'])
+        times = resdata.index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
+
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
+
+        times_timestamp = map(convert_to_timestamp, times_string)
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i]]
+            data4.append(a)
+        # dictionary = {'data': data4}
+        self.setData(data4)
+        self.setMessage("data values is successfully working")
+
+
 
 class SetDataValues():
     """ Class to assign constant values """

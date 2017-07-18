@@ -1188,7 +1188,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'qualityPanel',
                                 flex:1,
-                                height: 400,
+                                height: 250,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1200,7 +1200,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'panel',
                                         frame: false,
-                                        height: 100,
+                                        height: 40,
+                                        border:'false',
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1208,22 +1209,79 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                             {
                                                 xtype: 'spinnerfield',
-                                                height: 50,
+                                                height: 40,
                                                 width: '',
-                                                fieldLabel: 'value'
+                                                id:'Qvalue',
+                                                fieldLabel: 'value',
+                                                value: 0.00,
+                                                step: -1.00,
+                                                // override onSpinUp (using step isn't neccessary)
+                                                onSpinUp: function()
+                                                {
+                                                    var me = this;
+                                                    if (!me.readOnly)
+                                                    {
+                                                        var val = parseFloat(me.getValue());
+                                                        me.setValue(val - me.step);
+                                                    }
+                                                },
+                                                // override onSpinDown
+                                                onSpinDown: function()
+                                                {
+                                                    var me = this;
+                                                    if (!me.readOnly)
+                                                    {
+                                                        var val = parseFloat(me.getValue());
+                                                        me.setValue(val + me.step);
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'combobox',
                                                 margin: 0,
-                                                height: 50,
-                                                fieldLabel: 'Type of statistics'
+                                                height: 40,
+                                                id:'Qstat',
+                                                flex:1,
+                                                fieldLabel: 'Type of statistics',
+                                                value: "VAR",
+                                                store: Ext.create('Ext.data.Store',
+                                                {
+                                                    fields: ['abbr', 'name'],
+                                                    data: [
+                                                    {
+                                                        'abbr': 'VAR',
+                                                        'name': 'VAR'
+                                                    },
+                                                    {
+                                                        'abbr': 'SD',
+                                                        'name': 'SD'
+                                                    },
+                                                    {
+                                                        'abbr': 'CV',
+                                                        'name': 'CV'
+                                                    },
+                                                    {
+                                                        'abbr': 'WT',
+                                                        'name': 'WT'
+                                                    },
+                                                    {
+                                                        'abbr': 'SQRWT',
+                                                        'name': 'SQRWT'
+                                                    }
+                                                    ]
+                                                }),
+                                                matchFieldWidth: false,
+                                                valueField: "abbr",
+                                                displayField: "name",
+                                                queryMode: 'local',
+                                                forceSelection: true
                                             }
                                         ]
                                     },
                                     {
                                         xtype: 'panel',
-                                        margin: 10,
-                                        height: 100,
+                                        border:'false',
+                                        height: 80,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1232,14 +1290,16 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'checkboxfield',
                                                 flex: 0.2,
-                                                height: 50,
+                                                height: 80,
+                                                id:'Qtime',
                                                 fieldLabel: '',
                                                 boxLabel: 'Use time'
                                             },
                                             {
                                                 xtype: 'panel',
                                                 flex: 1,
-                                                height: 100,
+                                                height: 80,
+                                                border:'false',
                                                 layout: {
                                                     type: 'hbox',
                                                     align: 'stretch'
@@ -1247,8 +1307,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 items: [
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 2,
-                                                        height: 100,
+                                                        flex: 1,
+                                                        height: 40,
+                                                        border:'false',
                                                         layout: {
                                                             type: 'vbox',
                                                             align: 'stretch'
@@ -1256,14 +1317,16 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                         items: [
                                                             {
                                                                 xtype: 'spinnerfield',
-                                                                height: 50,
+                                                                height: 40,
+                                                                id:'Qbegin',
                                                                 flex: 1,
-                                                                fieldLabel: 'Begin'
+                                                                fieldLabel: 'Begin',
                                                             },
                                                             {
                                                                 xtype: 'spinnerfield',
-                                                                height: 50,
+                                                                height: 40,
                                                                 flex: 1,
+                                                                id:'Qend',
                                                                 fieldLabel: 'End'
                                                             }
                                                         ]
@@ -1271,7 +1334,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     {
                                                         xtype: 'panel',
                                                         flex: 1,
-                                                        height: 100,
+                                                        height: 40,
+                                                        border:'false',
                                                         layout: {
                                                             type: 'vbox',
                                                             align: 'stretch'
@@ -1279,9 +1343,32 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                         items: [
                                                             {
                                                                 xtype: 'spinnerfield',
-                                                                height: 50,
-                                                                flex: 0,
-                                                                fieldLabel: 'Timezone'
+                                                                height: 40,
+                                                                flex: 1,
+                                                                id:'Qtimezone',
+                                                                fieldLabel: 'Timezone',
+                                                                value: 0.00,
+                                                                step: -1.00,
+                                                                // override onSpinUp (using step isn't neccessary)
+                                                                onSpinUp: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseFloat(me.getValue());
+                                                                        me.setValue(val - me.step);
+                                                                    }
+                                                                },
+                                                                // override onSpinDown
+                                                                onSpinDown: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseFloat(me.getValue());
+                                                                        me.setValue(val + me.step);
+                                                                    }
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1291,8 +1378,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'panel',
-                                        margin: 10,
-                                        height: 100,
+                                        height: 40,
+                                        border:'false',
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1301,14 +1388,16 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'checkboxfield',
                                                 flex: 0.3,
-                                                margins: '10',
-                                                height: 50,
+                                                id:'Qlimit',
+                                                height: 40,
+                                                border:'false',
                                                 fieldLabel: '',
                                                 boxLabel: 'Use limit'
                                             },
                                             {
                                                 xtype: 'panel',
                                                 flex: 1,
+                                                border:'false',
                                                 layout: {
                                                     type: 'hbox',
                                                     align: 'stretch'
@@ -1316,16 +1405,61 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 items: [
                                                     {
                                                         xtype: 'spinnerfield',
-                                                        margins: '0',
-                                                        height: 50,
-                                                        flex: 0.7,
-                                                        fieldLabel: 'low'
+                                                        height: 40,
+                                                        id:'Qlow',
+                                                        flex: 1,
+                                                        fieldLabel: 'low',
+                                                        value: 0.00,
+                                                        step: -1.00,
+                                                        // override onSpinUp (using step isn't neccessary)
+                                                        onSpinUp: function()
+                                                        {
+                                                            var me = this;
+                                                            if (!me.readOnly)
+                                                            {
+                                                                var val = parseFloat(me.getValue());
+                                                                me.setValue(val - me.step);
+                                                            }
+                                                        },
+                                                        // override onSpinDown
+                                                        onSpinDown: function()
+                                                        {
+                                                            var me = this;
+                                                            if (!me.readOnly)
+                                                            {
+                                                                var val = parseFloat(me.getValue());
+                                                                me.setValue(val + me.step);
+                                                            }
+                                                        }
                                                     },
                                                     {
                                                         xtype: 'spinnerfield',
-                                                        flex: 0.7,
-                                                        height: 50,
-                                                        fieldLabel: 'high'
+                                                        flex: 1,
+                                                        id:'Qhigh',
+                                                        height: 40,
+                                                        fieldLabel: 'high',
+                                                        value: 0.00,
+                                                        step: -1.00,
+                                                        // override onSpinUp (using step isn't neccessary)
+                                                        onSpinUp: function()
+                                                        {
+                                                            var me = this;
+                                                            if (!me.readOnly)
+                                                            {
+                                                                var val = parseFloat(me.getValue());
+                                                                me.setValue(val - me.step);
+                                                            }
+                                                        },
+                                                        // override onSpinDown
+                                                        onSpinDown: function()
+                                                        {
+                                                            var me = this;
+                                                            if (!me.readOnly)
+                                                            {
+                                                                var val = parseFloat(me.getValue());
+                                                                me.setValue(val + me.step);
+                                                            }
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -1360,6 +1494,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 xtype: 'spinnerfield',
                                                 id:'dvvalue',
                                                 height: 40,
+                                                border:false,
                                                 width: '',
                                                 fieldLabel: 'value',
                                                 value: 0.00,
@@ -1370,7 +1505,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     var me = this;
                                                     if (!me.readOnly)
                                                     {
-                                                        var val = parseInt(me.getValue());
+                                                        var val = parseFloat(me.getValue());
                                                         me.setValue(val - me.step);
                                                     }
                                                 },
@@ -1380,7 +1515,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     var me = this;
                                                     if (!me.readOnly)
                                                     {
-                                                        var val = parseInt(me.getValue());
+                                                        var val = parseFloat(me.getValue());
                                                         me.setValue(val + me.step);
                                                     }
                                                 }
@@ -1391,6 +1526,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         margin: 5,
                                         height: 100,
+                                        border:false,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1401,6 +1537,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 flex: 0.2,
                                                 id:'dvtime',
                                                 height: 80,
+                                                border:false,
                                                 fieldLabel: '',
                                                 boxLabel: 'Use time'
                                             },
@@ -1408,6 +1545,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 xtype: 'panel',
                                                 flex: 1,
                                                 height: 80,
+                                                border:false,
                                                 layout: {
                                                     type: 'hbox',
                                                     align: 'stretch'
@@ -1416,6 +1554,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     {
                                                         xtype: 'panel',
                                                         height: 80,
+                                                        border:false,
                                                         flex: 2,
                                                         layout: {
                                                             type: 'vbox',
@@ -1426,6 +1565,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                 xtype: 'spinnerfield',
                                                                 flex: 1,
                                                                 id:'dvbegin',
+                                                                border:false,
                                                                 height: 40,
                                                                 fieldLabel: 'Begin'
                                                             },
@@ -1433,6 +1573,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                 xtype: 'spinnerfield',
                                                                 flex: 1,
                                                                 id:'dvend',
+                                                                border:false,
                                                                 height: 40,
                                                                 fieldLabel: 'End'
                                                             }
@@ -1442,6 +1583,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                         xtype: 'panel',
                                                         flex: 1,
                                                         height: 80,
+                                                        border:false,
                                                         layout: {
                                                             type: 'vbox',
                                                             align: 'stretch'
@@ -1450,6 +1592,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                             {
                                                                 xtype: 'spinnerfield',
                                                                 id:'dvtimezone',
+                                                                border:false,
                                                                 height: 80,
                                                                 flex: 0,
                                                                 fieldLabel: 'Timezone'
@@ -1464,6 +1607,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         margin: 5,
                                         height: 40,
+                                        border:'false',
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1482,6 +1626,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 xtype: 'panel',
                                                 flex: 1,
                                                 height: 40,
+                                                border:'false',
                                                 layout: {
                                                     type: 'hbox',
                                                     align: 'stretch'

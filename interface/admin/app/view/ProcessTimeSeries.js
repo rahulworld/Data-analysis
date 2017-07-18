@@ -718,13 +718,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 }
 
                 //Taking Input
-                // var hsmode= Ext.getCmp("hsmode").getValue();
-                // var hsalpha= Ext.getCmp("hsalpha").getValue();
-                // var bsalpha= Ext.getCmp("bsalpha").getValue();
-                var hsmode
-                var hsalpha
-                var bsalpha
-
+                var hsmode= Ext.getCmp("HSmode").getValue();
+                var hsalpha= Ext.getCmp("HSalpha").getValue();
+                var bsalpha= Ext.getCmp("bsalpha").getValue();
                 var exeeResult="";
 
                 Resulttext.setVisible(false);
@@ -736,9 +732,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     scope: this,
                     method:"POST",
                     jsonData:{
-                        'Hsmode':hsmode,
-                        'Hsalpha':hsalpha,
-                        'bsalpha':bsalpha,
+                        'hsmode':hsmode,
+                        'hsalpha':hsalpha,
+                        'hsbfl':bsalpha,
                         'index1': resdata1,
                         'values1': resdata2,
                         'qual': resdata3
@@ -748,17 +744,17 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         console.log(json1);
                         // console.log(response.responseText);
 
-                        Ext.get('chartSeries').mask("Initializing chart..");
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            rec = rec.concat(vals);
-                            this.chartdata.push(rec);
-                        }
-                        console.log(this.chartdata);
-                        this.rederChart1(this.chartdata);
+                        // Ext.get('chartSeries').mask("Initializing chart..");
+                        // this.chartdata = [];
+                        // for (var i = 0; i < json1['data'].length; i++) {
+                        //     var rec = [];
+                        //     rec.push(parseInt(json1['data'][i][0]));
+                        //     var vals = json1['data'][i][1];
+                        //     rec = rec.concat(vals);
+                        //     this.chartdata.push(rec);
+                        // }
+                        // console.log(this.chartdata);
+                        // this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1026,47 +1022,66 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
+                // console.log(resdata);
+                // console.log(resdata3);
                 //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+                var DataValue= Ext.getCmp("dvvalue").getValue();
+                var DataTime= Ext.getCmp("dvtime").getValue();
+                var DataBegin= Ext.getCmp("dvbegin").getValue();
+                var DataEnd= Ext.getCmp("dvend").getValue();
+                var DataTimezone= Ext.getCmp("dvtimezone").getValue();
+                var DataLow= Ext.getCmp("dvlow").getValue();
+                var DataHigh= Ext.getCmp("dvhigh").getValue();
+
 
                 var exeeResult="";
-
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
-
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
+                textHistory.setValue("Filter Data Value Params:  Values "+DataValue+" Time: "+DataTime+" Begin: "+DataBegin+" End: "+DataEnd+" TimeZone: "+DataTimezone+" low: "+DataLow+" High: "+DataHigh);
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/datavalue', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "index1": resdata1,
+                        "values1": resdata2,
+                        "qual":resdata3,
+                        "dvvalue":DataValue,
+                        "dvtime":DataTime,
+                        "dvbegin":DataBegin,
+                        "dvend":DataEnd,
+                        "dvtimezone":DataTimezone,
+                        "dvlow":DataLow,
+                        "dvhigh":DataHigh
+                    },
+                    success: function(response){
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1);
+                        // console.log(response.responseText);
+                        // Mask the container with loading message
+                        Ext.get('chartSeries').mask("Initializing chart..");
+                        
+                        this.chartdata = [];
+                        for (var i = 0; i < json1['data'].length; i++) {
+                            var rec = [];
+                            rec.push(parseInt(json1['data'][i][0]));
+                            var vals = json1['data'][i][1];
+                            rec = rec.concat(vals);
+                            this.chartdata.push(rec);
+                        }
+                        console.log(this.chartdata);
+                        this.rederChart1(this.chartdata);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 14)

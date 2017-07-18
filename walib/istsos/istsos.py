@@ -634,6 +634,7 @@ class HydroGraphSep():
         Returns:
             a tuple of two oat.Sensor objects (baseflow,runoff)
         """
+
         if not mode in ['TPDF', 'SPDF']:
             raise ValueError("stat parameter shall be one of: 'VAR','SD','CV','WT','SQRWT'")
 
@@ -641,27 +642,21 @@ class HydroGraphSep():
         self.alpha = alpha
         self.bfl_max = bfl_max
 
-    def execute(self, dataframe):
-        """ Compute statistics """
+    def execute(self,dataframe):
         df=dataframe
-
         """ apply selected mode for hysep """
-
         #if 'use' in oat.ts.columns:
             #del oat.ts['use']
-
-        flux = df
-        base = df
-
-        #print (base.ts.ix[0]['data'])
+        import copy
+        flux = copy.deepcopy(df)
+        base = copy.deepcopy(df)
 
         base['quality'] = np.zeros(base['quality'].size)
         base['data'] = np.zeros(base['data'].size)
-        runoff = base
+        runoff = copy.deepcopy(base)
+
         base.ix[0, 'data'] = flux.ix[0, 'data']
-
         #print (len(flux.ts.index))
-
         if self.mode == 'TPDF':
             a = (1 - self.bfl_max) * self.alpha
             b = (1 - self.alpha) * self.bfl_max
@@ -694,8 +689,7 @@ class HydroGraphSep():
 #         self.result['type'] = "sensor list"
 #         self.result['data'] = [base, runoff]
 #         return self.returnResult(detailedresult)
-        return base
-
+        return runoff
 class HSMethod(waIstsos):
     """
         Run HargreavesETo method
@@ -712,23 +706,153 @@ class HSMethod(waIstsos):
         index1=self.json['index1']
         values1=self.json['values1']
         qua=self.json['qual']
-        # mode = self.json['hsmode']
-        # alpha =self.json['hsalpha']
-        # bfl = self.json['hsbfl']
+        mode = self.json['hsmode']
+        alpha =self.json['hsalpha']
+        bfl = self.json['hsbfl']
+
+        # alpha=int(alpha)        
+        # bfl=int(bfl)
         
-        mode = 'TPDF'
-        alpha = 0.98
-        bfl = 0.50
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+
+        HS=HydroGraphSep(mode=mode, alpha=alpha, bfl_max=bfl)
+        resdata=HS.execute(df)
+
+        # values = np.array(resdata['data'])
+        # times = resdata.index
+        # times_string =[]
+        # for i in times:
+        #     times_string.append(str(i))
+
+        # def convert_to_timestamp(a):
+        #     dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+        #     return int(time.mktime(dt.timetuple()))
+
+        # times_timestamp = map(convert_to_timestamp, times_string)
+
+        # data4 = []
+        # for i in range(len(times_string)):
+        #     a = [times_timestamp[i], values[i]]
+        #     data4.append(a)
+
+        # dictionary = {'data': data4}
+
+        self.setData(resdata)
+        self.setMessage("resampling is successfully working")
+
+class SetDataValues():
+    """ Class to assign constant values """
+
+    def __init__(self, value, vbounds=[(None, None)], tbounds=[(None, None)]):
+        """Assign a constant value to the time series
+
+        Args:
+            value (float): the value to be assigned
+            vbounds (list): a list of tuples with upper and lower value limits for assignment.
+                bounds are closed bounds (min >= x <= max)
+                e.g: [(None,0.2),(0.5,1.5),(11,None)] will apply:
+                if data is lower then 0.2 # --> (None,0.2)
+                or data is between 0.5 and 1.5 # --> (0.5,1.5)
+                or data is higher then 11 # --> (11,None)
+            tbounds (list): a list of tuples with upper and lower time limits for assignment.
+                bounds are closed bounds (t0 >= t <= t1)
+
+        Returns:
+            a new oat.Sensor object with assigned constant value based on conditions
+        """
+        self.value = value
+
+        if not vbounds:
+            self.vbounds = [(None, None)]
+        else:
+            self.vbounds = vbounds
+
+        if not tbounds:
+            self.tbounds = [(None, None)]
+        else:
+            self.tbounds = tbounds
+
+    def execute(self, dataframe):
+        """ aaply statistics acording to conditions """
+        df=dataframe
+        #apply the value to all observations
+        #Here is df placed of df.loc['data']
+        if self.vbounds == [(None, None)] and self.tbounds == [(None, None)]:
+            df['data'] = df['data'].apply(lambda d: self.value)
+            # df.loc['data'] = df['data'].apply(lambda d: self.value)
+        #apply value to combination of time intervals and vaue intervals (periods and tresholds)
+        elif self.tbounds and self.vbounds:
+            tmin = df.index.min()
+            tmax = df.index.max()
+            vmin = df['data'].min()
+            vmax = df['data'].max()
+            for t in self.tbounds:
+                t0 = t[0] or tmin
+                t1 = t[1] or tmax
+                for v in self.vbounds:
+                    v0 = v[0] or vmin
+                    v1 = v[1] or vmax
+                    df.loc[(df.index >= t0) & (df.index <= t1) & (df['data'] >= v0) & (df['data'] <= v1),'data'] = self.value
+        resdata=df
+        return resdata
+
+class DataValuesMethod(waIstsos):
+    """
+        Run data values method
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        value = self.json['dvvalue']
+        time12 = self.json['dvtime']
+        dvbegin = self.json['dvbegin']
+
+        dvend = self.json['dvend']
+        dvtimezone = self.json['dvtimezone']
+
+        dvlow = self.json['dvlow']
+        dvhigh = self.json['dvhigh']
+
+        tbounds = [(None, None)]
+        vbounds = [(None, None)]
+
+        # if time12:
+        #     if dvtimezone >= 0:
+        #         timez = "+" + "%02d:00" % (dvtimezone)
+        #     else:
+        #         timez = "-" + "%02d:00" % (abs(dvtimezone))
+        #     begin_pos = dvbegin + timez
+        #     end_pos = dvend + timez
+        #     tbounds = [(begin_pos, end_pos)]
+
+        # if value:
+        #     min_val = dvlow
+        #     max_val = dvhigh
+        #     vbounds = [(min_val, max_val)]
 
         data1 = {'date': index1, 'data':values1, 'quality':qua}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
         del df['date']
-        
-        HS=HydroGraphSep(mode, alpha=alpha, bfl_max=bfl)
-        resdata=HS.execute(df)
 
+        setDataValues=SetDataValues(value=value, vbounds=vbounds, tbounds=tbounds)
+        resdata=setDataValues.execute(df)
+        # return resdata
         values = np.array(resdata['data'])
         times = resdata.index
         times_string =[]
@@ -740,17 +864,13 @@ class HSMethod(waIstsos):
             return int(time.mktime(dt.timetuple()))
 
         times_timestamp = map(convert_to_timestamp, times_string)
-
         data4 = []
         for i in range(len(times_string)):
             a = [times_timestamp[i], values[i]]
             data4.append(a)
-
         # dictionary = {'data': data4}
-
         self.setData(data4)
-        self.setMessage("resampling is successfully working")
-
+        self.setMessage("data values is successfully working")
 
 class Fill():
     """ """

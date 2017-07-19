@@ -340,33 +340,33 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
                 var digLow= Ext.getCmp("digLowcutOff").getValue();
                 var digHigh= Ext.getCmp("digHigcutOff").getValue();
                 var digOrder= Ext.getCmp("digOrder").getValue();
                 var digiType= Ext.getCmp("digiType").getValue();
-                // intgTimePanel.disable();
-                // if(intgUseTime==){
-                //     intgTimePanel.enable()
-                // }
-
                 var exeeResult="";
 
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
                 textHistory.setValue("Filter Digital Filter Params:  Integrate Low cut-off: "+digLow+"  High cut-off: "+digHigh+"  Order: "+digOrder+"  Type: "+digiType);
                 Ext.Ajax.request({
-                    url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                    url: Ext.String.format('{0}/istsos/operations/oat/digitalfilter', wa.url),
                     scope: this,
                     method:"POST",
                     jsonData:{
-                        "exceevalues":exceeValues,
-                        "exceeperc":exceeProbability,
-                        "etu":exceeTime,
-                        "exceeunder":exceeUnder,
+                        "dlow":digLow,
+                        "dhigh":digHigh,
+                        "dorder":digOrder,
+                        "dfilter":digiType,
                         "index1": resdata1,
-                        "values1": resdata2
+                        "values1": resdata2,
+                        "qual":resdata3
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);

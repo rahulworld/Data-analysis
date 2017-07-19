@@ -227,8 +227,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             var me = this;
                                             if (!me.readOnly)
                                             {
-                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                me.setValue((val - me.step) + ' ');
+                                                var val = me.getValue();
+                                                me.setValue(parseFloat(val) - me.step);
                                             }
                                         },
                                         // override onSpinDown
@@ -237,8 +237,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             var me = this;
                                             if (!me.readOnly)
                                             {
-                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                me.setValue((val + me.step) + ' ');
+                                                var val = me.getValue();
+                                                me.setValue(parseFloat(val) + me.step);
                                             }
                                         }
                                     },
@@ -254,8 +254,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         onSpinUp: function()
                                         {
                                             var me = this;
-                                                var val = parseInt(me.getValue());
-                                                me.setValue((val - me.step));
+                                            if (!me.readOnly)
+                                            {
+                                                var val = me.getValue();
+                                                me.setValue(parseFloat(val) - me.step);
+                                            }
                                         },
                                         // override onSpinDown
                                         onSpinDown: function()
@@ -263,8 +266,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             var me = this;
                                             if (!me.readOnly)
                                             {
-                                                var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                me.setValue((val + me.step) + ' ');
+                                                var val = me.getValue();
+                                                me.setValue(parseFloat(val) + me.step);
                                             }
                                         }
                                     }]

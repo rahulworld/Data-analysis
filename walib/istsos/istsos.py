@@ -284,6 +284,82 @@ class Statistics():
         resdata= self.elab
         return resdata
 
+class DigitalFilter():
+    """ """
+    def __init__(self, fs, lowcut, highcut=0.0, order=5, btype='lowpass'):
+        """bandpass Butterworth filter
+
+        Args:
+            lowcut (float): low cutoff frequency
+            highcut (float): high cutoff frequency
+            fs (float): sampling frequency
+            order (int): the filter order
+            btype (str): band type, one of ['lowpass', 'highpass', 'bandpass', 'bandstop']
+
+        Returns:
+            A new OAT object with filitered data
+        """
+        self.lowcut = int(lowcut)
+        self.highcut = int(highcut)
+        self.fs = fs
+        self.order = order
+        self.btype = btype
+
+    def execute(self, dataframe):
+        df=dataframe
+        """ Apply bandpass Butterworth filter to an OAT object """
+        try:
+            from scipy.signal import butter, lfilter, lfilter_zi
+        except:
+            raise ImportError("scipy.signal module is required for this method")
+
+        nyq = 0.5 * self.fs
+        low = self.lowcut / nyq
+        high = self.highcut / nyq
+        b, a = butter(self.order, [low, high], btype=self.btype)
+        #y = lfilter(b, a, oat.ts['data'])
+        zi = lfilter_zi(b, a)
+        y, zo = lfilter(b, a, df['data'], zi=zi * df['data'][0])
+
+        #copy oat and return the modified copy
+        df['data'] = y
+        resdata=df
+        return resdata
+
+class DigitalThread(waIstsos):
+    """
+        Execute digital filter (?)
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        highcut = self.json['dhigh']
+        lowcut = self.json['dlow']
+        order = self.json['dorder']
+        filter_type = self.json['dfilter']
+
+        if highcut == 0:
+            self.exception.emit(Exception('high cutoff freq must be > 0.0'))
+            return
+ 
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+        
+        digital=DigitalFilter(lowcut, highcut, order=order, btype=filter_type)
+        dig=digital.execute(df)
+                        
+        self.setData(dig)
+        self.setMessage("digital filter is successfully working")
+
+
 class Statisticsmethod(waIstsos):
     def __init__(self, waEnviron):
         waIstsos.__init__(self, waEnviron)

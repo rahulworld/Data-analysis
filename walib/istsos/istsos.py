@@ -572,6 +572,117 @@ class ExceedanceData(waIstsos):
 #         return self.returnResult(detailedresult)
 
 
+class Integrate():
+    """ Integrate a time series using different methods """
+
+    def __init__(self, periods=[(None, None)], tunit="seconds", factor=1, how='trapz', astext=False):
+        """Perform integration of time series curve
+
+        Args:
+            periods (list): a list of tuples with upper and lower time limits for volumes computation.
+            tunit (str): The time units of data employed by the time series, one of: 'seconds', 'minutes', 'hours', 'days', 'years'.
+            factor (float): factor by which integrated volumes or masses are multiplied before storage
+                generally used for unit conversion (e.g.: 0.0283168 will convert cubic feets to cubic meters)
+            how (str): integration method, available methods are:
+                * trapz - trapezoidal
+                * cumtrapz - cumulative trapezoidal
+                * simps - Simpson's rule
+                * romb - Romberger's rule
+            astext: define if dates has to be returned as text (True) or Timestamp (False). Default is False.
+
+        Returns:
+            a tuple of two oat.Sensor objects (baseflow,runoff)
+        """
+
+        integration_how = ['trapz', 'cumtrapz', 'simps', 'romb']
+        if not how in integration_how:
+            raise ValueError("integration mode %s not supported use one of: %s" % (how, integration_how))
+        if not tunit in ['seconds', 'minutes', 'hours', 'days', 'years']:
+            raise TypeError("tunit accpted values are: 'seconds','minutes','hours','days','years'")
+
+        self.periods = periods
+        self.factor = factor
+        self.how = how
+        self.astext = astext
+        if tunit == 'seconds':
+            self.res = 1
+        elif tunit == 'minutes':
+            self.res = 1 / 60
+        elif tunit == 'hours':
+            self.res = 1 / 3600
+        elif tunit == 'days':
+            self.res = 1 / (3600 * 24)
+        elif tunit == 'years':
+            self.res = 1 / (365 * 3600 * 24)
+
+    def execute(self, dataframe):
+        df=dataframe
+        """ apply selected mode for hysep """
+        try:
+            from scipy import integrate
+        except:
+            raise ImportError("scipy is required from hyseo method")
+
+        results = []
+        tmin = df.index.min()
+        tmax = df.index.max()
+        for t in self.periods:
+            t0 = t[0] or tmin
+            t1 = t[1] or tmax
+            rule = integrate.__getattribute__(self.how)
+
+            result = rule(df['data'].loc[t0:t1].values, df.loc[t0:t1].index.astype(np.int64) / 10 ** 9).tolist()
+            if self.astext:
+                results.append({"from": "%s" % t0, "to": "%s" % t1, "value": result})
+                #results.append(("%s" % t0, "%s" % t1, result * self.res * self.factor))
+            else:
+                results.append({"from": "%s" % t0, "to": "%s" % t1, "value": result})
+                # results.append({"from": t0, "to": t1, "value": result})
+                #results.append((t0, t1, result * self.res * self.factor))
+        return results
+
+class IntegrateMethod(waIstsos):
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        tunit = self.json['itimeunit']
+        factor = self.json['ifactor']
+        how = self.json['ihow']
+        astext = self.json['idataastext']
+        itimeuse=self.json['iusetime']
+        itimezone=self.json['itimezone']
+        ibegin=self.json['ibegin']
+        iend=self.json['iend']
+
+        period = [(None, None)]
+        # if itimeuse:
+        #     timezone1 = itimezone
+        #     if timezone1 >= 0:
+        #         timez = "+" + "%02d:00" % (timezone1)
+        #     else:
+        #         timez = "-" + "%02d:00" % (abs(timezone1))
+
+        #     begin_pos = ibegin + timez
+        #     end_pos = iend + timez
+
+        #     period = [(begin_pos, end_pos)]
+
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+        
+        Intgrt=Integrate(periods=period, tunit=tunit, factor=factor, how=how,astext=astext)
+        IG=Intgrt.execute(df)
+        
+        self.setData(IG)
+        self.setMessage("Integrate is successfully working")
 
 class regularization(waIstsos):
 

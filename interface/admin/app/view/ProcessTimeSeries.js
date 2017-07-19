@@ -516,13 +516,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 3)
             {
-                // Data
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var frequency;
-                var percentage;
-                var value;
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
                 var intgTimeUnit= Ext.getCmp("timeUnitsCombox").getValue();
@@ -547,37 +547,35 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
                 textHistory.setValue("Filter Integrate Params:  Integrate Time Unit: "+intgTimeUnit+"  Use Time: "+intgUseTime+"  Begin Time: "+intgBegin+"  End Time: "+intgEnd+"  TimeZone: "+intgTimeZone+"  How: "+intgHow+"  Factor: "+intgFactor+"  DateAsText: "+intgDateAsText);
-
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "index1": resdata1,
+                        "values1": resdata2,
+                        "qual":resdata3,
+                        "itimeunit":intgTimeUnit,
+                        "ihow":intgHow,
+                        "ifactor":intgFactor,
+                        "iusetime":intgUseTime,
+                        "ibegin":intgBegin,
+                        "iend":intgEnd,
+                        "itimezone":intgTimeZone,
+                        "idataastext":intgDateAsText,
+                    },
+                    success: function(response){
+                        // var json1 = Ext.decode(response.responseText);
+                        // console.log(json1);
+                        console.log(response.responseText);
+                        ExeeTextView.setValue(response.responseText);
+                        // ExeeTextView.setValue("  To:  "+json1['data']['to']+"  from: "+json1['data']['from']+"  value:  "+json1['data']['value']);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 4)

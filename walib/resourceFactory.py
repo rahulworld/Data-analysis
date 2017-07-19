@@ -91,9 +91,9 @@ def initResource(waEnviron):
                 elif resource == "hydrosaparation":
                     from walib.istsos import istsos
                     return istsos.HSMethod(waEnviron)
-                elif resource == "integrate":
+                elif resource == "intgrate":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.IntegrateMethod(waEnviron)
                 elif resource == "compare":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)

@@ -825,6 +825,100 @@ class HydroIndices(Method):
 
         return self.returnResult(detailedresult)
 
+class HydroEvents(Method):
+    """ class to calculate portion of time series associated with peak flow events"""
+
+    def __init__(self, rise_lag, fall_lag, window=1, min_peak=0, suffix="_event_N", period=None):
+        """peak flow periods extraction
+
+        Args:
+            rise_lag (float): The number of days prior to the peak to include in the event hydrograph.
+            fall_lag (float): The number of days following the peak to include in the event hydrograph.
+            window (int): Minimum time between successive peaks, in days.
+            min_peak (float): Minimum value for a peak.
+            suffix (string): The name of the time series on which statistical calculations will be carried out.
+            period (tuple): tuple of two elements indicating the BEGIN and END of datetimes records to be used in peak extraction.
+
+        Returns:
+            A list of oat objects with a storm hydrograph each, they will be named "seriesName+suffix+number"
+            (e.g.: with a series named "TEST" and a suffic "_hyevent_N" we will have: ["TEST_hyevent_N1, TEST_hyevent_N2, ...]
+        """
+        super(HydroEvents, self).__init__()
+
+        self.rise_lag = rise_lag
+        self.fall_lag = fall_lag
+        self.window = window
+        self.min_peak = min_peak
+        self.suffix = suffix
+        self.period = period
+
+    def execute(self, oat, detailedresult=False):
+        """ calculate peak hydrographs """
+        try:
+            from datetime import timedelta as dttd
+            from scipy.signal import argrelmax
+        except:
+            raise ImportError("scipy module is required for this method")
+
+        #win_stps = int(dttd(days=self.window) / oat.ts.index.freq.delta)
+        win_dt = dttd(days=self.window)
+
+        if self.period:
+            signal = oat.ts[self.period[0]:self.period[1]]['data'].values
+        else:
+            signal = oat.ts['data'].values
+
+        if not self.min_peak:
+            self.min_peak = min(signal)
+
+        #detect the local maxima above the setted treshold
+        idx = argrelmax(np.clip(signal, self.min_peak, signal.max()))
+
+        times = []
+        vales = []
+        index = idx[0].tolist()
+        for i in range(len(index)):
+            times.append(oat.ts.iloc[[index[i]]].index[0].to_datetime())
+            vales.append(oat.ts.iloc[index[i]]['data'])
+            #print(i, index[i], times[i], vales[i])
+
+        events_idx = []
+
+        while index != [None] * len(index):
+            #detect the index of the max value
+            imax = max(list(range(len(vales))), key=vales.__getitem__)
+            iloc = None
+            #find local maxima in range and opportunately set to None
+            for i in range(len(index)):
+                if (times[i] is not None) and (i != imax) and (abs(times[i] - times[imax]).total_seconds() < win_dt.total_seconds()):
+                    #print(times[i], times[imax], abs(times[i] - times[imax]).total_seconds(), win_dt.total_seconds())
+                    if vales[i] < vales[imax]:
+                        times[i] = None
+                        vales[i] = None
+                        index[i] = None
+            iloc = index[imax]
+            index[imax] = None
+            vales[imax] = None
+            times[imax] = None
+            if iloc is not None:
+                events_idx.append(iloc)
+
+        tsl = []
+        for i in events_idx:
+            temp_oat = oat.copy()
+            temp_oat.name = temp_oat.name + self.suffix + "%s" % (len(tsl) + 1)
+
+            st = oat.ts.iloc[[i]].index[0].to_datetime() - pd.DateOffset(days=self.rise_lag)
+            en = oat.ts.iloc[[i]].index[0].to_datetime() + pd.DateOffset(days=self.fall_lag)
+
+            temp_oat.ts = oat.ts[st:en]
+            tsl.append(temp_oat)
+
+        self.result['type'] = "sensor list"
+        self.result['data'] = tsl
+
+        return self.returnResult(detailedresult)
+
 
 class Integrate():
     """ Integrate a time series using different methods """

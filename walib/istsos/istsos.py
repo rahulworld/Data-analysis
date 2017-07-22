@@ -647,6 +647,184 @@ class ExceedanceData(waIstsos):
 
 #         return self.returnResult(detailedresult)
 
+class HydroIndices(Method):
+    """ class to calculate hydrologic indices"""
+
+    __htype__ = ["MA", "ML", "MH", "FL", "FH", "DL", "DH", "TA", "TL", "TH", "RA"]
+
+    def __init__(self, htype, code, period=None, flow_component=False, stream_classification=False, median=False, drain_area=None):
+        """peak flow periods extraction
+
+        Args:
+            htype (str): alphanumeric code, one of [MA,ML,MH,FL,FH,DL,DH,TA,TL,TH,RA]
+            code (int): code that jointly with htype determine the indiced to calculate (see TSPROC HYDROLOGIC_INDECES Table 3-2, page 90)
+            period (tuple): tuple of two elements indicating the BEGIN and END of datetimes records to be used.
+            flow_component (str): Specify the hydrologic regime as defined in Olden and Poff (2003).
+                One of ["AVERAGE_MAGNITUDE", "LOW_FLOW_MAGNITUDE", "HIGH_FLOW_MAGNITUDE", "LOW_FLOW_FREQUENCY,
+                HIGH_FLOW_FREQUENCY", "LOW_FLOW_DURATION", "HIGH_FLOW_DURATION", "TIMING", "RATE_OF_CHANGE"]
+            stream_classification (str): Specify the hydrologic regime as defined in Olden and Poff (2003).
+                One of ["HARSH_INTERMITTENT", "FLASHY_INTERMITTENT", "SNOWMELT_PERENNIAL", "SNOW_RAIN_PERENNIAL", "
+                    GROUNDWATER_PERENNIAL", "FLASHY_PERENNIAL", "ALL_STREAMS"]
+            median (bool): Requests that indices that normally report the mean of some other sumamry statistic to instead report the median value.
+            drain_area (float): the gauge area in m3
+
+        Returns:
+            A list of oat objects with a storm hydrograph each, they will be named "seriesName+suffix+number"
+            (e.g.: with a series named "TEST" and a suffic "_hyevent_N" we will have: ["TEST_hyevent_N1, TEST_hyevent_N2, ...]
+        """
+
+        super(HydroIndices, self).__init__()
+
+        if not htype in self.__htype__:
+            raise ValueError("htype shall be in %s" % self.__htype__)
+
+        self.htype = htype
+        self.code = code
+        self.period = period
+        self.flow_component = flow_component
+        self.stream_classification = stream_classification
+        self.median = median
+        self.drain_area = drain_area
+
+    def execute(self, oat, detailedresult=False):
+        """ calculate peak hydrographs """
+
+        if self.htype == "MA":
+            #raise Exception(str(oat.ts))
+            if not oat.ts.index.freq or oat.ts.index.freq.delta.total_seconds() != 60 * 60 * 24:
+                tmp_oat = oat.process(Resample(freq='1D', how='mean'))
+            else:
+                tmp_oat = oat.copy()
+
+            if self.code == 1:
+                # Mean of the daily mean flow values for the entire flow record
+                value = tmp_oat.ts.mean()['data']
+            elif self.code == 2:
+                # Median of the daily mean flow values for the entire flow record.
+                value = tmp_oat.ts.median()['data']
+            elif self.code == 3:
+                # Mean (or median) of the coefficients of variation (standard deviation/mean) for each year.
+                # Compute the coefficient of variation for each year of daily flows. Compute the mean of the annual coefficients of variation
+                l = [v.std()[0] / v.mean()[0] for a, v in tmp_oat.ts.groupby(tmp_oat.ts.index.year)]
+                value = sum(l) / float(len(l))
+            elif self.code == 4:
+                #Standard deviation of the percentiles of the logs of the entire flow record divided by the mean of percentiles of the logs.
+                #Compute the log10 of the daily flows for the entire record.
+                #Compute the 5th, 10th, 15th, 20th, 25th, 30th, 35th, 40th, 45th, 50th, 55th, 60th, 65th, 70th,
+                #75th, 80th, 85th, 90th, and 95th percentiles for the logs of the entire flow record.
+                #Percentiles are computed by interpolating between the ordered (ascending) logs of the flow values.
+                #Compute the standard deviation and mean for the percentile values. Divide the standard deviation by the mean.
+                q = np.log(tmp_oat.ts["data"]).quantile(
+                    [.05, .10, .15, .20, .25, .30, .35, .40, .45, .50,
+                         .55, .60, .65, .70, .75, .80, .85, .90, .95])
+                value = q.std() / q.mean()
+            elif self.code == 5:
+                #The skewness of the entire flow record is computed as the mean for the entire flow record (MA1)
+                #divided by the median (MA2) for the entire flow record.
+                value = tmp_oat.ts.mean()['data'] / tmp_oat.ts.median()['data']
+            elif self.code == 6:
+                #Range in daily flows is the ratio of the 10-percent to 90-percent exceedance values for the entire flow record.
+                #Compute the 5-percent to 95-percent exceedance values for the entire flow record.
+                #Exceedance is computed by interpolating between the ordered (descending) flow values.
+                #Divide the 10-percent exceedance value by the 90-percent value.
+                #exc = oat.process(ExceedanceProbability([4, 6, 10],etu='days')))
+                exc = tmp_oat.process(Exceedance(perc=[10, 90]))
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code == 7:
+                #Range in daily flows is the ratio of the 20-percent to 80-percent exceedance values for the entire flow record.
+                exc = tmp_oat.process(Exceedance(perc=[20, 80]))
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code == 8:
+                #Range in daily flows is the ratio of the 25-percent to 75-percent exceedance values for the entire flow record.
+                exc = tmp_oat.process(Exceedance(perc=[25, 75]))
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code == 9:
+                #Spread in daily flows is the ratio of the difference between the 90th and 10th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                #Compute the log10 of the daily flows for the entire record.
+                #Compute the 5th, 10th, 15th, 20th, 25th, 30th, 35th, 40th, 45th, 50th, 55th, 60th, 65th, 70th, 75th, 80th,
+                #85th, 90th, and 95th percentiles for the logs of the entire flow record.
+                #Percentiles are computed by interpolating between the ordered (ascending) logs of the flow values.
+                #Compute MA9 as (90th –10th) /log10(MA2).
+                q = np.log10(tmp_oat.ts["data"]).quantile([.10, .90])
+                value = (q[0.10] - q[0.90]) / np.log10(tmp_oat.ts.median()['data'])
+            elif self.code == 10:
+                #Spread in daily flows is the ratio of the difference between the 80th and 20th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                q = np.log10(tmp_oat.ts["data"]).quantile([.20, .80])
+                value = (q[0.20] - q[0.80]) / np.log10(tmp_oat.ts.median()['data'])
+            elif self.code == 11:
+                #Spread in daily flows is the ratio of the difference between the 25th and 75th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                q = np.log10(tmp_oat.ts["data"]).quantile([.25, .75])
+                value = (q[0.25] - q[0.75]) / np.log10(tmp_oat.ts.median()['data'])
+            elif self.code in range(12, 24):
+                #Means (or medians) of monthly flow values. Compute the means for each month over the entire flow record.
+                #For example, MA12 is the mean of all January flow values over the entire record.
+                month_num = self.code - 11
+                b = tmp_oat.process(Resample(freq='1M', how='mean'))
+                try:
+                    m = b.ts.groupby(b.ts.index.month).get_group(month_num)
+                    v = m.mean()[0]
+                except KeyError:
+                    v = None
+                value = v
+            elif self.code in range(24, 36):
+                #Variability (coefficient of variation) of monthly flow values.
+                #Compute the standard deviation for each month in each year over the entire flow record.
+                #Divide the standard deviation by the mean for each month. Average (or take median of) these values for each month across all years.
+                month_num = self.code - 23
+                #b = tmp_oat.process(Resample(freq='1M', how='std'))
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean, np.std])  # .dropna()
+                try:
+                    cov = (m.xs(month_num, level=1)['data']['std'] / m.xs(month_num, level=1)['data']['mean']).mean()
+                except KeyError:
+                    cov = None
+                value = cov
+            elif self.code == 36:
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean])
+                value = (m.max()[0] - m.min()[0]) / m.median()[0]
+            elif self.code == 37:
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean])
+                q = m.quantile([.25, .75])
+                value = (q.ix[0.25][0] - q.ix[0.75][0]) / m.median()[0]
+            elif self.code == 38:
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean])
+                q = m.quantile([.10, .90])
+                value = (q.ix[0.10][0] - q.ix[0.90][0]) / m.median()[0]
+            elif self.code == 39:
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean])
+                value = (m.std()[0] * 100) / m.mean()[0]
+            elif self.code == 40:
+                m = oat.ts.groupby([oat.ts.index.year, oat.ts.index.month]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / m.median()[0]
+            elif self.code == 41:
+                if self.drain_area is None:
+                    raise ValueError("drain_area must be defined to calculate this indice!")
+                m = oat.ts.groupby([oat.ts.index.year]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / self.drain_area
+            elif self.code == 42:
+                m = oat.ts.groupby([oat.ts.index.year]).agg([np.mean])
+                value = (m.max()[0] - m.min()[0]) / m.median()[0]
+            elif self.code == 43:
+                m = oat.ts.groupby([oat.ts.index.year]).agg([np.mean])
+                q = m.quantile([.25, .75])
+                value = (q.ix[0.25][0] - q.ix[0.75][0]) / m.median()[0]
+            elif self.code == 44:
+                m = oat.ts.groupby([oat.ts.index.year]).agg([np.mean])
+                q = m.quantile([.10, .90])
+                value = (q.ix[0.10][0] - q.ix[0.90][0]) / m.median()[0]
+            elif self.code == 45:
+                m = oat.ts.groupby([oat.ts.index.year]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / m.median()[0]
+            else:
+                raise ValueError("the code number %s is not defined!" % self.code)
+
+        self.result['type'] = 'value'
+        self.result['data'] = value
+
+        return self.returnResult(detailedresult)
+
 
 class Integrate():
     """ Integrate a time series using different methods """

@@ -825,6 +825,8 @@ class HydroIndices(Method):
 
         return self.returnResult(detailedresult)
 
+
+
 class HydroEvents(Method):
     """ class to calculate portion of time series associated with peak flow events"""
 
@@ -918,6 +920,51 @@ class HydroEvents(Method):
         self.result['data'] = tsl
 
         return self.returnResult(detailedresult)
+
+class HydroEventsThread(BaseThread):
+    """
+        Run Hydro events filter
+
+        calculate portion of time series associated with peak flow events
+
+    """
+    def __init__(self, gui):
+        super(HydroEventsThread, self).__init__(gui)
+        self.history['process'] = "HydroEvents"
+
+    def run(self):
+        try:
+            rise = self.gui.hEvtRise.value()
+            fall = self.gui.hEvtFall.value()
+            window = self.gui.hEvtWindow.value()
+            peak = self.gui.hEvtPeak.value()
+            suffix = self.gui.hEvtSuffix.text()
+
+            period = None
+            if self.gui.hEvtTime.checkState() == Qt.Checked:
+
+                begin = self.gui.hEvtBegin.text().replace(" ", "T")
+                end = self.gui.hEvtEnd.text().replace(" ", "T")
+
+                period = [begin, end]
+
+            if suffix == "":
+                suffix = "_event_N"
+
+            self.history['params']['rise_lag'] = rise
+            self.history['params']['fall_lag'] = fall
+            self.history['params']['window'] = window
+            self.history['params']['min_peak'] = peak
+            self.history['params']['suffix'] = suffix
+            self.history['params']['period'] = period
+
+            self.result = self.gui.oat.process(method.HydroEvents(rise_lag=rise, fall_lag=fall, window=window,
+                                                                  min_peak=peak, suffix=suffix, period=period),
+                                               detailedresult=True)
+
+            self.end.emit(self.result, self.history)
+        except Exception as e:
+            self.exception.emit(e)
 
 
 class Integrate():

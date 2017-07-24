@@ -825,6 +825,81 @@ class HydroIndices(Method):
 
         return self.returnResult(detailedresult)
 
+class HydroIndicesThread(BaseThread):
+    """
+        Run Hydro indices filter
+    """
+    def __init__(self, gui):
+        super(HydroIndicesThread, self).__init__(gui)
+        self.history['process'] = "HydoIndices"
+
+    def run(self):
+
+        try:
+            htype = self.gui.hIndexType.currentText()
+
+            if htype != 'MA':
+                self.exception.emit(Exception("Sorry, only Ma is supported (Alphanumeric Code)"))
+                return
+
+            if self.gui.hIndexCode.text() == '':
+                self.exception.emit(Exception("Please define code"))
+                return
+
+            code = map(int, self.gui.hIndexCode.text().split(','))
+
+            if len(code) != 2:
+                self.exception.emit(Exception("Please change code"))
+                return
+            elif code[0] > code[1]:
+                self.exception.emit(Exception('code 1 must be lower than code 2'))
+                return
+            elif code[0] < 1:
+                self.exception.emit(Exception("Code 1 shoul'd be >= 1"))
+                return
+            elif code[1] > 45:
+                self.exception.emit(Exception("Code 2 shoul'd be <= 45"))
+                return
+
+            comp = self.gui.hIndexComponent.currentText()
+            classification = self.gui.hIndexClassification.currentText()
+            median = self.gui.hIndexMedian.isChecked()
+            drain = self.gui.hIndexDrain.value()
+
+            period = None
+            if self.gui.hIndexTime.checkState() == Qt.Checked:
+                begin = self.gui.hIndexBegin.text().replace(" ", "T")
+                end = self.gui.hIndexEnd.text().replace(" ", "T")
+
+                period = [begin, end]
+
+            self.result = {
+                "op": "hydroIndices",
+                "type": "dict list",
+                "data": []
+            }
+
+            self.history['params']['htype'] = htype
+            self.history['params']['code'] = code
+            self.history['params']['flow_component'] = comp
+            self.history['params']['stream_classification'] = classification
+            self.history['params']['median'] = median
+            self.history['params']['drain_area'] = drain
+            self.history['params']['period'] = period
+
+            self.debug.emit(str(self.history))
+
+            for c in range(code[0], code[1]):
+                self.debug.emit(str(c))
+                result = self.gui.oat.process(method.HydroIndices(htype=htype, code=c, flow_component=comp,
+                                                                  stream_classification=classification, median=median,
+                                                                  drain_area=drain, period=period), detailedresult=True)
+                self.debug.emit(str(result))
+                self.result['data'].append({"index": c, "value": result['data']})
+
+            self.end.emit(self.result, self.history)
+        except Exception as e:
+            self.exception.emit(e)
 
 
 class HydroEvents(Method):

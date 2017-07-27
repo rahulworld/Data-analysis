@@ -426,15 +426,15 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
                         console.log(json1);
-                        for (var i = 0; i < json1["data"].length; i++) {
-                                frequency=json1["data"][i][frequency];
-                                percentage=json1["data"][i][percentage];
-                                value=json1["data"][i][value];
-                                exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                        }
+                        // for (var i = 0; i < json1["data"].length; i++) {
+                        //         frequency=json1["data"][i][frequency];
+                        //         percentage=json1["data"][i][percentage];
+                        //         value=json1["data"][i][value];
+                        //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                        // }
                                 // for(var i=0;i<test.length;i++){
                                 // }
-                        ExeeTextView.setValue(exeeResult);
+                        ExeeTextView.setValue(response.responseText);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);

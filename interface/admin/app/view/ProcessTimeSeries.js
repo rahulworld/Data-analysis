@@ -30,8 +30,11 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         var methodpanel=Ext.getCmp('methodstabs');
         var methodserch=Ext.getCmp('buttonExecute');
+        var downloadResult=Ext.getCmp('buttonSave');
+        
         // methodserch.disable();
         // methodpanel.disable();
+        downloadResult.disable();
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
@@ -47,8 +50,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
 
             var value = combo.getValue();
-            console.log(value);
-            console.log('in the combox');
+            // console.log(value);
+            // console.log('in the combox');
 
             var digital_filter = Ext.getCmp('digitalPanel');
             var exeedance = Ext.getCmp('exeedancePanel');
@@ -334,6 +337,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var chartPlot=Ext.getCmp('chartSeries');
             var ExeeTextView=Ext.getCmp('ResultViewer');
 
+
+            downloadResult.enable();
+
             if (methods == 0)
             {
                 // Data
@@ -424,8 +430,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "values1": resdata2
                     },
                     success: function(response){
-                        var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
+                        // var json1 = Ext.decode(response.responseText);
+                        // console.log(json1);
                         // for (var i = 0; i < json1["data"].length; i++) {
                         //         frequency=json1["data"][i][frequency];
                         //         percentage=json1["data"][i][percentage];
@@ -1355,5 +1361,190 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
-        }
+    },
+    showResult: function(chartdata){
+            this.chartdata=chartdata;
+            // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
+            // var procs = [];
+            // get the json rapresentation of the tree menu of procedures
+            //var checked = Ext.getCmp('proceduresTree').getValues();
+            var visibility = []; // Initialize the chart series visibility
+
+            this.labels = ["isodate"];
+            this.colors = [];
+            var template = [];
+
+            var valueFormatter = {
+
+            }
+
+            var initChart = true;
+            if (initChart) {
+                this.chart = new Dygraph(
+                    document.getElementById("chartSeries-body"),
+                    this.chartdata,
+                    {
+                        strokeWidth: 2,
+                        digitsAfterDecimal: 6,
+                        connectSeparatedPoints: true,
+                        //visibility: visibility,
+                        legend: 'always',
+                        showRangeSelector: true,
+                        showRoller: true,
+                        rangeSelectorHeight: 30,
+                        rangeSelectorPlotStrokeColor: 'black',
+                        rangeSelectorPlotFillColor: 'green',
+                        labelsDivStyles: {
+                            'padding': '4px',
+                            'border': '1px solid black',
+                            'borderRadius': '3px',
+                            'boxShadow': '4px 4px 4px #888',
+                            'right': '10px'
+                        },
+                        labelsDivWidth: "100%",
+                        axisLineColor: 'green',
+                        axisLabelFontSize: 12,
+                        axisLabelWidth: 150,
+                        xAxisLabelWidth: 150,
+                        highlightCircleSize: 4,
+                        axes: Ext.apply({
+                            x: {
+                                valueFormatter: function(ms) {
+                                    return istsos.utils.micro2iso(ms,istsos.utils.tzToMinutes(Ext.getCmp('oeTZ').getValue()));
+                                },
+                                axisLabelFormatter: function(ms, gran, b, chart){
+
+                                    // Get unix time in seconds
+                                    var unix = parseInt(ms/1000000);
+                                    // Extract microseconds only
+                                    var micro = ms-(unix*1000000);
+                                    // Date object without considering microseconds
+                                    var date = Ext.Date.parse(unix,'U');
+
+                                    var range = chart.xAxisRange();
+                                    var delta = range[1]-range[0];
+
+                                    var clip = function(m){
+                                        return (parseFloat('0.'+m)+"").substring(1);
+                                    }
+                                    if (delta<500000) { // less then a seconds range
+                                        if (micro == 0) {
+                                            if (date.getHours()==0
+                                                && date.getMinutes()==0
+                                                && date.getSeconds()==0) {
+                                                return Ext.Date.format(date,'Y-m-d');
+                                            }else{
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }
+                                        }else{
+                                            if (micro==200000 || micro==400000 || micro==600000 || micro==800000) {
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }else{
+                                                return micro/1000;
+                                            }
+                                        }
+                                    }else if (delta<1000000) { // less then a seconds range
+                                        if (micro == 0) {
+                                            if (date.getHours()==0
+                                                && date.getMinutes()==0
+                                                && date.getSeconds()==0) {
+                                                return Ext.Date.format(date,'Y-m-d');
+                                            }else{
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }
+                                        }else{
+                                            if (micro==500000) {
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }else{
+                                                return micro/1000;
+                                            }
+                                        }
+                                    }else if(delta<1000000*60) { // less the a minute
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                        }
+                                    }else if(delta<1000000*60*60) { // less the an hour
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else if(delta<1000000*60*60*24) { // less the a day
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else if (date.getHours()==12
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d') + "T" +
+                                            Ext.Date.format(date,'H:i');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else if(delta<1000000*60*60*24*4) { // less the a day
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else if (date.getHours()==12) {
+                                            return Ext.Date.format(date,'Y-m-d') + "<br>" +
+                                            Ext.Date.format(date,'H:i');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else  { // less the a day
+                                        return Ext.Date.format(date,'Y-m-d');
+                                    }
+
+                                }
+                            }
+                        },valueFormatter),
+                        clickCallback: function(e, x, pts) {
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            // Series selectd
+                            if (e.shiftKey && chartpanel.lastClick) {
+                                Ext.callback(function(e, x, pts){
+                                    this.fireEvent("seriesSelected", this, e, x, this.lastClick, pts);
+                                }, chartpanel, [e, x, pts]);
+
+                            }else{ // Single point selected
+                                chartpanel.lastClick = x;
+                                Ext.callback(function(e, x, pts){
+                                    this.fireEvent("clickCallback", this, e, x, pts);
+                                }, chartpanel, [e, x, pts]);
+                            }
+
+                        },
+                        pointClickCallback: function(e, p) {
+
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            Ext.callback(function(e, p){
+                                this.fireEvent("clickCallback", this, e, p['xval']);
+                            }, chartpanel, [e, p]);
+                        },
+                        underlayCallback: function(canvas, area, g) {
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            Ext.callback(function(canvas, area, g){
+                                this.fireEvent("underlayCallback", this, canvas, area, g);
+                            }, chartpanel, [canvas, area, g]);
+                        }
+                    }
+                    );
+            }else if (!Ext.isEmpty(this.chart)) {
+                this.chart.updateOptions({
+                    file: this.chartdata,
+                    visibility: visibility,
+                    labels: this.labels
+                });
+            }
+            Ext.get('chartSeries-body').removeCls("viewerChart");
+            Ext.get('chartSeries').unmask();
+    }
 });

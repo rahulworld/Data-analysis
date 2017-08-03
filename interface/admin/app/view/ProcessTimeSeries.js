@@ -886,8 +886,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 var exeeResult="";
 
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
                 textHistory.setValue("Filter Statistics Params: data: "+dataSta+"  quality: "+quaSta+"  time: "+timeSta+"  beginSta: "+beginSta+"  end: "+endSta+"  timezone: "+timezoneSta);
 
                 Ext.Ajax.request({
@@ -909,8 +909,34 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var json1 = Ext.decode(response.responseText);
                         console.log(json1['data']['25%']);
                         var strg=json1['data']['25%'];
-                        ExeeTextView.setValue(strg);
-
+                        // ExeeTextView.setValue(strg); 
+                        var data;
+                        var initialData = [
+                          { table: "Data", rows: [
+                              { table: "Count", row: "Row1" },
+                              { table: "std", row: "Row2" },
+                              { table: "mean", row: "Row3" },
+                              { table: "max", row: "Row4" },
+                              { table: "min", row: "Row5" },
+                              { table: "25%", row: strg },
+                              { table: "50%", row: "Row7" },
+                              { table: "75%", row: "Row8" }
+                            ]
+                          },
+                          { table: "Quality", rows: [
+                              { table: "Count", row: "Row1" },
+                              { table: "std", row: "Row2" },
+                              { table: "mean", row: "Row3" },
+                              { table: "max", row: "Row4" },
+                              { table: "min", row: "Row5" },
+                              { table: "25%", row: "Row6" },
+                              { table: "50%", row: "Row7" },
+                              { table: "75%", row: "Row8" }
+                            ]
+                          }
+                        ]
+                        data = JSON.parse(JSON.stringify(initialData));
+                        this.showResultGrid(data);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1550,5 +1576,52 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
+    },
+    showResultGrid: function(data) {    
+                        // title div with label and button
+                        var header2 = d3.select("div").attr("class", "well");
+                        // container for array of tables
+                        var tableDiv = d3.select("#chartSeries-body");
+                          for(var i=0;i<3;i++){
+                                    console.log('BEFORE');
+                                    // update(data);
+                                              // select all divs in the table div, and then apply new data 
+                                      // after .data() is executed below, divs becomes a d3 update selection
+                                  var divs = tableDiv.selectAll("div").data(data,function(data) { return data.table }) ;
+                                  console.log(data.table);
+                                  // divs.exit().remove();
+
+                                  var divsEnter = divs.enter().append("div").attr("id", function(d) { return d.table + "Div"; }).attr("class", "well");
+                                  divsEnter.append("h5").text(function(d) { return d.table; });
+                                  // add table in new div(s)
+                                  var tableEnter = divsEnter.append("table")
+                                      .attr("id", function(d) { return d.table })
+                                      .attr("class", "table table-condensed table-striped table-bordered")
+                                  // append table head in new table(s)
+                                  tableEnter.append("thead").append("tr").selectAll("th").data(["Statistics Params", "Values"]).enter().append("th")
+                                      .text(function(d) { return d; });
+                                  // append table body in new table(s)
+                                  tableEnter.append("tbody");
+                                  // select all tr elements in the divs update selection
+                                  var tr = divs.select("table").select("tbody").selectAll("tr")
+                                            .data(
+                                        function(d) { return d.rows; }, // return inherited data item
+                                        function(d) { return d.row }    // "key" function to disable default by-index evaluation
+                                      ); 
+                                  // tr.exit().remove();
+                                  tr.enter().append("tr");
+                                  // bind data to table cells
+                                  var td = tr.selectAll("td")
+                                      // after the .data() is executed below, the td becomes a d3 update selection
+                                      .data(function(d) { return d3.values(d); });   // return inherited data item
+                                  // use the enter method to add td elements 
+                                  td.enter().append("td")               // add the table cell
+                                      .text(function(d) { return d; })  // add text to the table cell
+                                      console.log(td);
+                                    console.log('AFTER');        
+                          }
+                    Ext.get('chartSeries-body').removeCls("viewerChart");
+                    Ext.get('chartSeries').unmask();
+
     }
 });

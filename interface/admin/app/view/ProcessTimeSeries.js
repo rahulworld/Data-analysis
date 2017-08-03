@@ -906,7 +906,11 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "qual": resdata3
                     },
                     success: function(response){
-                        ExeeTextView.setValue(response.responseText);
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1['data']['25%']);
+                        var strg=json1['data']['25%'];
+                        ExeeTextView.setValue(strg);
+
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);

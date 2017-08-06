@@ -35,6 +35,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // methodserch.disable();
         // methodpanel.disable();
         downloadResult.disable();
+        var rst_data, rst_header;
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
@@ -907,34 +908,53 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1['data']['25%']);
-                        var strg=json1['data']['25%'];
+                        console.log(json1);
+                        rst_header = 'Statistics Params\ncount,std,min,max,50%,25%,75%,mean\n';
                         // ExeeTextView.setValue(strg); 
+                        var initialData;
                         var data;
-                        var initialData = [
-                          { table: "Data", rows: [
-                              { table: "Count", row: "Row1" },
-                              { table: "std", row: "Row2" },
-                              { table: "mean", row: "Row3" },
-                              { table: "max", row: "Row4" },
-                              { table: "min", row: "Row5" },
-                              { table: "25%", row: strg },
-                              { table: "50%", row: "Row7" },
-                              { table: "75%", row: "Row8" }
+                        if(dataSta && quaSta){
+                            initialData = [
+                               { table: "Quality", rows: [
+                                { table: "count", row: json1['data']['quality']['count'] },
+                                  { table: "std", row: json1['data']['quality']['std'] },
+                                  { table: "mean", row: json1['data']['quality']['mean'] },
+                                  { table: "max", row: json1['data']['quality']['max'] },
+                                  { table: "min", row: json1['data']['quality']['min'] },
+                                  { table: "25%", row: json1['data']['quality']['25%'] },
+                                  { table: "50%", row: json1['data']['quality']['50%'] },
+                                  { table: "75%", row: json1['data']['quality']['75%'] }
+                                ]
+                              },
+                              { table: "Data", rows: [
+                                  { table: "Count", row: json1['data']['data']['count'] },
+                                  { table: "std", row: json1['data']['data']['std'] },
+                                  { table: "mean", row: json1['data']['data']['mean'] },
+                                  { table: "max", row: json1['data']['data']['max'] },
+                                  { table: "min", row: json1['data']['data']['min'] },
+                                  { table: "25%", row: json1['data']['data']['25%'] },
+                                  { table: "50%", row: json1['data']['data']['50%'] },
+                                  { table: "75%", row: json1['data']['data']['75%'] }
+                                ]
+                              }
                             ]
-                          },
-                          { table: "Quality", rows: [
-                              { table: "Count", row: "Row1" },
-                              { table: "std", row: "Row2" },
-                              { table: "mean", row: "Row3" },
-                              { table: "max", row: "Row4" },
-                              { table: "min", row: "Row5" },
-                              { table: "25%", row: "Row6" },
-                              { table: "50%", row: "Row7" },
-                              { table: "75%", row: "Row8" }
+                            rst_data=json1['data']['data'];    
+                        }else{
+                            initialData = [
+                              { table: "Data", rows: [
+                                  { table: "Count", row: json1['data']['count'] },
+                                  { table: "std", row: json1['data']['std'] },
+                                  { table: "mean", row: json1['data']['mean'] },
+                                  { table: "max", row: json1['data']['max'] },
+                                  { table: "min", row: json1['data']['min'] },
+                                  { table: "25%", row: json1['data']['25%'] },
+                                  { table: "50%", row: json1['data']['50%'] },
+                                  { table: "75%", row: json1['data']['75%'] }
+                                ]
+                              }
                             ]
-                          }
-                        ]
+                            rst_data=json1['data'];
+                        }
                         data = JSON.parse(JSON.stringify(initialData));
                         this.showResultGrid(data);
                     },
@@ -1197,6 +1217,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
             console.log('BUTTON SAVE CLICKED');
+            this.download_csv(rst_data,rst_header);
         },this);
         Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){
             console.log('checkboxOverwrite');
@@ -1392,203 +1413,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
     },
-    showResult: function(chartdata){
-            this.chartdata=chartdata;
-            // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
-            // var procs = [];
-            // get the json rapresentation of the tree menu of procedures
-            //var checked = Ext.getCmp('proceduresTree').getValues();
-            var visibility = []; // Initialize the chart series visibility
-
-            this.labels = ["isodate"];
-            this.colors = [];
-            var template = [];
-
-            var valueFormatter = {
-
-            }
-
-            var initChart = true;
-            if (initChart) {
-                this.chart = new Dygraph(
-                    document.getElementById("chartSeries-body"),
-                    this.chartdata,
-                    {
-                        strokeWidth: 2,
-                        digitsAfterDecimal: 6,
-                        connectSeparatedPoints: true,
-                        //visibility: visibility,
-                        legend: 'always',
-                        showRangeSelector: true,
-                        showRoller: true,
-                        rangeSelectorHeight: 30,
-                        rangeSelectorPlotStrokeColor: 'black',
-                        rangeSelectorPlotFillColor: 'green',
-                        labelsDivStyles: {
-                            'padding': '4px',
-                            'border': '1px solid black',
-                            'borderRadius': '3px',
-                            'boxShadow': '4px 4px 4px #888',
-                            'right': '10px'
-                        },
-                        labelsDivWidth: "100%",
-                        axisLineColor: 'green',
-                        axisLabelFontSize: 12,
-                        axisLabelWidth: 150,
-                        xAxisLabelWidth: 150,
-                        highlightCircleSize: 4,
-                        axes: Ext.apply({
-                            x: {
-                                valueFormatter: function(ms) {
-                                    return istsos.utils.micro2iso(ms,istsos.utils.tzToMinutes(Ext.getCmp('oeTZ').getValue()));
-                                },
-                                axisLabelFormatter: function(ms, gran, b, chart){
-
-                                    // Get unix time in seconds
-                                    var unix = parseInt(ms/1000000);
-                                    // Extract microseconds only
-                                    var micro = ms-(unix*1000000);
-                                    // Date object without considering microseconds
-                                    var date = Ext.Date.parse(unix,'U');
-
-                                    var range = chart.xAxisRange();
-                                    var delta = range[1]-range[0];
-
-                                    var clip = function(m){
-                                        return (parseFloat('0.'+m)+"").substring(1);
-                                    }
-                                    if (delta<500000) { // less then a seconds range
-                                        if (micro == 0) {
-                                            if (date.getHours()==0
-                                                && date.getMinutes()==0
-                                                && date.getSeconds()==0) {
-                                                return Ext.Date.format(date,'Y-m-d');
-                                            }else{
-                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
-                                            }
-                                        }else{
-                                            if (micro==200000 || micro==400000 || micro==600000 || micro==800000) {
-                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
-                                            }else{
-                                                return micro/1000;
-                                            }
-                                        }
-                                    }else if (delta<1000000) { // less then a seconds range
-                                        if (micro == 0) {
-                                            if (date.getHours()==0
-                                                && date.getMinutes()==0
-                                                && date.getSeconds()==0) {
-                                                return Ext.Date.format(date,'Y-m-d');
-                                            }else{
-                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
-                                            }
-                                        }else{
-                                            if (micro==500000) {
-                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
-                                            }else{
-                                                return micro/1000;
-                                            }
-                                        }
-                                    }else if(delta<1000000*60) { // less the a minute
-                                        if (date.getHours()==0
-                                            && date.getMinutes()==0
-                                            && date.getSeconds()==0) {
-                                            return Ext.Date.format(date,'Y-m-d');
-                                        }else{
-                                            return Ext.Date.format(date,'H:i:s')+clip(micro);
-                                        }
-                                    }else if(delta<1000000*60*60) { // less the an hour
-                                        if (date.getHours()==0
-                                            && date.getMinutes()==0
-                                            && date.getSeconds()==0) {
-                                            return Ext.Date.format(date,'Y-m-d');
-                                        }else{
-                                            return Ext.Date.format(date,'H:i');
-                                        }
-                                    }else if(delta<1000000*60*60*24) { // less the a day
-                                        if (date.getHours()==0
-                                            && date.getMinutes()==0
-                                            && date.getSeconds()==0) {
-                                            return Ext.Date.format(date,'Y-m-d');
-                                        }else if (date.getHours()==12
-                                            && date.getMinutes()==0
-                                            && date.getSeconds()==0) {
-                                            return Ext.Date.format(date,'Y-m-d') + "T" +
-                                            Ext.Date.format(date,'H:i');
-                                        }else{
-                                            return Ext.Date.format(date,'H:i');
-                                        }
-                                    }else if(delta<1000000*60*60*24*4) { // less the a day
-                                        if (date.getHours()==0
-                                            && date.getMinutes()==0
-                                            && date.getSeconds()==0) {
-                                            return Ext.Date.format(date,'Y-m-d');
-                                        }else if (date.getHours()==12) {
-                                            return Ext.Date.format(date,'Y-m-d') + "<br>" +
-                                            Ext.Date.format(date,'H:i');
-                                        }else{
-                                            return Ext.Date.format(date,'H:i');
-                                        }
-                                    }else  { // less the a day
-                                        return Ext.Date.format(date,'Y-m-d');
-                                    }
-
-                                }
-                            }
-                        },valueFormatter),
-                        clickCallback: function(e, x, pts) {
-                            var chartpanel = Ext.getCmp('serieschartpanel');
-                            // Series selectd
-                            if (e.shiftKey && chartpanel.lastClick) {
-                                Ext.callback(function(e, x, pts){
-                                    this.fireEvent("seriesSelected", this, e, x, this.lastClick, pts);
-                                }, chartpanel, [e, x, pts]);
-
-                            }else{ // Single point selected
-                                chartpanel.lastClick = x;
-                                Ext.callback(function(e, x, pts){
-                                    this.fireEvent("clickCallback", this, e, x, pts);
-                                }, chartpanel, [e, x, pts]);
-                            }
-
-                        },
-                        pointClickCallback: function(e, p) {
-
-                            var chartpanel = Ext.getCmp('serieschartpanel');
-                            Ext.callback(function(e, p){
-                                this.fireEvent("clickCallback", this, e, p['xval']);
-                            }, chartpanel, [e, p]);
-                        },
-                        underlayCallback: function(canvas, area, g) {
-                            var chartpanel = Ext.getCmp('serieschartpanel');
-                            Ext.callback(function(canvas, area, g){
-                                this.fireEvent("underlayCallback", this, canvas, area, g);
-                            }, chartpanel, [canvas, area, g]);
-                        }
-                    }
-                    );
-            }else if (!Ext.isEmpty(this.chart)) {
-                this.chart.updateOptions({
-                    file: this.chartdata,
-                    visibility: visibility,
-                    labels: this.labels
-                });
-            }
-            Ext.get('chartSeries-body').removeCls("viewerChart");
-            Ext.get('chartSeries').unmask();
-    },
     showResultGrid: function(data) {    
                         // title div with label and button
                         var header2 = d3.select("div").attr("class", "well");
                         // container for array of tables
                         var tableDiv = d3.select("#chartSeries-body");
                           for(var i=0;i<3;i++){
-                                    console.log('BEFORE');
                                     // update(data);
                                               // select all divs in the table div, and then apply new data 
                                       // after .data() is executed below, divs becomes a d3 update selection
                                   var divs = tableDiv.selectAll("div").data(data,function(data) { return data.table }) ;
-                                  console.log(data.table);
                                   // divs.exit().remove();
 
                                   var divsEnter = divs.enter().append("div").attr("id", function(d) { return d.table + "Div"; }).attr("class", "well");
@@ -1598,7 +1432,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                       .attr("id", function(d) { return d.table })
                                       .attr("class", "table table-condensed table-striped table-bordered")
                                   // append table head in new table(s)
-                                  tableEnter.append("thead").append("tr").selectAll("th").data(["Statistics Params", "Values"]).enter().append("th")
+                                  tableEnter.append("thead").append("tr").selectAll("th").data(["     Stat. Prams      ", "      Values   "]).enter().append("th")
                                       .text(function(d) { return d; });
                                   // append table body in new table(s)
                                   tableEnter.append("tbody");
@@ -1616,12 +1450,45 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                       .data(function(d) { return d3.values(d); });   // return inherited data item
                                   // use the enter method to add td elements 
                                   td.enter().append("td")               // add the table cell
-                                      .text(function(d) { return d; })  // add text to the table cell
-                                      console.log(td);
-                                    console.log('AFTER');        
+                                      .text(function(d) { return d; })  // add text to the table cell        
                           }
-                    Ext.get('chartSeries-body').removeCls("viewerChart");
-                    Ext.get('chartSeries').unmask();
+                    // Ext.get('chartSeries-body').removeCls("viewerChart");
+                    // Ext.get('chartSeries').unmask();
 
+    },
+    ConvertToCSV: function(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += ','
+                line += array[i][index];
+            }
+            str += line + '\r\n';
+        }
+        return str;
+    },
+    download_csv: function(csv_data,csv_header) {
+        // var csv = 'Name,Color,Size\n';
+        var csv = csv_header;
+        // Create Object
+        // var items = [
+        //       { name: "Item 1", color: "Green", size: "X-Large" },
+        //       { name: "Item 2", color: "Green", size: "X-Large" },
+        //       { name: "Item 3", color: "Green", size: "X-Large" }];
+        // Convert Object to JSON
+        // var jsonObject = JSON.stringify(csv_data);
+        // Convert JSON to CSV & Display CSV
+        // csv+= this.ConvertToCSV(jsonObject);
+        var csv_array=[csv_data];
+        // console.log(csv_data);
+        csv+= this.ConvertToCSV(csv_array);
+        console.log(csv);
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'statistics_result.csv';
+        hiddenElement.click();
     }
 });

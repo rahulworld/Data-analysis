@@ -48,6 +48,20 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                         {
                             xtype: 'panel',
                             border: 0,
+                            hidden:true,
+                            id: "show_result",
+                            layout: {
+                                type: 'fit'
+                            },
+                            overflowY: 'scroll',
+                            autoScroll: true,
+                            height:1000,
+                            bodyCls: 'viewerChart',
+                            title: ''
+                        },
+                        {
+                            xtype: 'panel',
+                            border: 0,
                             height:400,
                             layout:
                             {

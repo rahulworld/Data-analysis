@@ -177,23 +177,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     exeedance.setVisible(false);
                     resample.setVisible(false);
                     integrate.setVisible(false);
-                    regularization.setVisible(true);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
-                    break;
-                case 7:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
                     regularization.setVisible(false);
                     fill.setVisible(false);
                     dataValues.setVisible(false);
@@ -206,7 +189,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(true);
                     break;
-                case 8:
+                case 7:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -223,7 +206,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 9:
+                case 8:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -240,7 +223,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 10:
+                case 9:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -257,7 +240,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 11:
+                case 10:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -274,7 +257,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 12:
+                case 11:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -291,7 +274,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 13:
+                case 12:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -308,7 +291,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     subtract.setVisible(false);
                     hydro_separation.setVisible(false);
                     break;
-                case 14:
+                case 13:
                     digital_filter.setVisible(false);
                     exeedance.setVisible(false);
                     resample.setVisible(false);
@@ -336,6 +319,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             var textViewer=Ext.getCmp('ResultViewer');
             var Resulttext=Ext.getCmp('Resulttextpanel');
             var chartPlot=Ext.getCmp('chartSeries');
+            var show_result=Ext.getCmp('show_result');
             var ExeeTextView=Ext.getCmp('ResultViewer');
 
 
@@ -361,6 +345,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Digital Filter Params:  Integrate Low cut-off: "+digLow+"  High cut-off: "+digHigh+"  Order: "+digOrder+"  Type: "+digiType);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/digitalfilter', wa.url),
@@ -413,9 +398,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 var exeeResult="";
 
-                Resulttext.setVisible(true);
+                Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
-
+                show_result.setVisible(true);
                 textHistory.setValue("Filter Exeedance Params:  Exeedance Values: "+exceeValues+"  Exeedance Probability: "+exceeProbability+"  Exeedance Time: "+exceeTime+"  Exeedance Under: "+exceeUnder);
 
                 Ext.Ajax.request({
@@ -432,25 +417,22 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // for (var i = 0; i < json1["data"].length; i++) {
-                        //         frequency=json1["data"][i][frequency];
-                        //         percentage=json1["data"][i][percentage];
-                        //         value=json1["data"][i][value];
-                        //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                        // }
-                                // for(var i=0;i<test.length;i++){
-                                // }
-                        this.showResultGrid(json1);
-                        ExeeTextView.setValue(response.responseText);
+                        console.log(json1['data']);
+                        rst_header = 'Exeedance Params\npercentage,frequency,value\n';
+                        // ExeeTextView.setValue(strg); 
+                        var initialData;
+                        var data;
+                            initialData = json1['data'];
+                            var csv_array=json1['data'];
+                            rst_data=csv_array;
+                            data = JSON.parse(JSON.stringify(initialData));
+                            this.tabulate(data,['percentage', 'frequency','value']);
                     },
                     failure: function (response) {
-                        // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                        // Ext.Msg.alert("Error",jsonResp.error);
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
                     }
                 });
-                
-
             }
             if (methods == 2)
             {
@@ -469,6 +451,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 Ext.get('chartSeries').mask("Initializing chart..");
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 rst_header = 'Resample\ntime,values\n';
 
                 console.log(frequency+"  "+timeSeriesMethods+"   "+fillCombox+"    "+Limit+" "+Quality);
@@ -551,8 +534,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 var exeeResult="";
 
-                Resulttext.setVisible(true);
+                Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
+                show_result.setVisible(true);
                 textHistory.setValue("Filter Integrate Params:  Integrate Time Unit: "+intgTimeUnit+"  Use Time: "+intgUseTime+"  Begin Time: "+intgBegin+"  End Time: "+intgEnd+"  TimeZone: "+intgTimeZone+"  How: "+intgHow+"  Factor: "+intgFactor+"  DateAsText: "+intgDateAsText);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
@@ -572,10 +556,18 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "idataastext":intgDateAsText,
                     },
                     success: function(response){
-                        // var json1 = Ext.decode(response.responseText);
-                        // console.log(json1);
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1);
                         console.log(response.responseText);
-                        ExeeTextView.setValue(response.responseText);
+                        rst_header = 'Integrate Params\nfrom,to,value\n';
+                        // ExeeTextView.setValue(strg); 
+                        var initialData;
+                        var data;
+                            initialData = json1['data'];
+                            var csv_array=json1['data'];
+                            rst_data=csv_array;
+                            data = JSON.parse(JSON.stringify(initialData));
+                            this.tabulate(data,['from', 'to','value']);
                         // ExeeTextView.setValue("  To:  "+json1['data']['to']+"  from: "+json1['data']['from']+"  value:  "+json1['data']['value']);
                     },
                     failure: function (response) {
@@ -600,6 +592,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
 
                 // Ext.Ajax.request({
@@ -649,6 +642,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
 
                 // Ext.Ajax.request({
@@ -683,36 +677,36 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 // });
             }
 
-            if(methods==6){
-                // console.log('BUTTON EXECUTE CLICKED'); 
-                var frequency= Ext.getCmp("edittextFrequency").getValue();
-                var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
-                var fillCombox= Ext.getCmp("comboxFill").getValue();
-                var Limit= Ext.getCmp("comboxLimit").getValue();
-                var Quality= Ext.getCmp("comboxHowquality").getValue();
-                Ext.get('chartSeries').mask("Initializing chart..");
-                    Ext.Ajax.request({
-                    url: Ext.String.format('{0}/istsos/operations/oat/regularization', wa.url),
-                    scope: this,
-                    method: "GET",
-                    success: function(response){
-                        var json1 = Ext.decode(response.responseText);
-                        console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-                        console.log('this success response');
-                        var text1 = response.responseText;
-                        console.log(json1);
-                    },
-                    failure: function (response) {
-                        console.log('this failure response');
-                      // var jsonResp = Ext.util.JSON.decode(response.responseText);
-                      // Ext.Msg.alert("Error",jsonResp.error);
-                        var text2 = response.responseText;
-                        console.log(text2);
-                        }
-                    });
-            }
+            // if(methods==6){
+            //     // console.log('BUTTON EXECUTE CLICKED'); 
+            //     var frequency= Ext.getCmp("edittextFrequency").getValue();
+            //     var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
+            //     var fillCombox= Ext.getCmp("comboxFill").getValue();
+            //     var Limit= Ext.getCmp("comboxLimit").getValue();
+            //     var Quality= Ext.getCmp("comboxHowquality").getValue();
+            //     Ext.get('chartSeries').mask("Initializing chart..");
+            //         Ext.Ajax.request({
+            //         url: Ext.String.format('{0}/istsos/operations/oat/regularization', wa.url),
+            //         scope: this,
+            //         method: "GET",
+            //         success: function(response){
+            //             var json1 = Ext.decode(response.responseText);
+            //             console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
+            //             console.log('this success response');
+            //             var text1 = response.responseText;
+            //             console.log(json1);
+            //         },
+            //         failure: function (response) {
+            //             console.log('this failure response');
+            //           // var jsonResp = Ext.util.JSON.decode(response.responseText);
+            //           // Ext.Msg.alert("Error",jsonResp.error);
+            //             var text2 = response.responseText;
+            //             console.log(text2);
+            //             }
+            //         });
+            // }
 
-            if (methods == 7)
+            if (methods == 6)
             {
                 // Data
                 var resdata=this.dataAccess();
@@ -731,6 +725,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 Ext.get('chartSeries').mask("Initializing chart..");
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Hydro Separation Params:  mode: "+hsmode+"  alpha: "+hsalpha+"  bsalpha"+bsalpha);
 
                 Ext.Ajax.request({
@@ -769,6 +764,56 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 });
             }
 
+            if (methods == 7)
+            {
+                // Data
+                var resdata=this.dataAccess();
+                var resdata1=resdata[0];
+                var resdata2=resdata[1];
+
+                //Taking Input
+                var fillMethod= Ext.getCmp("fillMethod").getValue();
+                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+
+                var exeeResult="";
+                Ext.get('chartSeries').mask("Initializing chart..");
+
+                Resulttext.setVisible(true);
+                chartPlot.setVisible(false);
+                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+
+                // Ext.Ajax.request({
+                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
+                //     scope: this,
+                //     method:"POST",
+                //     jsonData:{
+                //         "exceevalues":exceeValues,
+                //         "exceeperc":exceeProbability,
+                //         "etu":exceeTime,
+                //         "exceeunder":exceeUnder,
+                //         "index1": resdata1,
+                //         "values1": resdata2
+                //     },
+                //     success: function(response){
+                //         var json1 = Ext.decode(response.responseText);
+                //         console.log(json1);
+                //         // for (var i = 0; i < json1["data"].length; i++) {
+                //         //         frequency=json1["data"][i][frequency];
+                //         //         percentage=json1["data"][i][percentage];
+                //         //         value=json1["data"][i][value];
+                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
+                //         // }
+                //         //         // for(var i=0;i<test.length;i++){
+                //         //         // }
+                //         // ExeeTextView.setValue(exeeResult);
+                //     },
+                //     failure: function (response) {
+                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
+                //         Ext.Msg.alert("Error",jsonResp.error);
+                //     }
+                // });
+            }
+
             if (methods == 8)
             {
                 // Data
@@ -785,6 +830,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 Resulttext.setVisible(true);
                 chartPlot.setVisible(false);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
 
                 // Ext.Ajax.request({
@@ -825,56 +871,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-
-                //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
-
-                var exeeResult="";
-                Ext.get('chartSeries').mask("Initializing chart..");
-
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
-
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
-            }
-
-            if (methods == 10)
-            {
-                // Data
-                var resdata=this.dataAccess();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
                 var resdata3=new Array();
                 for(var i=0;i<resdata1.length;i++){
                     resdata3[i]=200;
@@ -891,7 +887,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var exeeResult="";
 
                 Resulttext.setVisible(false);
-                chartPlot.setVisible(true);
+                chartPlot.setVisible(false);
+                show_result.setVisible(true);
                 textHistory.setValue("Filter Statistics Params: data: "+dataSta+"  quality: "+quaSta+"  time: "+timeSta+"  beginSta: "+beginSta+"  end: "+endSta+"  timezone: "+timezoneSta);
 
                 Ext.Ajax.request({
@@ -917,49 +914,36 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var data;
                         if(dataSta && quaSta){
                             initialData = [
-                               { table: "Quality", rows: [
-                                { table: "count", row: json1['data']['quality']['count'] },
-                                  { table: "std", row: json1['data']['quality']['std'] },
-                                  { table: "mean", row: json1['data']['quality']['mean'] },
-                                  { table: "max", row: json1['data']['quality']['max'] },
-                                  { table: "min", row: json1['data']['quality']['min'] },
-                                  { table: "25%", row: json1['data']['quality']['25%'] },
-                                  { table: "50%", row: json1['data']['quality']['50%'] },
-                                  { table: "75%", row: json1['data']['quality']['75%'] }
+                                { data: "count", quality: json1['data']['quality']['count'], value: json1['data']['data']['count']},
+                                  { data: "std", quality: json1['data']['quality']['std'], value: json1['data']['data']['std']},
+                                  { data: "mean", quality: json1['data']['quality']['mean'],value : json1['data']['data']['mean']},
+                                  { data: "max", quality: json1['data']['quality']['max'], value: json1['data']['data']['max'] },
+                                  { data: "min", quality: json1['data']['quality']['min'], value: json1['data']['data']['min'] },
+                                  { data: "25%", quality: json1['data']['quality']['25%'], value: json1['data']['data']['25%'] },
+                                  { data: "50%", quality: json1['data']['quality']['50%'], value: json1['data']['data']['50%'] },
+                                  { data: "75%", quality: json1['data']['quality']['75%'], value: json1['data']['data']['75%'] }
                                 ]
-                              },
-                              { table: "Data", rows: [
-                                  { table: "Count", row: json1['data']['data']['count'] },
-                                  { table: "std", row: json1['data']['data']['std'] },
-                                  { table: "mean", row: json1['data']['data']['mean'] },
-                                  { table: "max", row: json1['data']['data']['max'] },
-                                  { table: "min", row: json1['data']['data']['min'] },
-                                  { table: "25%", row: json1['data']['data']['25%'] },
-                                  { table: "50%", row: json1['data']['data']['50%'] },
-                                  { table: "75%", row: json1['data']['data']['75%'] }
-                                ]
-                              }
-                            ]
-                            rst_data=json1['data']['data'];    
+                            rst_data=[json1['data']['data'],json1['data']['quality']];
+                            data = JSON.parse(JSON.stringify(initialData));
+                            this.tabulate(data,['data', 'value','quality']);
                         }else{
                             initialData = [
-                              { table: "Data", rows: [
-                                  { table: "Count", row: json1['data']['count'] },
-                                  { table: "std", row: json1['data']['std'] },
-                                  { table: "mean", row: json1['data']['mean'] },
-                                  { table: "max", row: json1['data']['max'] },
-                                  { table: "min", row: json1['data']['min'] },
-                                  { table: "25%", row: json1['data']['25%'] },
-                                  { table: "50%", row: json1['data']['50%'] },
-                                  { table: "75%", row: json1['data']['75%'] }
-                                ]
-                              }
+                                  { data: "Count", value: json1['data']['count'] },
+                                  { data: "std", value: json1['data']['std'] },
+                                  { data: "mean", value: json1['data']['mean'] },
+                                  { data: "max", value: json1['data']['max'] },
+                                  { data: "min", value: json1['data']['min'] },
+                                  { data: "25%", value: json1['data']['25%'] },
+                                  { data: "50%", value: json1['data']['50%'] },
+                                  { data: "75%", value: json1['data']['75%'] }
                             ]
                             var csv_array=json1['data'];
                             rst_data=[csv_array];
+                            data = JSON.parse(JSON.stringify(initialData));
+                            this.tabulate(data,['data', 'value']);
                         }
-                        data = JSON.parse(JSON.stringify(initialData));
-                        this.showResultGrid(data);
+                        // this.showResultGrid(data);
+
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -968,7 +952,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 });
             }
 
-            if (methods == 11)
+            if (methods == 10)
             {
                 // Data
                 var resdata=this.dataAccess();
@@ -987,6 +971,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 Ext.get('chartSeries').mask("Initializing chart..");
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
 
                 Ext.Ajax.request({
@@ -1024,7 +1009,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 });
             }
 
-            if (methods == 12)
+            if (methods == 11)
             {
                 // Data 
                 var resdata=this.dataAccess();
@@ -1051,6 +1036,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var exeeResult="";
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Quality Params:  Values "+DataValue+"  Statistics:  "+DataStat+" Time: "+DataTime+" Begin: "+DataBegin+" End: "+DataEnd+" TimeZone: "+DataTimezone+" low: "+DataLow+" High: "+DataHigh);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/qualitymethod', wa.url),
@@ -1094,7 +1080,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 });
             }
 
-            if (methods == 13)
+            if (methods == 12)
             {
                 // Data
                 var resdata=this.dataAccess();
@@ -1120,6 +1106,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var exeeResult="";
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Data Value Params:  Values "+DataValue+" Time: "+DataTime+" Begin: "+DataBegin+" End: "+DataEnd+" TimeZone: "+DataTimezone+" low: "+DataLow+" High: "+DataHigh);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/datavalue', wa.url),
@@ -1162,7 +1149,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 });
             }
 
-            if (methods == 14)
+            if (methods == 13)
             {
                 // Data
                 var resdata=this.dataAccess();
@@ -1181,6 +1168,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var exeeResult="";
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Hargreaves Params:  Hargreaves ");
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/hargreaves', wa.url),
@@ -1416,49 +1404,40 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
     },
-    showResultGrid: function(data) {    
-                        // title div with label and button
-                        // var header2 = d3.select("div").attr("class", "well");
-                        // container for array of tables
-                        var tableDiv = d3.select("#chartSeries-body");
-                        Ext.get('chartSeries').mask("Initializing chart..");
-                          for(var i=0;i<3;i++){
-                                    // update(data);
-                                              // select all divs in the table div, and then apply new data 
-                                      // after .data() is executed below, divs becomes a d3 update selection
-                                  var divs = tableDiv.selectAll("div").data(data,function(data) { return data.table }) ;
-                                  // divs.exit().remove();
+    tabulate:function(data, columns) {
+        Ext.get('show_result').mask("Initializing chart..");
+        var table = d3.select('#show_result-body').append('table');
+        var thead = table.append('thead');
+        var tbody = table.append('tbody');
 
-                                  var divsEnter = divs.enter().append("div").attr("id", function(d) { return d.table + "Div"; }).attr("class", "well");
-                                  divsEnter.append("h5").text(function(d) { return d.table; });
-                                  // add table in new div(s)
-                                  var tableEnter = divsEnter.append("table")
-                                      .attr("id", function(d) { return d.table })
-                                      .attr("class", "table table-condensed table-striped table-bordered")
-                                  // append table head in new table(s)
-                                  tableEnter.append("thead").append("tr").selectAll("th").data(["     Stat. Prams      ", "      Values   "]).enter().append("th")
-                                      .text(function(d) { return d; });
-                                  // append table body in new table(s)
-                                  tableEnter.append("tbody");
-                                  // select all tr elements in the divs update selection
-                                  var tr = divs.select("table").select("tbody").selectAll("tr")
-                                            .data(
-                                        function(d) { return d.rows; }, // return inherited data item
-                                        function(d) { return d.row }    // "key" function to disable default by-index evaluation
-                                      ); 
-                                  // tr.exit().remove();
-                                  tr.enter().append("tr");
-                                  // bind data to table cells
-                                  var td = tr.selectAll("td")
-                                      // after the .data() is executed below, the td becomes a d3 update selection
-                                      .data(function(d) { return d3.values(d); });   // return inherited data item
-                                  // use the enter method to add td elements 
-                                  td.enter().append("td")               // add the table cell
-                                      .text(function(d) { return d; })  // add text to the table cell        
-                          }
-                    Ext.get('chartSeries-body').removeCls("viewerChart");
-                    Ext.get('chartSeries').unmask();
+        Ext.get('show_result-body').removeCls("viewerChart");
+        Ext.get('show_result').unmask();
+        // append the header row
+        thead.append('tr')
+          .selectAll('th')
+          .data(columns).enter()
+          .append('th')
+            .text(function (column) { return column; });
 
+        // create a row for each object in the data
+        var rows = tbody.selectAll('tr')
+          .data(data)
+          .enter()
+          .append('tr');
+
+        // create a cell in each row for each column
+        var cells = rows.selectAll('td')
+          .data(function (row) {
+            return columns.map(function (column) {
+              return {column: column, value: row[column]};
+            });
+          })
+          .enter()
+          .append('td')
+            .text(function (d) { return d.value; });
+            
+
+        return table;
     },
     ConvertToCSV: function(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;

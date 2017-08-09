@@ -110,38 +110,34 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         'abbr': 6,
-                                        'name': 'regularization'
-                                    },
-                                    {
-                                        'abbr': 7,
                                         'name': 'hydro separation'
                                     },
                                     {
-                                        'abbr': 8,
+                                        'abbr': 7,
                                         'name': 'hydro events'
                                     },
                                     {
-                                        'abbr': 9,
+                                        'abbr': 8,
                                         'name': 'hydro indicies'
                                     },
                                     {
-                                        'abbr': 10,
+                                        'abbr': 9,
                                         'name': 'statistics'
                                     },
                                     {
-                                        'abbr': 11,
+                                        'abbr': 10,
                                         'name': 'fill'
                                     },
                                     {
-                                        'abbr': 12,
+                                        'abbr': 11,
                                         'name': 'quality'
                                     },
                                     {
-                                        'abbr': 13,
+                                        'abbr': 12,
                                         'name': 'data values'
                                     },
                                     {
-                                        'abbr': 14,
+                                        'abbr': 13,
                                         'name': 'Hargreaves'
                                     }]
                                 })

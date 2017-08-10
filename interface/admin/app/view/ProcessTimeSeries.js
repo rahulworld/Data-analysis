@@ -472,16 +472,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        // for (var i = 0; i < json1.data.length; i++) {
-                        // }
-                                console.log(json1['data']);
-                                // console.log(JSON.parse(json1['data']));
-                                // var test=JSON.parse(json1.data);
-                                // for(var i=0;i<json1['data'].length;i++){
-                                //     console.log(json1['data'][i][0]+"   "+json1['data'][i][1])
-                                // }
-                                var csv_array=json1['data'];
-                                rst_data=csv_array;
+                        console.log(json1['data']);
+                        rst_header = 'Resample Params\ntime,value\n';
+                        // ExeeTextView.setValue(strg); 
+                            var initialData;
+                            initialData = json1['data'];
+                            var csv_array=json1['data'];
+                            rst_data=csv_array;
                                 // Mask the container with loading message
                                 
                                 // var x=Object.keys(test['value']);
@@ -495,7 +492,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                     rec = rec.concat(vals);
                                     this.chartdata.push(rec);
                                 }
-                                console.log(this.chartdata);
+                                // console.log(this.chartdata);
                                 this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
@@ -718,32 +715,30 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 }
 
                 //Taking Input
-                var hsmode= Ext.getCmp("HSmode").getValue();
-                var hsalpha= Ext.getCmp("HSalpha").getValue();
-                var bsalpha= Ext.getCmp("bsalpha").getValue();
-                var exeeResult="";
-                Ext.get('chartSeries').mask("Initializing chart..");
+                var hsmode1= Ext.getCmp("HSmode").getValue();
+                var hsalpha1= Ext.getCmp("HSalpha").getValue();
+                var bsalpha1= Ext.getCmp("bsalpha").getValue();
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
-                textHistory.setValue("Filter Hydro Separation Params:  mode: "+hsmode+"  alpha: "+hsalpha+"  bsalpha"+bsalpha);
-
+                textHistory.setValue("Filter Hydro Separation Params:  mode: "+hsmode1+"  alpha: "+hsalpha1+"  bsalpha"+bsalpha1);
+                console.log('this is not good');
                 Ext.Ajax.request({
-                    url: Ext.String.format('{0}/istsos/operations/oat/hydrosaparation', wa.url),
+                    url: Ext.String.format('{0}/istsos/operations/oat/hysap', wa.url),
                     scope: this,
                     method:"POST",
                     jsonData:{
-                        'hsmode':hsmode,
-                        'hsalpha':hsalpha,
-                        'hsbfl':bsalpha,
+                        'hsmode':hsmode1,
+                        'hsalpha':hsalpha1,
+                        'hsbfl':bsalpha1,
                         'index1': resdata1,
                         'values1': resdata2,
                         'qual': resdata3
                     },
                     success: function(response){
-                        var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // console.log(response.responseText);
+                        // var json1 = Ext.decode(response.responseText);
+                        // console.log(json1);
+                        console.log(response.responseText);
 
                         // Ext.get('chartSeries').mask("Initializing chart..");
                         // this.chartdata = [];
@@ -777,9 +772,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                 var exeeResult="";
                 Ext.get('chartSeries').mask("Initializing chart..");
-
-                Resulttext.setVisible(true);
-                chartPlot.setVisible(false);
+                Resulttext.setVisible(false);
+                chartPlot.setVisible(true);
+                show_result.setVisible(false);
                 textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
 
                 // Ext.Ajax.request({
@@ -820,49 +815,63 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
+
 
                 //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+                var hialphacode= Ext.getCmp("alphacode").getValue();
+                var hiindicies= Ext.getCmp("indicies").getValue();
+                var hicomponent= Ext.getCmp("cbcompo").getValue();
+                var hiclass= Ext.getCmp("cbclass").getValue();
+                var himedian= Ext.getCmp("cbmedian").getValue();
+                var hidrainArea= Ext.getCmp("drainArea").getValue();
+                var hiperiod= Ext.getCmp("cbperiod").getValue();
+                var hibeg= Ext.getCmp("hibegin").getValue();
+                var hiend= Ext.getCmp("hiend").getValue();
 
-                var exeeResult="";
                 Ext.get('chartSeries').mask("Initializing chart..");
 
-                Resulttext.setVisible(true);
+                Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
-                show_result.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+                show_result.setVisible(true);
+                textHistory.setValue("Filter Hydro indicies Params:  alphacode: "+hialphacode+"  code indicies: "+hiindicies+"  component: "+hicomponent+"  classification: "+hiclass+"  median: "+himedian+" drain area: "+hidrainArea+"  period: "+hiperiod+"  begin: "+hibeg+"  end: "+hiend);
 
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/hi', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "hialpha":hialphacode,
+                        "hiindi":hiindicies,
+                        "hicomp":hicomponent,
+                        "hicss":hiclass,
+                        "himed":himedian,
+                        "hiper":hiperiod,
+                        "hida":hidrainArea,
+                        "hib":hibeg,
+                        "hie":hiend,
+                        "index1": resdata1,
+                        "values1": resdata2,
+                        "qual": resdata3
+                    },
+                    success: function(response){
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1);
+                        rst_header = 'Hydro indicies Params\n index,value\n';
+                        var csv_array=json1['data']['data'];
+                        rst_data=csv_array;
+                        data = JSON.parse(JSON.stringify(csv_array));
+                        this.tabulate(data,['index', 'value']);
+                        // console.log(response.responseText);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 9)
@@ -884,7 +893,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var endSta= Ext.getCmp("endSta").getValue();
                 var timezoneSta= Ext.getCmp("timezoneSta").getValue();
 
-                var exeeResult="";
 
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
@@ -987,10 +995,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // console.log(response.responseText);
-
                         Ext.get('chartSeries').mask("Initializing chart..");
+                        rst_header = 'Fill Params\ntime,value\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
                         this.chartdata = [];
                         for (var i = 0; i < json1['data'].length; i++) {
                             var rec = [];
@@ -1061,7 +1069,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         // console.log(response.responseText);
                         // Mask the container with loading message
                         Ext.get('chartSeries').mask("Initializing chart..");
-                        
+                        rst_header = 'Quality Params\ntime,value\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
                         this.chartdata = [];
                         for (var i = 0; i < json1['data'].length; i++) {
                             var rec = [];
@@ -1130,6 +1140,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         // console.log(response.responseText);
                         // Mask the container with loading message
                         Ext.get('chartSeries').mask("Initializing chart..");
+
+                        rst_header = 'Data Values Params\ntime,value\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
                         
                         this.chartdata = [];
                         for (var i = 0; i < json1['data'].length; i++) {
@@ -1181,11 +1195,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // console.log(response.responseText);
-                        // Mask the container with loading message
+
                         Ext.get('chartSeries').mask("Initializing chart..");
-                        
+
+                        rst_header = 'Hargreaves Params\ntime,value\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
+
                         this.chartdata = [];
                         for (var i = 0; i < json1['data'].length; i++) {
                             var rec = [];

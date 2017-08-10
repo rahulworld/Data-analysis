@@ -67,9 +67,6 @@ def initResource(waEnviron):
                 if resource == "resample":
                     from walib.istsos import istsos
                     return istsos.resamplingData(waEnviron)
-                elif resource == "regularization":
-                    from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
                 elif resource == "digitalfilter":
                     from walib.istsos import istsos
                     return istsos.DigitalThread(waEnviron)
@@ -79,16 +76,16 @@ def initResource(waEnviron):
                 elif resource == "hydro_events":
                     from walib.istsos import istsos
                     return istsos.regularization(waEnviron)
-                elif resource == "hydro_indicies":
+                elif resource == "hi":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.HydroIndices(waEnviron)
                 elif resource == "qualitymethod":
                     from walib.istsos import istsos
                     return istsos.QualityMethod(waEnviron)
                 elif resource == "datavalue":
                     from walib.istsos import istsos
                     return istsos.DataValuesMethod(waEnviron)
-                elif resource == "hydrosaparation":
+                elif resource == "hysap":
                     from walib.istsos import istsos
                     return istsos.HSMethod(waEnviron)
                 elif resource == "intgrate":

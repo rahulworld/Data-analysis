@@ -183,8 +183,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                             {
                                 type: 'fit'
                             },
-                            flex: 0.5,
-                            width: 500,
+                            flex: 1,
+                            width: 550,
                             maxWidth: 1000,
                             minWidth: 400,
                             items: [
@@ -1847,7 +1847,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'HydroEventsPanel',
                                 flex:1,
-                                height: 400,
+                                height: 250,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1860,6 +1860,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     frame: false,
                                     height: 40,
+                                    border:false,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -1869,12 +1870,14 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'spinnerfield',
                                             width: '',
                                             height: 40,
+                                            border:false,
                                             fieldLabel: 'Days prior the peak'
                                         },
                                         {
                                             xtype: 'spinnerfield',
                                             margin: 0,
                                             height: 40,
+                                            border:false,
                                             fieldLabel: 'Days following the peak'
                                         }
                                     ]
@@ -1882,7 +1885,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     xtype: 'panel',
                                     frame: false,
-                                    height: 60,
+                                    height: 40,
+                                    border:false,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -1899,13 +1903,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             margin: 0,
                                             height: 40,
                                             fieldLabel: 'Minimun value for a peak',
-                                            labelPad: 0
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'panel',
-                                    margin: 10,
+                                    border:false,
                                     height: 40,
                                     layout: {
                                         type: 'hbox',
@@ -1921,7 +1924,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 },
                                 {
                                     xtype: 'panel',
-                                    margin: 10,
+                                    border:false,
                                     height: 40,
                                     layout: {
                                         type: 'hbox',
@@ -1931,7 +1934,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'checkboxfield',
                                             flex: 0.15,
-                                            margins: '10',
                                             height: 40,
                                             fieldLabel: '',
                                             boxLabel: 'time'
@@ -1939,6 +1941,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'panel',
                                             flex: 1,
+                                            border:false,
                                             height: 40,
                                             layout: {
                                                 type: 'hbox',
@@ -1968,7 +1971,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'HydroIndicesPanel',
                                 flex:1,
-                                height: 400,
+                                height: 300,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1980,7 +1983,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     xtype: 'panel',
                                     frame: false,
-                                    height:50,
+                                    border:false,
+                                    margin:5,
+                                    height:40,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -1988,14 +1993,68 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'combobox',
+                                            id:'alphacode',
                                             width: '',
-                                            height:50,
-                                            fieldLabel: 'alphanumeric code'
+                                            height:40,
+                                            margin: 1,
+                                            fieldLabel: 'alphanumeric code',
+                                            value: "MA",
+                                            store: Ext.create('Ext.data.Store',
+                                            {
+                                                fields: ['abbr', 'name'],
+                                                data: [
+                                                {
+                                                    'abbr': 'MA',
+                                                    'name': 'MA'
+                                                },
+                                                {
+                                                    'abbr': 'ML',
+                                                    'name': 'ML'
+                                                },
+                                                {
+                                                    'abbr': 'MH',
+                                                    'name': 'MH'
+                                                },
+                                                {
+                                                    'abbr': 'FL',
+                                                    'name': 'FL'
+                                                },
+                                                {
+                                                    'abbr': 'FH',
+                                                    'name': 'FH'
+                                                },
+                                                {
+                                                    'abbr': 'DL',
+                                                    'name': 'DL'
+                                                },
+                                                {
+                                                    'abbr': 'DH',
+                                                    'name': 'DH'
+                                                },
+                                                {
+                                                    'abbr': 'TL',
+                                                    'name': 'TL'
+                                                },
+                                                {
+                                                    'abbr': 'TH',
+                                                    'name': 'TH'
+                                                },
+                                                {
+                                                    'abbr': 'RA',
+                                                    'name': 'RA'
+                                                }]
+                                            }),
+                                            matchFieldWidth: false,
+                                            valueField: "abbr",
+                                            displayField: "name",
+                                            queryMode: 'local',
+                                            forceSelection: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            margin: 0,
-                                            height:50,
+                                            id:'indicies',
+                                            margin: 1,
+                                            height:40,
                                             fieldLabel: 'indices to calculate'
                                         }
                                     ]
@@ -2003,7 +2062,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     xtype: 'panel',
                                     frame: false,
-                                    height:50,
+                                    border:false,
+                                    margin:5,
+                                    height:40,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2012,21 +2073,115 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'combobox',
                                             width: '',
-                                            height:50,
-                                            fieldLabel: 'component'
+                                            id:'cbcompo',
+                                            height:40,
+                                            margin: 1,
+                                            fieldLabel: 'component',
+                                            value: "AVERAGE_MAGNITUDE",
+                                            store: Ext.create('Ext.data.Store',
+                                            {
+                                                fields: ['abbr', 'name'],
+                                                data: [
+                                                {
+                                                    'abbr': 'AVERAGE_MAGNITUDE',
+                                                    'name': 'AVERAGE_MAGNITUDE'
+                                                },
+                                                {
+                                                    'abbr': 'LOW_FLOW_MAGNITUDE',
+                                                    'name': 'LOW_FLOW_MAGNITUDE'
+                                                },
+                                                {
+                                                    'abbr': 'HIGH_FLOW_MAGNITUDE',
+                                                    'name': 'HIGH_FLOW_MAGNITUDE'
+                                                },
+                                                {
+                                                    'abbr': 'LOW_FLOW_FREQUENCY',
+                                                    'name': 'LOW_FLOW_FREQUENCY'
+                                                },
+                                                {
+                                                    'abbr': 'HIGH_FLOW_FREQUENCY',
+                                                    'name': 'HIGH_FLOW_FREQUENCY'
+                                                },
+                                                {
+                                                    'abbr': 'LOW_FLOW_FREQUENCY',
+                                                    'name': 'LOW_FLOW_FREQUENCY'
+                                                },
+                                                {
+                                                    'abbr': 'LOW_FLOW_DURATION',
+                                                    'name': 'LOW_FLOW_DURATION'
+                                                },
+                                                {
+                                                    'abbr': 'HIGH_FLOW_DURATION',
+                                                    'name': 'HIGH_FLOW_DURATION'
+                                                },
+                                                {
+                                                    'abbr': 'TIMING',
+                                                    'name': 'TIMING'
+                                                },
+                                                {
+                                                    'abbr': 'RATE_OF_CHANGE',
+                                                    'name': 'RATE_OF_CHANGE'
+                                                }]
+                                            }),
+                                            matchFieldWidth: false,
+                                            valueField: "abbr",
+                                            displayField: "name",
+                                            queryMode: 'local',
+                                            forceSelection: true
                                         },
                                         {
                                             xtype: 'combobox',
-                                            margin: 0,
-                                            height:50,
+                                            id:'cbclass',
+                                            margin: 1,
+                                            height:40,
                                             fieldLabel: 'classification',
-                                            labelPad: 0
+                                            value: "HARSH_INTERMITTENT",
+                                            store: Ext.create('Ext.data.Store',
+                                            {
+                                                fields: ['abbr', 'name'],
+                                                data: [
+                                                {
+                                                    'abbr': 'HARSH_INTERMITTENT',
+                                                    'name': 'HARSH_INTERMITTENT'
+                                                },
+                                                {
+                                                    'abbr': 'FLASHY_INTERMITTENT',
+                                                    'name': 'FLASHY_INTERMITTENT'
+                                                },
+                                                {
+                                                    'abbr': 'SNOWMELT_PERENNIAL',
+                                                    'name': 'SNOWMELT_PERENNIAL'
+                                                },
+                                                {
+                                                    'abbr': 'SNOW_RAIN_PERENNIAL',
+                                                    'name': 'SNOW_RAIN_PERENNIAL'
+                                                },
+                                                {
+                                                    'abbr': 'GROUNDWATER_PERENNIAL',
+                                                    'name': 'GROUNDWATER_PERENNIAL'
+                                                },
+                                                {
+                                                    'abbr': 'FLASHY_PERENNIAL',
+                                                    'name': 'FLASHY_PERENNIAL'
+                                                },
+                                                {
+                                                    'abbr': 'ALL_STREAMS',
+                                                    'name': 'ALL_STREAMS'
+                                                }]
+                                            }),
+                                            matchFieldWidth: false,
+                                            valueField: "abbr",
+                                            displayField: "name",
+                                            queryMode: 'local',
+                                            forceSelection: true
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'panel',
                                     margin: 10,
+                                    border:false,
+                                    margin:5,
                                     height:50,
                                     layout: {
                                         type: 'hbox',
@@ -2035,23 +2190,50 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
-                                            flex: 1,
-                                            height:50,
+                                            id:'cbmedian',
+                                            flex: 0.1,
+                                            height:40,
                                             fieldLabel: '',
                                             boxLabel: 'median'
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            flex: 1,
-                                            height:50,
-                                            fieldLabel: 'drain area'
+                                            xtype: 'spinnerfield',
+                                            id:'drainArea',
+                                            flex: 0.6,
+                                            height:40,
+                                            width:60,
+                                            labelWidth:60,
+                                            fieldLabel: 'drain area',
+                                            value: 1,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'panel',
-                                    margin: 10,
                                     height:50,
+                                    border:false,
+                                    margin:5,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2059,16 +2241,17 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
-                                            flex: 0.15,
-                                            margins: '10',
-                                            height:50,
+                                            flex: 0.2,
+                                            id:'cbperiod',
+                                            height:40,
                                             fieldLabel: '',
                                             boxLabel: 'period'
                                         },
                                         {
                                             xtype: 'panel',
                                             flex: 1,
-                                            height:50,
+                                            height:40,
+                                            border:false,
                                             layout: {
                                                 type: 'hbox',
                                                 align: 'stretch'
@@ -2076,15 +2259,19 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             items: [
                                                 {
                                                     xtype: 'spinnerfield',
+                                                    id:'hibegin',
                                                     margins: '0',
-                                                    height:50,
+                                                    height:40,
                                                     flex: 1,
+                                                    labelWidth:40,
                                                     fieldLabel: 'Begin'
                                                 },
                                                 {
                                                     xtype: 'spinnerfield',
+                                                    id:'hiend',
                                                     flex: 1,
-                                                    height:50,
+                                                    labelWidth:40,
+                                                    height:40,
                                                     fieldLabel: 'End'
                                                 }
                                             ]
@@ -2204,8 +2391,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     id:'bsalpha',
                                                     margin:5,
                                                     fieldLabel: 'bfl_max',
-                                                    value: 0.50,
-                                                    step: -0.01,
+                                                    value: 1,
+                                                    step: -1,
                                                     // override onSpinUp (using step isn't neccessary)
                                                     onSpinUp: function()
                                                     {

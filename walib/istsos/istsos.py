@@ -242,6 +242,7 @@ class Resample1():
             temp_oat = df.resample(rule=self.freq,how=self.how,fill_method=self.fill, limit=self.limit)
 
         return temp_oat
+        
 class Statistics():
     """ compute base statistics: count, min, max, mean, std, 25%, 50% 75 percentile"""
 
@@ -709,51 +710,7 @@ class IntegrateMethod(waIstsos):
         self.setData(IG)
         self.setMessage("Integrate is successfully working")
 
-class regularization(waIstsos):
-
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-
-    def executeGet(self):
-        ############################
-        #     Resampling Code
-        ############################
-        # from pandas import read_csv
-        # from pandas import datetime
-        # from datetime import datetime
-        # import pandas as pd
-        # import json
-        # data = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'values': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-        # df = pd.DataFrame(data, columns = ['date', 'values'])
-        # df['date'] = pd.to_datetime(df['date'])
-        # df.index = df['date']
-        # del df['date']
-        # resdata=df.resample('D', how='sum').to_json()
-        # parsed_json=json.loads(resdata)
-        # json_data = '{"103": {"class": "V", "Name": "Samiya", "Roll_n": 12}, "102": {"class": "V", "Name": "David", "Roll_no": 8}, "101": {"class": "V", "Name": "Rohit", "Roll_no": 7}}'
-        # parsed_json=json.loads(json_data)
-        # print(parsed_json['103']['class'])
-        # data = {}
-        # data["istsos_version"] = ""
-        # data["latest_istsos_version"] = ""
-        # data["latest_istsos_changelog"] = ""
-        # data["download_url"] = "https://sourceforge.net/projects/istsos"
-        # data["istsos_message"] = "updates not found"
-        # data["istsos_update"] = False
-        ############################
-        #     Regularisation Code
-        ############################
-        import pandas as pd
-        from dateutil.parser import parse as parse_time
-        times = ['2011-01-01 00:00:00', '2011-01-01 00:53:00', '2011-01-01 02:00:00']
-        times = [parse_time(t) for t in times]
-        x = pd.DataFrame([1.1, 2.3, 5.2], index=pd.DatetimeIndex(times))
-        x.asfreq(pd.datetools.Hour(), method='pad')
-        self.setData(x)
-        self.setMessage("this is regularisation successfully")
-
-
-class HydroGraphSep():
+class HydroGraphSep1():
     """ Class to assign constant weight values """
 
     def __init__(self, mode, alpha=0.98, bfl_max=0.50):
@@ -784,13 +741,17 @@ class HydroGraphSep():
         #if 'use' in oat.ts.columns:
             #del oat.ts['use']
         import copy
+        import numpy as np
         flux = copy.deepcopy(df)
         base = copy.deepcopy(df)
+        #         return copy.deepcopy(self)
+        #         print df
+                #print (base.ts.ix[0]['data'])
+        #         print flux
 
         base['quality'] = np.zeros(base['quality'].size)
         base['data'] = np.zeros(base['data'].size)
         runoff = copy.deepcopy(base)
-
         base.ix[0, 'data'] = flux.ix[0, 'data']
         #print (len(flux.ts.index))
         if self.mode == 'TPDF':
@@ -798,19 +759,17 @@ class HydroGraphSep():
             b = (1 - self.alpha) * self.bfl_max
             c = (1 - self.alpha * self.bfl_max)
             for i in range(1, len(flux.index)):
-                #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
-                    #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
                 base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
                     + b * flux.ix[i, 'data']) / c
                 if base.ix[i, 'data'] > flux.ix[i, 'data']:
                     base.ix[i, 'data'] = flux.ix[i, 'data']
                 runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
+                #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
+                    #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
 
         elif self.mode == 'SPDF':
             a = (1 + self.alpha) / 2
             for i in range(1, len(flux.index)):
-                #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
-                    #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
                 runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
                     + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
                 if runoff.ix[i, 'data'] < 0:
@@ -818,13 +777,9 @@ class HydroGraphSep():
                 if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
                     runoff.ix[i, 'data'] = flux.ix[i, 'data']
                 base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
+                #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
+                    #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
 
-        base.name = "{}_base".format('base')
-        runoff.name = "{}_runoff".format('runoff')
-
-#         self.result['type'] = "sensor list"
-#         self.result['data'] = [base, runoff]
-#         return self.returnResult(detailedresult)
         return runoff
 
 class HSMethod(waIstsos):
@@ -843,22 +798,34 @@ class HSMethod(waIstsos):
         index1=self.json['index1']
         values1=self.json['values1']
         qua=self.json['qual']
-        mode = self.json['hsmode']
-        alpha =self.json['hsalpha']
-        bfl = self.json['hsbfl']
+        # mode = self.json['hsmode']
+        # alpha =self.json['hsalpha']
+        # bfl = self.json['hsbfl']
 
-        # alpha=int(alpha)        
-        # bfl=int(bfl)
+        # alpha1=float(alpha)        
+        # bfl1=float(bfl)
         
-        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        # data1 = {'date': index1, 'data':values1, 'quality':qua}
+        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        # df['date'] = pd.to_datetime(df['date'])
+        # df.index = df['date']
+        # del df['date']
+
+        # HS=HydroGraphSep(mode, alpha=alpha1, bfl_max=bfl1)
+        # resdata=HS.execute(df)
+        data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
+        # df.data=df['value']
         del df['date']
 
-        HS=HydroGraphSep(mode=mode, alpha=alpha, bfl_max=bfl)
-        resdata=HS.execute(df)
+        mode = 'TPDF'
+        alpha =0.50
+        bfl = 0.80
 
+        HS=HydroGraphSep1(mode, alpha=alpha, bfl_max=bfl)
+        hs=HS.execute(df)
         # values = np.array(resdata['data'])
         # times = resdata.index
         # times_string =[]
@@ -878,8 +845,8 @@ class HSMethod(waIstsos):
 
         # dictionary = {'data': data4}
 
-        self.setData(resdata)
-        self.setMessage("resampling is successfully working")
+        self.setData(hs)
+        self.setMessage("hydrosepration is successfully working")
 
 
 class  QualityStat():
@@ -1060,7 +1027,7 @@ class SetDataValues():
         #apply the value to all observations
         #Here is df placed of df.loc['data']
         if self.vbounds == [(None, None)] and self.tbounds == [(None, None)]:
-            df['data'] = df['data'].apply(lambda d: self.value)
+            df.loc['data'] = df['data'].apply(lambda d: self.value)
             # df.loc['data'] = df['data'].apply(lambda d: self.value)
         #apply value to combination of time intervals and vaue intervals (periods and tresholds)
         elif self.tbounds and self.vbounds:
@@ -1324,3 +1291,258 @@ class waValidatedb(waIstsos):
 
         self.setData(res)
         self.setMessage("Database validation request successfully executed")
+
+class HydroIndices1():
+    """ class to calculate hydrologic indices"""
+
+    __htype__ = ["MA", "ML", "MH", "FL", "FH", "DL", "DH", "TA", "TL", "TH", "RA"]
+
+    def __init__(self, htype, code1, period=None, flow_component=False, stream_classification=False, median=False, drain_area=None):
+        """peak flow periods extraction
+
+        Args:
+            htype (str): alphanumeric code, one of [MA,ML,MH,FL,FH,DL,DH,TA,TL,TH,RA]
+            code (int): code that jointly with htype determine the indiced to calculate (see TSPROC HYDROLOGIC_INDECES Table 3-2, page 90)
+            period (tuple): tuple of two elements indicating the BEGIN and END of datetimes records to be used.
+            flow_component (str): Specify the hydrologic regime as defined in Olden and Poff (2003).
+                One of ["AVERAGE_MAGNITUDE", "LOW_FLOW_MAGNITUDE", "HIGH_FLOW_MAGNITUDE", "LOW_FLOW_FREQUENCY,
+                HIGH_FLOW_FREQUENCY", "LOW_FLOW_DURATION", "HIGH_FLOW_DURATION", "TIMING", "RATE_OF_CHANGE"]
+            stream_classification (str): Specify the hydrologic regime as defined in Olden and Poff (2003).
+                One of ["HARSH_INTERMITTENT", "FLASHY_INTERMITTENT", "SNOWMELT_PERENNIAL", "SNOW_RAIN_PERENNIAL", "
+                    GROUNDWATER_PERENNIAL", "FLASHY_PERENNIAL", "ALL_STREAMS"]
+            median (bool): Requests that indices that normally report the mean of some other sumamry statistic to instead report the median value.
+            drain_area (float): the gauge area in m3
+
+        Returns:
+            A list of oat objects with a storm hydrograph each, they will be named "seriesName+suffix+number"
+            (e.g.: with a series named "TEST" and a suffic "_hyevent_N" we will have: ["TEST_hyevent_N1, TEST_hyevent_N2, ...]
+        """
+
+        if not htype in self.__htype__:
+            raise ValueError("htype shall be in %s" % self.__htype__)
+
+        self.htype = htype
+        self.code1 = code1
+        self.period = period
+        self.flow_component = flow_component
+        self.stream_classification = stream_classification
+        self.median = median
+        self.drain_area = drain_area
+
+    def execute(self, dataframe):
+        df=dataframe
+        """ calculate peak hydrographs """
+        
+        if self.htype == "MA":
+            #raise Exception(str(oat.ts))
+            if not df.index.freq or df.index.freq.delta.total_seconds() != 60 * 60 * 24:
+                tmp_oat = Resample1(freq='1D', how='mean').execute1(df)
+            else:
+                tmp_oat = df
+
+            if self.code1 == 1:
+                # Mean of the daily mean flow values for the entire flow record
+                value = tmp_oat.mean()['data']
+            elif self.code1 == 2:
+                # Median of the daily mean flow values for the entire flow record.
+                value = tmp_oat.median()['data']
+            elif self.code1 == 3:
+                # Mean (or median) of the coefficients of variation (standard deviation/mean) for each year.
+                # Compute the coefficient of variation for each year of daily flows. Compute the mean of the annual coefficients of variation
+                l = [v.std()[0] / v.mean()[0] for a, v in tmp_oat.groupby(tmp_oat.index.year)]
+                value = sum(l) / float(len(l))
+            elif self.code1 == 4:
+                #Standard deviation of the percentiles of the logs of the entire flow record divided by the mean of percentiles of the logs.
+                #Compute the log10 of the daily flows for the entire record.
+                #Compute the 5th, 10th, 15th, 20th, 25th, 30th, 35th, 40th, 45th, 50th, 55th, 60th, 65th, 70th,
+                #75th, 80th, 85th, 90th, and 95th percentiles for the logs of the entire flow record.
+                #Percentiles are computed by interpolating between the ordered (ascending) logs of the flow values.
+                #Compute the standard deviation and mean for the percentile values. Divide the standard deviation by the mean.
+                q = np.log(tmp_oat["data"]).quantile(
+                    [.05, .10, .15, .20, .25, .30, .35, .40, .45, .50,
+                         .55, .60, .65, .70, .75, .80, .85, .90, .95])
+                value = q.std() / q.mean()
+            elif self.code1 == 5:
+                #The skewness of the entire flow record is computed as the mean for the entire flow record (MA1)
+                #divided by the median (MA2) for the entire flow record.
+                value = tmp_oat.mean()['data'] / tmp_oat.median()['data']
+            elif self.code1 == 6:
+                #Range in daily flows is the ratio of the 10-percent to 90-percent exceedance values for the entire flow record.
+                #Compute the 5-percent to 95-percent exceedance values for the entire flow record.
+                #Exceedance is computed by interpolating between the ordered (descending) flow values.
+                #Divide the 10-percent exceedance value by the 90-percent value.
+                #exc = oat.process(ExceedanceProbability([4, 6, 10],etu='days')))
+                exc = Exceedance(perc=[10, 90]).execute1(temp_oat)
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code1 == 7:
+                #Range in daily flows is the ratio of the 20-percent to 80-percent exceedance values for the entire flow record.
+                exc = Exceedance(perc=[20,80]).execute1(temp_oat)
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code1 == 8:
+                #Range in daily flows is the ratio of the 25-percent to 75-percent exceedance values for the entire flow record.
+                exc = Exceedance(perc=[25,75]).execute1(temp_oat)
+                value = exc[0]['value'] / exc[1]['value']
+            elif self.code == 9:
+                #Spread in daily flows is the ratio of the difference between the 90th and 10th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                #Compute the log10 of the daily flows for the entire record.
+                #Compute the 5th, 10th, 15th, 20th, 25th, 30th, 35th, 40th, 45th, 50th, 55th, 60th, 65th, 70th, 75th, 80th,
+                #85th, 90th, and 95th percentiles for the logs of the entire flow record.
+                #Percentiles are computed by interpolating between the ordered (ascending) logs of the flow values.
+                #Compute MA9 as (90th –10th) /log10(MA2).
+                q = np.log10(tmp_oat["data"]).quantile([.10, .90])
+                value = (q[0.10] - q[0.90]) / np.log10(tmp_oat.median()['data'])
+            elif self.code == 10:
+                #Spread in daily flows is the ratio of the difference between the 80th and 20th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                q = np.log10(tmp_oat["data"]).quantile([.20, .80])
+                value = (q[0.20] - q[0.80]) / np.log10(tmp_oat.median()['data'])
+            elif self.code1 == 11:
+                #Spread in daily flows is the ratio of the difference between the 25th and 75th percentile of the logs of the
+                #flow data to the log of the median of the entire flow record.
+                q = np.log10(tmp_oat["data"]).quantile([.25, .75])
+                value = (q[0.25] - q[0.75]) / np.log10(tmp_oat.median()['data'])
+            elif self.code1 in range(12, 24):
+                #Means (or medians) of monthly flow values. Compute the means for each month over the entire flow record.
+                #For example, MA12 is the mean of all January flow values over the entire record.
+                month_num = self.code - 11
+                b = Resample1(freq='1M', how='mean').execute1(temp_oat)
+                try:
+                    m = b.groupby(b.index.month).get_group(month_num)
+                    v = m.mean()[0]
+                except KeyError:
+                    v = None
+                value = v
+            elif self.code1 in range(24, 36):
+                #Variability (coefficient of variation) of monthly flow values.
+                #Compute the standard deviation for each month in each year over the entire flow record.
+                #Divide the standard deviation by the mean for each month. Average (or take median of) these values for each month across all years.
+                month_num = self.code - 23
+                #b = tmp_oat.process(Resample(freq='1M', how='std'))
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean, np.std])  # .dropna()
+                try:
+                    cov = (m.xs(month_num, level=1)['data']['std'] / m.xs(month_num, level=1)['data']['mean']).mean()
+                except KeyError:
+                    cov = None
+                value = cov
+            elif self.code1 == 36:
+                m = oat.ts.groupby([df.index.year, df.index.month]).agg([np.mean])
+                value = (m.max()[0] - m.min()[0]) / m.median()[0]
+            elif self.code1 == 37:
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
+                q = m.quantile([.25, .75])
+                value = (q.ix[0.25][0] - q.ix[0.75][0]) / m.median()[0]
+            elif self.code1 == 38:
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
+                q = m.quantile([.10, .90])
+                value = (q.ix[0.10][0] - q.ix[0.90][0]) / m.median()[0]
+            elif self.code1 == 39:
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
+                value = (m.std()[0] * 100) / m.mean()[0]
+            elif self.code1 == 40:
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / m.median()[0]
+            elif self.code1 == 41:
+                if self.drain_area is None:
+                    raise ValueError("drain_area must be defined to calculate this indice!")
+                m = df.groupby([df.index.year]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / self.drain_area
+            elif self.code1 == 42:
+                m = df.groupby([df.index.year]).agg([np.mean])
+                value = (m.max()[0] - m.min()[0]) / m.median()[0]
+            elif self.code1 == 43:
+                m = df.groupby([df.index.year]).agg([np.mean])
+                q = m.quantile([.25, .75])
+                value = (q.ix[0.25][0] - q.ix[0.75][0]) / m.median()[0]
+            elif self.code1 == 44:
+                m = df.groupby([df.index.year]).agg([np.mean])
+                q = m.quantile([.10, .90])
+                value = (q.ix[0.10][0] - q.ix[0.90][0]) / m.median()[0]
+            elif self.code1 == 45:
+                m = df.groupby([df.index.year]).agg([np.mean])
+                value = (m.mean()[0] - m.median()[0]) / m.median()[0]
+            else:
+                raise ValueError("the code number %s is not defined!" % self.code)
+
+            return value
+
+
+class HydroIndices(waIstsos):
+    """
+        Run Hydro indices filter
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+    
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        htype = self.json['hialpha']
+        hindicies = self.json['hiindi']
+        # hindicies = '1,3'
+
+        if htype != 'MA':
+            self.exception.emit(Exception("Sorry, only Ma is supported (Alphanumeric Code)"))
+            return
+
+        if hindicies == '':
+            self.exception.emit(Exception("Please define code"))
+            return
+
+        code1 = map(int, hindicies.split(','))
+        # code = [1,3]
+
+        if len(code1) != 2:
+            self.exception.emit(Exception("Please change code"))
+            return
+        elif code1[0] > code1[1]:
+            self.exception.emit(Exception('code 1 must be lower than code 2'))
+            return
+        elif code1[0] < 1:
+            self.exception.emit(Exception("Code 1 shoul'd be >= 1"))
+            return
+        elif code1[1] > 45:
+            self.exception.emit(Exception("Code 2 shoul'd be <= 45"))
+            return
+
+        comp = self.json['hicomp']
+        classification = self.json['hicss']
+        median = self.json['himed']
+        drain = self.json['hida']
+        per=self.json['hiper']
+        beg=self.json['hib']
+        en=self.json['hie']
+
+        period = None
+        if per:
+            begin = beg.replace(" ", "T")
+            end = en.replace(" ", "T")
+
+            period = [begin, end]
+
+        result1 = {
+            "op": "hydroIndices",
+            "type": "dict list",
+            "data": []
+        }
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+
+        for c in range(code1[0], code1[1]):
+            HyI = HydroIndices1(htype=htype, code1=c, flow_component=comp,stream_classification=classification,median=median,drain_area=drain, period=period)
+            result=HyI.execute(df)
+            result1['data'].append({"index": c, "value": result})
+            # res='errors'
+
+        self.setData(result1)
+        self.setMessage("Hydro Indicies is successfully working")

@@ -1868,17 +1868,64 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'spinnerfield',
+                                            id:'herise',
+                                            margin:1,
                                             width: '',
                                             height: 40,
                                             border:false,
-                                            fieldLabel: 'Days prior the peak'
+                                            fieldLabel: 'Days prior the peak',
+                                            value: 2.00,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
-                                            margin: 0,
+                                            id:'hefall',
+                                            margin:1,
                                             height: 40,
                                             border:false,
-                                            fieldLabel: 'Days following the peak'
+                                            fieldLabel: 'Days following the peak',
+                                            value: 2.00,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         }
                                     ]
                                 },
@@ -1894,15 +1941,62 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'spinnerfield',
+                                            id:'hewindow',
+                                            margin:1,
                                             width: '',
                                             height: 40,
-                                            fieldLabel: 'Min days between peak'
+                                            fieldLabel: 'Min days between peak',
+                                            value: 2,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
-                                            margin: 0,
+                                            id:'hepeak',
+                                            margin:1,
                                             height: 40,
                                             fieldLabel: 'Minimun value for a peak',
+                                            value: 3.00,
+                                            step: -1,
+                                            // override onSpinUp (using step isn't neccessary)
+                                            onSpinUp: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val - me.step) + ' ');
+                                                }
+                                            },
+                                            // override onSpinDown
+                                            onSpinDown: function()
+                                            {
+                                                var me = this;
+                                                if (!me.readOnly)
+                                                {
+                                                    var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                    me.setValue((val + me.step) + ' ');
+                                                }
+                                            }
                                         }
                                     ]
                                 },
@@ -1917,7 +2011,10 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'textfield',
+                                            id:'heseries',
+                                            margin:1,
                                             height: 40,
+                                            value:'start',
                                             fieldLabel: 'Name of time series'
                                         }
                                     ]
@@ -1933,13 +2030,15 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
+                                            id:'hetime',
+                                            margin:1,
                                             flex: 0.15,
                                             height: 40,
-                                            fieldLabel: '',
                                             boxLabel: 'time'
                                         },
                                         {
                                             xtype: 'panel',
+                                            margin:1,
                                             flex: 1,
                                             border:false,
                                             height: 40,
@@ -1950,6 +2049,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             items: [
                                                 {
                                                     xtype: 'spinnerfield',
+                                                    id:'hebeg',
+                                                    margin:1,                                                    
                                                     margins: '0',
                                                     height: 40,
                                                     flex: 1,
@@ -1957,6 +2058,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 },
                                                 {
                                                     xtype: 'spinnerfield',
+                                                    id:'heend',
+                                                    margin:1,
                                                     flex: 1,
                                                     height: 40,
                                                     fieldLabel: 'End'

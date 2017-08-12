@@ -73,9 +73,9 @@ def initResource(waEnviron):
                 elif resource == "exceedance":
                     from walib.istsos import istsos
                     return istsos.ExceedanceData(waEnviron)
-                elif resource == "hydro_events":
+                elif resource == "he":
                     from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    return istsos.HydroEventsTh(waEnviron)
                 elif resource == "hi":
                     from walib.istsos import istsos
                     return istsos.HydroIndices(waEnviron)
@@ -87,7 +87,7 @@ def initResource(waEnviron):
                     return istsos.DataValuesMethod(waEnviron)
                 elif resource == "hysap":
                     from walib.istsos import istsos
-                    return istsos.HSMethod(waEnviron)
+                    return istsos.HydroSeparationTh(waEnviron)
                 elif resource == "intgrate":
                     from walib.istsos import istsos
                     return istsos.IntegrateMethod(waEnviron)

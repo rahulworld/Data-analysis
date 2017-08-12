@@ -765,48 +765,55 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
 
                 //Taking Input
-                var fillMethod= Ext.getCmp("fillMethod").getValue();
-                var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
+                var hyerise= Ext.getCmp("herise").getValue();
+                var hyefall= Ext.getCmp("hefall").getValue();
+                var hyewindow= Ext.getCmp("hewindow").getValue();
+                var hyepeak= Ext.getCmp("hepeak").getValue();
+                var hyeseries= Ext.getCmp("heseries").getValue();
+                var hyetime= Ext.getCmp("hetime").getValue();
+                var hyebeg= Ext.getCmp("hebeg").getValue();
+                var hyeend= Ext.getCmp("heend").getValue();
 
-                var exeeResult="";
                 Ext.get('chartSeries').mask("Initializing chart..");
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
-                textHistory.setValue("Filter Fill Params:  filling no data method: "+fillMethod+"  consucutive no data allowed: "+fillConsucutive);
+                textHistory.setValue("Filter Hydro Events Params: rise: "+hyerise+"  fall: "+hyefall+"  window: "+hyewindow+"  peak: "+hyepeak+"  series: "+hyeseries+"  period: "+hyetime+"  begin: "+hyebeg+"  end: "+hyeend);
 
-                // Ext.Ajax.request({
-                //     url: Ext.String.format('{0}/istsos/operations/oat/intgrate', wa.url),
-                //     scope: this,
-                //     method:"POST",
-                //     jsonData:{
-                //         "exceevalues":exceeValues,
-                //         "exceeperc":exceeProbability,
-                //         "etu":exceeTime,
-                //         "exceeunder":exceeUnder,
-                //         "index1": resdata1,
-                //         "values1": resdata2
-                //     },
-                //     success: function(response){
-                //         var json1 = Ext.decode(response.responseText);
-                //         console.log(json1);
-                //         // for (var i = 0; i < json1["data"].length; i++) {
-                //         //         frequency=json1["data"][i][frequency];
-                //         //         percentage=json1["data"][i][percentage];
-                //         //         value=json1["data"][i][value];
-                //         //         exeeResult=+"\nfrequency : "+frequency+" percentage : "+percentage+" value : "+value;
-                //         // }
-                //         //         // for(var i=0;i<test.length;i++){
-                //         //         // }
-                //         // ExeeTextView.setValue(exeeResult);
-                //     },
-                //     failure: function (response) {
-                //         var jsonResp = Ext.util.JSON.decode(response.responseText);
-                //         Ext.Msg.alert("Error",jsonResp.error);
-                //     }
-                // });
+                Ext.Ajax.request({
+                    url: Ext.String.format('{0}/istsos/operations/oat/he', wa.url),
+                    scope: this,
+                    method:"POST",
+                    jsonData:{
+                        "hydrise":hyerise,
+                        "hydfall":hyefall,
+                        "hydwindow":hyewindow,
+                        "hydpeak":hyepeak,
+                        "hydseries":hyeseries,
+                        "hydtime":hyetime,
+                        "hydbeg":hyebeg,
+                        "hydend":hyeend,
+
+                        "index1": resdata1,
+                        "values1": resdata2,
+                        "qual":resdata3
+                    },
+                    success: function(response){
+                        // var json1 = Ext.decode(response.responseText);
+                        // console.log(json1);
+                        console.log(response.responseText);
+                    },
+                    failure: function (response) {
+                        var jsonResp = Ext.util.JSON.decode(response.responseText);
+                        Ext.Msg.alert("Error",jsonResp.error);
+                    }
+                });
             }
 
             if (methods == 8)

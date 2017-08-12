@@ -33,6 +33,7 @@ from walib.oat.oatlib import method
 import pandas as pd
 import numpy as np
 import json
+import scipy
 
 
 try:
@@ -710,7 +711,7 @@ class IntegrateMethod(waIstsos):
         self.setData(IG)
         self.setMessage("Integrate is successfully working")
 
-class HydroGraphSep1():
+class HydroGraph():
     """ Class to assign constant weight values """
 
     def __init__(self, mode, alpha=0.98, bfl_max=0.50):
@@ -741,48 +742,53 @@ class HydroGraphSep1():
         #if 'use' in oat.ts.columns:
             #del oat.ts['use']
         import copy
-        import numpy as np
         flux = copy.deepcopy(df)
         base = copy.deepcopy(df)
-        #         return copy.deepcopy(self)
-        #         print df
-                #print (base.ts.ix[0]['data'])
-        #         print flux
+#         return copy.deepcopy(self)
+#         print df
+        #print (base.ts.ix[0]['data'])
+#         print flux
 
         base['quality'] = np.zeros(base['quality'].size)
         base['data'] = np.zeros(base['data'].size)
         runoff = copy.deepcopy(base)
-        base.ix[0, 'data'] = flux.ix[0, 'data']
-        #print (len(flux.ts.index))
-        if self.mode == 'TPDF':
-            a = (1 - self.bfl_max) * self.alpha
-            b = (1 - self.alpha) * self.bfl_max
-            c = (1 - self.alpha * self.bfl_max)
-            for i in range(1, len(flux.index)):
-                base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
-                    + b * flux.ix[i, 'data']) / c
-                if base.ix[i, 'data'] > flux.ix[i, 'data']:
-                    base.ix[i, 'data'] = flux.ix[i, 'data']
-                runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
-                #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
-                    #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
+        # base.ix[0, 'data'] = flux.ix[0, 'data']
+        # #print (len(flux.ts.index))
+        # if self.mode == 'TPDF':
+        #     a = (1 - self.bfl_max) * self.alpha
+        #     b = (1 - self.alpha) * self.bfl_max
+        #     c = (1 - self.alpha * self.bfl_max)
+        #     for i in range(1, len(flux.index)):
+        #         #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
+        #             #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
+        #         base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
+        #             + b * flux.ix[i, 'data']) / c
+        #         if base.ix[i, 'data'] > flux.ix[i, 'data']:
+        #             base.ix[i, 'data'] = flux.ix[i, 'data']
+        #         runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
 
-        elif self.mode == 'SPDF':
-            a = (1 + self.alpha) / 2
-            for i in range(1, len(flux.index)):
-                runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
-                    + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
-                if runoff.ix[i, 'data'] < 0:
-                    runoff.ix[i, 'data'] = 0
-                if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
-                    runoff.ix[i, 'data'] = flux.ix[i, 'data']
-                base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
-                #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
-                    #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
+        # elif self.mode == 'SPDF':
+        #     a = (1 + self.alpha) / 2
+        #     for i in range(1, len(flux.index)):
+        #         #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
+        #             #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
+        #         runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
+        #             + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
+        #         if runoff.ix[i, 'data'] < 0:
+        #             runoff.ix[i, 'data'] = 0
+        #         if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
+        #             runoff.ix[i, 'data'] = flux.ix[i, 'data']
+        #         base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
 
+        # base.name = "{}_base".format('base')
+        # runoff.name = "{}_runoff".format('runoff')
+
+#         self.result['type'] = "sensor list"
+#         self.result['data'] = [base, runoff]
+#         return self.returnResult(detailedresult)
         return runoff
 
-class HSMethod(waIstsos):
+class HydroSeparationTh(waIstsos):
     """
         Run HargreavesETo method
     """
@@ -798,34 +804,35 @@ class HSMethod(waIstsos):
         index1=self.json['index1']
         values1=self.json['values1']
         qua=self.json['qual']
-        # mode = self.json['hsmode']
-        # alpha =self.json['hsalpha']
-        # bfl = self.json['hsbfl']
 
-        # alpha1=float(alpha)        
-        # bfl1=float(bfl)
-        
-        # data1 = {'date': index1, 'data':values1, 'quality':qua}
-        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
-        # df['date'] = pd.to_datetime(df['date'])
-        # df.index = df['date']
-        # del df['date']
-
-        # HS=HydroGraphSep(mode, alpha=alpha1, bfl_max=bfl1)
-        # resdata=HS.execute(df)
-        data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
+        mode = self.json['hsmode']
+        alpha =self.json['hsalpha']
+        bfl = self.json['hsbfl']
+        alpha1=float(alpha)        
+        bfl1=float(bfl)
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
-        # df.data=df['value']
         del df['date']
 
-        mode = 'TPDF'
-        alpha =0.50
-        bfl = 0.80
+        # resdata='Not Worked'
+        HS=HydroGraph(mode=mode, alpha=alpha1, bfl_max=bfl1)
+        resdata=HS.execute(df)
 
-        HS=HydroGraphSep1(mode, alpha=alpha, bfl_max=bfl)
-        hs=HS.execute(df)
+        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
+        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        # df['date'] = pd.to_datetime(df['date'])
+        # df.index = df['date']
+        # # df.data=df['value']
+        # del df['date']
+
+        # mode = 'TPDF'
+        # alpha =0.50
+        # bfl = 0.80
+
+        # HS=HydroGraph(mode, alpha=alpha, bfl_max=bfl)
+        # hs=HS.execute(df)
         # values = np.array(resdata['data'])
         # times = resdata.index
         # times_string =[]
@@ -845,7 +852,7 @@ class HSMethod(waIstsos):
 
         # dictionary = {'data': data4}
 
-        self.setData(hs)
+        self.setData(resdata)
         self.setMessage("hydrosepration is successfully working")
 
 
@@ -1546,3 +1553,142 @@ class HydroIndices(waIstsos):
 
         self.setData(result1)
         self.setMessage("Hydro Indicies is successfully working")
+
+class HydroEvents1():
+    """ class to calculate portion of time series associated with peak flow events"""
+
+    def __init__(self, rise_lag, fall_lag, window=1, min_peak=0, suffix="_event_N", period=None):
+        """peak flow periods extraction
+
+        Args:
+            rise_lag (float): The number of days prior to the peak to include in the event hydrograph.
+            fall_lag (float): The number of days following the peak to include in the event hydrograph.
+            window (int): Minimum time between successive peaks, in days.
+            min_peak (float): Minimum value for a peak.
+            suffix (string): The name of the time series on which statistical calculations will be carried out.
+            period (tuple): tuple of two elements indicating the BEGIN and END of datetimes records to be used in peak extraction.
+
+        Returns:
+            A list of oat objects with a storm hydrograph each, they will be named "seriesName+suffix+number"
+            (e.g.: with a series named "TEST" and a suffic "_hyevent_N" we will have: ["TEST_hyevent_N1, TEST_hyevent_N2, ...]
+        """
+        self.rise_lag = rise_lag
+        self.fall_lag = fall_lag
+        self.window = window
+        self.min_peak = min_peak
+        self.suffix = suffix
+        self.period = period
+
+    def execute1(self, dataframe):
+        """ aaply statistics acording to conditions """
+        df=dataframe
+        """ calculate peak hydrographs """
+        try:
+            from datetime import timedelta as dttd
+            from scipy.signal import argrelmax
+        except:
+            raise ImportError("scipy module is required for this method")
+
+        #win_stps = int(dttd(days=self.window) / oat.ts.index.freq.delta)
+        da=int(self.window)
+        win_dt = dttd(days=da)
+
+        if False:
+            signal = df[self.period[0]:self.period[1]]['data'].values
+        else:
+            signal = df['data'].values
+
+        if not self.min_peak:
+            self.min_peak = min(signal)
+
+        #detect the local maxima above the setted treshold
+        idx = argrelmax(np.clip(signal, self.min_peak, signal.max()))
+
+        times = []
+        vales = []
+        index = idx[0].tolist()
+        for i in range(len(index)):
+            times.append(df.iloc[[index[i]]].index[0].to_datetime())
+            vales.append(df.iloc[index[i]]['data'])
+            #print(i, index[i], times[i], vales[i])
+
+        events_idx = []
+
+        while index != [None] * len(index):
+            #detect the index of the max value
+            imax = max(list(range(len(vales))), key=vales.__getitem__)
+            iloc = None
+            #find local maxima in range and opportunately set to None
+            for i in range(len(index)):
+                if (times[i] is not None) and (i != imax) and (abs(times[i] - times[imax]).total_seconds() < win_dt.total_seconds()):
+                    #print(times[i], times[imax], abs(times[i] - times[imax]).total_seconds(), win_dt.total_seconds())
+                    if vales[i] < vales[imax]:
+                        times[i] = None
+                        vales[i] = None
+                        index[i] = None
+            iloc = index[imax]
+            index[imax] = None
+            vales[imax] = None
+            times[imax] = None
+            if iloc is not None:
+                events_idx.append(iloc)
+
+        tsl = []
+        for i in events_idx:
+#             temp_oat.name = temp_oat.name + self.suffix + "%s" % (len(tsl) + 1)
+
+            st = df.iloc[[i]].index[0].to_datetime() - pd.DateOffset(days=self.rise_lag)
+            en = df.iloc[[i]].index[0].to_datetime() + pd.DateOffset(days=self.fall_lag)
+
+            temp_oat = df[st:en]
+            tsl.append(temp_oat)
+        resdata=tsl
+        return resdata
+
+class HydroEventsTh(waIstsos):
+    """
+        Run Hydro events filter
+        calculate portion of time series associated with peak flow events
+    """
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        import pandas as pd
+        import numpy as np
+        import datetime
+        from datetime import datetime
+        import time
+        index1=self.json['index1']
+        values1=self.json['values1']
+        qua=self.json['qual']
+
+        rise = self.json['hydrise']
+        fall = self.json['hydfall']
+        window = self.json['hydwindow']
+        peak = self.json['hydpeak']
+
+        suffix = self.json['hydseries']
+        per=self.json['hydtime']
+        beg=self.json['hydbeg']
+        en=self.json['hydend']
+        period = None
+        if per:
+            begin = beg.replace(" ", "T")
+            end = en.replace(" ", "T")
+            period = [begin, end]
+
+        if suffix == "":
+            suffix = "_event_N"
+
+        data1 = {'date': index1, 'data':values1, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
+        df['date'] = pd.to_datetime(df['date'])
+        df.index = df['date']
+        del df['date']
+
+        HyE=HydroEvents1(rise_lag=rise, fall_lag=fall, window=window,min_peak=peak, suffix=suffix, period=period)
+        resdata=HyE.execute1(df)
+
+        self.setData(resdata)
+        self.setMessage("Hydro events is successfully working")

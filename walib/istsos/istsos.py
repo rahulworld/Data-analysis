@@ -711,7 +711,7 @@ class IntegrateMethod(waIstsos):
         self.setData(IG)
         self.setMessage("Integrate is successfully working")
 
-class HydroGraph():
+class HydroGraph12():
     """ Class to assign constant weight values """
 
     def __init__(self, mode, alpha=0.98, bfl_max=0.50):
@@ -736,7 +736,7 @@ class HydroGraph():
         self.alpha = alpha
         self.bfl_max = bfl_max
 
-    def execute(self,dataframe):
+    def execute12(self,dataframe):
         df=dataframe
         """ apply selected mode for hysep """
         #if 'use' in oat.ts.columns:
@@ -748,45 +748,49 @@ class HydroGraph():
 #         print df
         #print (base.ts.ix[0]['data'])
 #         print flux
-
         base['quality'] = np.zeros(base['quality'].size)
         base['data'] = np.zeros(base['data'].size)
-        runoff = copy.deepcopy(base)
-        # base.ix[0, 'data'] = flux.ix[0, 'data']
-        # #print (len(flux.ts.index))
-        # if self.mode == 'TPDF':
-        #     a = (1 - self.bfl_max) * self.alpha
-        #     b = (1 - self.alpha) * self.bfl_max
-        #     c = (1 - self.alpha * self.bfl_max)
-        #     for i in range(1, len(flux.index)):
-        #         #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
-        #             #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
-        #         base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
-        #             + b * flux.ix[i, 'data']) / c
-        #         if base.ix[i, 'data'] > flux.ix[i, 'data']:
-        #             base.ix[i, 'data'] = flux.ix[i, 'data']
-        #         runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
+        runoff = base.copy()
+        base.ix[0, 'data'] = flux.ix[0, 'data']
 
-        # elif self.mode == 'SPDF':
-        #     a = (1 + self.alpha) / 2
-        #     for i in range(1, len(flux.index)):
-        #         #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
-        #             #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
-        #         runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
-        #             + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
-        #         if runoff.ix[i, 'data'] < 0:
-        #             runoff.ix[i, 'data'] = 0
-        #         if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
-        #             runoff.ix[i, 'data'] = flux.ix[i, 'data']
-        #         base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
+        #print (len(flux.ts.index))
+
+        if self.mode == 'TPDF':
+            a = (1 - self.bfl_max) * self.alpha
+            b = (1 - self.alpha) * self.bfl_max
+            c = (1 - self.alpha * self.bfl_max)
+            for i in range(1, len(flux.index)):
+                #base.ts.ix[i]['data'] = ((1 - self.bfl_max) * self.alpha * base.ts.ix[i - 1]['data']
+                    #+ (1 - self.alpha) * self.bfl_max * flux.ts.ix[i]['data']) / (1 - self.alpha * self.bfl_max)
+                base.ix[i, 'data'] = (a * base.ix[i - 1, 'data']
+                    + b * flux.ix[i, 'data']) / c
+                if base.ix[i, 'data'] > flux.ix[i, 'data']:
+                    base.ix[i, 'data'] = flux.ix[i, 'data']
+                runoff.ix[i, 'data'] = flux.ix[i, 'data'] - base.ix[i, 'data']
+
+        elif self.mode == 'SPDF':
+            a = (1 + self.alpha) / 2
+            for i in range(1, len(flux.index)):
+                #runoff.ts.ix[i]['data'] = (self.alpha * runoff.ts.ix[i - 1]['data']
+                    #+ ((1 + self.alpha) / 2) * (flux.ts.ix[i]['data'] - flux.ts.ix[i - 1]['data']))
+                runoff.ix[i, 'data'] = (self.alpha * runoff.ix[i - 1, 'data']
+                    + a * (flux.ix[i, 'data'] - flux.ix[i - 1, 'data']))
+                if runoff.ix[i, 'data'] < 0:
+                    runoff.ix[i, 'data'] = 0
+                if runoff.ix[i, 'data'] > flux.ix[i, 'data']:
+                    runoff.ix[i, 'data'] = flux.ix[i, 'data']
+                base.ix[i, 'data'] = flux.ix[i, 'data'] - runoff.ix[i, 'data']
 
         # base.name = "{}_base".format('base')
         # runoff.name = "{}_runoff".format('runoff')
-
-#         self.result['type'] = "sensor list"
-#         self.result['data'] = [base, runoff]
-#         return self.returnResult(detailedresult)
-        return runoff
+        result1 = {
+            "op": "Hydro Saparation",
+            "base": [],
+            "runoff":[]
+        }
+        result1['base'] = base
+        result1['runoff']=runoff
+        return result1
 
 class HydroSeparationTh(waIstsos):
     """
@@ -816,43 +820,32 @@ class HydroSeparationTh(waIstsos):
         df.index = df['date']
         del df['date']
 
-        # resdata='Not Worked'
-        HS=HydroGraph(mode=mode, alpha=alpha1, bfl_max=bfl1)
-        resdata=HS.execute(df)
+        HS=HydroGraph12(mode=mode, alpha=alpha1, bfl_max=bfl1)
+        resdata=HS.execute12(df)
 
-        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
-        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
-        # df['date'] = pd.to_datetime(df['date'])
-        # df.index = df['date']
-        # # df.data=df['value']
-        # del df['date']
+        # HS=HydroGraph12(mode, alpha=alpha, bfl_max=bfl)
+        # resdata=HS.execute12(df)
+        values = np.array(resdata['runoff']['data'])
+        values1 = np.array(resdata['base']['data'])
+        times = resdata['runoff'].index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
 
-        # mode = 'TPDF'
-        # alpha =0.50
-        # bfl = 0.80
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
 
-        # HS=HydroGraph(mode, alpha=alpha, bfl_max=bfl)
-        # hs=HS.execute(df)
-        # values = np.array(resdata['data'])
-        # times = resdata.index
-        # times_string =[]
-        # for i in times:
-        #     times_string.append(str(i))
+        times_timestamp = map(convert_to_timestamp, times_string)
 
-        # def convert_to_timestamp(a):
-        #     dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-        #     return int(time.mktime(dt.timetuple()))
-
-        # times_timestamp = map(convert_to_timestamp, times_string)
-
-        # data4 = []
-        # for i in range(len(times_string)):
-        #     a = [times_timestamp[i], values[i]]
-        #     data4.append(a)
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i],values1[i]]
+            data4.append(a)
 
         # dictionary = {'data': data4}
 
-        self.setData(resdata)
+        self.setData(data4)
         self.setMessage("hydrosepration is successfully working")
 
 
@@ -1277,27 +1270,6 @@ class Hargreaves(waIstsos):
         self.setMessage("resampling is successfully working")
 
 
-class waValidatedb(waIstsos):
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-
-    def executePost(self):
-        from walib.utils import validatedb
-        res = {}
-        try:
-            test_conn = validatedb(
-                self.json["user"],
-                self.json["password"],
-                self.json["dbname"],
-                self.json["host"],
-                self.json["port"])
-            res["database"] = "active"
-
-        except:
-            res["database"] = "inactive"
-
-        self.setData(res)
-        self.setMessage("Database validation request successfully executed")
 
 class HydroIndices1():
     """ class to calculate hydrologic indices"""
@@ -1433,7 +1405,7 @@ class HydroIndices1():
                     cov = None
                 value = cov
             elif self.code1 == 36:
-                m = oat.ts.groupby([df.index.year, df.index.month]).agg([np.mean])
+                m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
                 value = (m.max()[0] - m.min()[0]) / m.median()[0]
             elif self.code1 == 37:
                 m = df.groupby([df.index.year, df.index.month]).agg([np.mean])
@@ -1554,7 +1526,7 @@ class HydroIndices(waIstsos):
         self.setData(result1)
         self.setMessage("Hydro Indicies is successfully working")
 
-class HydroEvents1():
+class HydroEvents12():
     """ class to calculate portion of time series associated with peak flow events"""
 
     def __init__(self, rise_lag, fall_lag, window=1, min_peak=0, suffix="_event_N", period=None):
@@ -1579,7 +1551,7 @@ class HydroEvents1():
         self.suffix = suffix
         self.period = period
 
-    def execute1(self, dataframe):
+    def execute12(self, dataframe):
         """ aaply statistics acording to conditions """
         df=dataframe
         """ calculate peak hydrographs """
@@ -1590,10 +1562,10 @@ class HydroEvents1():
             raise ImportError("scipy module is required for this method")
 
         #win_stps = int(dttd(days=self.window) / oat.ts.index.freq.delta)
-        da=int(self.window)
-        win_dt = dttd(days=da)
+        # da=self.window
+        win_dt = dttd(days=self.window)
 
-        if False:
+        if None:
             signal = df[self.period[0]:self.period[1]]['data'].values
         else:
             signal = df['data'].values
@@ -1643,6 +1615,7 @@ class HydroEvents1():
             temp_oat = df[st:en]
             tsl.append(temp_oat)
         resdata=tsl
+        # resdata=signal
         return resdata
 
 class HydroEventsTh(waIstsos):
@@ -1663,10 +1636,10 @@ class HydroEventsTh(waIstsos):
         values1=self.json['values1']
         qua=self.json['qual']
 
-        rise = self.json['hydrise']
-        fall = self.json['hydfall']
-        window = self.json['hydwindow']
-        peak = self.json['hydpeak']
+        rise = float(self.json['hydrise'])
+        fall = float(self.json['hydfall'])
+        window = int(self.json['hydwindow'])
+        peak = float(self.json['hydpeak'])
 
         suffix = self.json['hydseries']
         per=self.json['hydtime']
@@ -1687,8 +1660,49 @@ class HydroEventsTh(waIstsos):
         df.index = df['date']
         del df['date']
 
-        HyE=HydroEvents1(rise_lag=rise, fall_lag=fall, window=window,min_peak=peak, suffix=suffix, period=period)
-        resdata=HyE.execute1(df)
+        HyE=HydroEvents12(rise_lag=rise, fall_lag=fall, window=window,min_peak=peak, suffix=suffix, period=period)
+        resdata=HyE.execute12(df)
 
-        self.setData(resdata)
+        # values = np.array(resdata['data'])
+        # times = resdata.index
+        # times_string =[]
+        # for i in times:
+        #     times_string.append(str(i))
+
+        # def convert_to_timestamp(a):
+        #     dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+        #     return int(time.mktime(dt.timetuple()))
+
+        # times_timestamp = map(convert_to_timestamp, times_string)
+
+        # data4 = []
+        # for i in range(len(times_string)):
+        #     a = [times_timestamp[i], values[i]]
+        #     data4.append(a)
+        result2 = json.dumps(resdata)
+
+        self.setData(result2)
         self.setMessage("Hydro events is successfully working")
+
+
+class waValidatedb(waIstsos):
+    def __init__(self, waEnviron):
+        waIstsos.__init__(self, waEnviron)
+
+    def executePost(self):
+        from walib.utils import validatedb
+        res = {}
+        try:
+            test_conn = validatedb(
+                self.json["user"],
+                self.json["password"],
+                self.json["dbname"],
+                self.json["host"],
+                self.json["port"])
+            res["database"] = "active"
+
+        except:
+            res["database"] = "inactive"
+
+        self.setData(res)
+        self.setMessage("Database validation request successfully executed")

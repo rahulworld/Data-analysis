@@ -1663,25 +1663,24 @@ class HydroEventsTh(waIstsos):
         HyE=HydroEvents12(rise_lag=rise, fall_lag=fall, window=window,min_peak=peak, suffix=suffix, period=period)
         resdata=HyE.execute12(df)
 
-        # values = np.array(resdata['data'])
-        # times = resdata.index
-        # times_string =[]
-        # for i in times:
-        #     times_string.append(str(i))
+        values = np.array(resdata[0]['data'])
+        times = resdata[0].index
+        times_string =[]
+        for i in times:
+            times_string.append(str(i))
 
-        # def convert_to_timestamp(a):
-        #     dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-        #     return int(time.mktime(dt.timetuple()))
+        def convert_to_timestamp(a):
+            dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+            return int(time.mktime(dt.timetuple()))
 
-        # times_timestamp = map(convert_to_timestamp, times_string)
+        times_timestamp = map(convert_to_timestamp, times_string)
 
-        # data4 = []
-        # for i in range(len(times_string)):
-        #     a = [times_timestamp[i], values[i]]
-        #     data4.append(a)
-        result2 = json.dumps(resdata)
+        data4 = []
+        for i in range(len(times_string)):
+            a = [times_timestamp[i], values[i]]
+            data4.append(a)
 
-        self.setData(result2)
+        self.setData(data4)
         self.setMessage("Hydro events is successfully working")
 
 

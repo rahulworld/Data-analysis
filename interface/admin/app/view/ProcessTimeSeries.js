@@ -739,7 +739,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var json1 = Ext.decode(response.responseText);
                         console.log(json1);
                         Ext.get('chartSeries').mask("Initializing chart..");
-                        rst_header = 'Hydro Saparation Params\ntime,value\n';
+                        rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
                         var csv_array=json1['data'];
                         rst_data=csv_array;
                         this.chartdata = [];
@@ -808,9 +808,24 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "qual":resdata3
                     },
                     success: function(response){
-                        // var json1 = Ext.decode(response.responseText);
-                        // console.log(json1);
-                        console.log(response.responseText);
+                        var json1 = Ext.decode(response.responseText);
+                        console.log(json1);
+                        Ext.get('chartSeries').mask("Initializing chart..");
+                        rst_header = 'Hydro Events Params\ntime,value\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
+                        this.chartdata = [];
+                        for (var i = 0; i < json1['data'].length; i++) {
+                            var rec = [];
+                            rec.push(parseInt(json1['data'][i][0]));
+                            var vals = json1['data'][i][1];
+                            // var vals1=json1['data'][i][2]
+                            rec = rec.concat(vals);
+                            // rec = rec.concat(vals1);
+                            this.chartdata.push(rec);
+                        }
+                        // console.log(this.chartdata);
+                        this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1296,8 +1311,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                     return istsos.utils.micro2iso(ms,istsos.utils.tzToMinutes(Ext.getCmp('oeTZ').getValue()));
                                 },
                                 axisLabelFormatter: function(ms, gran, b, chart){
-
-                                    // Get unix time in seconds
+                                        // Get unix time in seconds
                                     var unix = parseInt(ms/1000000);
                                     // Extract microseconds only
                                     var micro = ms-(unix*1000000);

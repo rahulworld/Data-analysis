@@ -55,7 +55,7 @@ Ext.define('istsos.view.ui.TimeSeriesChart', {
                             },
                             overflowY: 'scroll',
                             autoScroll: true,
-                            height:1000,
+                            height:400,
                             bodyCls: 'viewerChart',
                             title: ''
                         },

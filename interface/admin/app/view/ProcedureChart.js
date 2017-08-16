@@ -124,8 +124,8 @@ Ext.define('istsos.view.ProcedureChart', {
         var template = [];
 
         this.chartStore1 = {};
-        // var valueFormatter = {
-        // }
+        var valueFormatter = {
+        }
         var cc = 1;
         var keys = Object.keys(pro);
         keys = keys.sort();
@@ -138,15 +138,13 @@ Ext.define('istsos.view.ProcedureChart', {
                 procs.push(pro[key]);
                 // Preparing labels and single native row template
                 template.push(null);
-                // this.labels.push(key);
+                this.labels.push(key);
                 // this.colors.push(this.procedures[key].color);
-                // valueFormatter[cc == 1 ? 'y': 'y'+cc] = {
-                //     valueFormatter: function(ms, fn, p) {
-                //         return ' '+ ms + ' '+ Ext.getCmp('chartpanel').procedures[p].getUomCode(
-                //             Ext.getCmp("oeCbObservedProperty").getValue()
-                //             );
-                //     }
-                // }
+                valueFormatter[cc == 1 ? 'y': 'y'+cc] = {
+                    valueFormatter: function(ms, fn, p) {
+                        return ' '+ ms;
+                    }
+                }
             }
         }
         // merging data
@@ -173,7 +171,7 @@ Ext.define('istsos.view.ProcedureChart', {
             }
             idx++;
         }
-        return [datepass, valuepass];       
+        return [datepass, valuepass,valueFormatter,this.labels];       
     },
     rederChart: function(){
 
@@ -218,6 +216,7 @@ Ext.define('istsos.view.ProcedureChart', {
             }
 
         }
+
         // merging data
         var idx = 0;
         //for (var key in procs) {
@@ -269,6 +268,9 @@ Ext.define('istsos.view.ProcedureChart', {
             rec = rec.concat(vals);
             this.chartdata.push(rec);
         }
+        console.log('##################');
+        // console.log(this.labels);
+        // console.log(valueFormatter);
         var initChart = true;
         if (initChart) {
             Ext.getCmp("btnRangeDay").toggle(false,true);

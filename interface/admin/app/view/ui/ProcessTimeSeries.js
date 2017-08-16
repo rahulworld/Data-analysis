@@ -2732,12 +2732,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 }
                                 ]
                             }
-
-
-
-
-
-
                             ]
                         }
                         ]
@@ -2752,9 +2746,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                 {
                             xtype: 'timeserieschart',
                             id: 'serieschartpanel',
+                            overflowX: 'scroll',
                             flex:1,
                             width:600,
-                            height:400,
                             region:'center'
                 },
                 {

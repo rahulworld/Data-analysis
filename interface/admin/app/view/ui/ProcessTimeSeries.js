@@ -1811,7 +1811,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                     },
                                                                     {
                                                                         xtype: 'datefield',
-                                                                        id: 'oeBegin1',
+                                                                        id:'beginSta',
                                                                         width: 60,
                                                                         height: 40,
                                                                         name: 'begin',
@@ -1821,12 +1821,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                     },
                                                                     {
                                                                         xtype: 'timefield',
-                                                                        id: 'oeBeginTime1',
+                                                                        id:'beginStaTime',
                                                                         width: 60,
                                                                         name: 'begintime',
                                                                         fieldLabel: 'Label',
                                                                         allowBlank: false,
-                                                                        format: 'H:i ',
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
                                                                         increment: 10,
                                                                         flex: 0.2
                                                                     }
@@ -1856,7 +1857,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                     },
                                                                     {
                                                                         xtype: 'datefield',
-                                                                        id: 'oeEnd1',
+                                                                        id:'endSta',
                                                                         width: 60,
                                                                         name: 'end',
                                                                         fieldLabel: 'Label',
@@ -1866,12 +1867,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                     },
                                                                     {
                                                                         xtype: 'timefield',
-                                                                        id: 'oeEndTime1',
+                                                                        id:'endStaTime',
                                                                         name: 'endtime',
                                                                         width: 60,
                                                                         fieldLabel: 'Label',
                                                                         allowBlank: false,
-                                                                        format: 'H:i ',
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
                                                                         increment: 10,
                                                                         flex: 0.2
                                                                     }
@@ -1888,47 +1890,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                         layout:'hbox',
                                                         anchor: '100%',
                                                         items: [
-                                                            // {
-                                                            //     xtype: 'textfield',
-                                                            //     id: 'oeTZ1',
-                                                            //     width: 30,
-                                                            //     height: 20,
-                                                            //     labelWidth:60,
-                                                            //     name: 'timezone',
-                                                            //     fieldLabel: 'Timezone',
-                                                            //     allowBlank: false,
-                                                            //     validator: function (value){
-
-                                                            //         var tz = "TZ format shall be +HH:MM";
-                                                            //         if (value.length!=6) {
-                                                            //             return tz;
-                                                            //         }
-                                                            //         if (value[0]!='-' && value[0]!='+') {
-                                                            //             return tz;
-                                                            //         }
-                                                            //         if (value.indexOf(':')!=3){
-                                                            //             return tz;
-                                                            //         }
-                                                            //         var h = parseInt( (value[1]+value[2]));
-                                                            //         var m = parseInt( (value[4]+value[5]));
-                                                                    
-                                                            //         if (h>23){
-                                                            //             return tz;
-                                                            //         }
-                                                            //         if (m>59){
-                                                            //             return tz;
-                                                            //         }
-                                                            //         return true;
-                                                            //     },
-                                                            //     flex: 0.5
-                                                            // },
                                                             {
                                                                 xtype: 'spinnerfield',
                                                                 width: 60,
                                                                 fieldLabel: 'Timezone',
+                                                                id:'timezoneSta',
                                                                 flex: 1,
                                                                 labelWidth: 60,
-                                                                id: "comboxLimit1",
                                                                 value: 0,
                                                                 step: -1,
                                                                 // override onSpinUp (using step isn't neccessary)
@@ -1956,61 +1924,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     }
                                                 ]
                                             }
-                                            // {
-                                            //     xtype: 'panel',
-                                            //     flex: 1,
-                                            //     id:'timeUse',
-                                            //     height: 100,
-                                            //     layout: {
-                                            //         type: 'hbox',
-                                            //         align: 'stretch'
-                                            //     },
-                                            //     items: [
-                                            //         {
-                                            //             xtype: 'panel',
-                                            //             flex: 2,
-                                            //             height: 100,
-                                            //             layout: {
-                                            //                 type: 'vbox',
-                                            //                 align: 'stretch'
-                                            //             },
-                                            //             items: [
-                                            //                 {
-                                            //                     xtype: 'spinnerfield',
-                                            //                     flex: 1,
-                                            //                     id:'beginSta',
-                                            //                     height: 50,
-                                            //                     fieldLabel: 'Begin'
-                                            //                 },
-                                            //                 {
-                                            //                     xtype: 'spinnerfield',
-                                            //                     flex: 1,
-                                            //                     id:'endSta',
-                                            //                     height: 50,
-                                            //                     fieldLabel: 'End'
-                                            //                 }
-                                            //             ]
-                                            //         },
-                                            //         {
-                                            //             xtype: 'panel',
-                                            //             flex: 1,
-                                            //             height: 50,
-                                            //             layout: {
-                                            //                 type: 'vbox',
-                                            //                 align: 'stretch'
-                                            //             },
-                                            //             items: [
-                                            //                 {
-                                            //                     xtype: 'spinnerfield',
-                                            //                     flex: 0,
-                                            //                     id:'timezoneSta',
-                                            //                     height: 50,
-                                            //                     fieldLabel: 'Timezone'
-                                            //                 }
-                                            //             ]
-                                            //         }
-                                            //     ]
-                                            // }
                                         ]
                                     }
                                 ]

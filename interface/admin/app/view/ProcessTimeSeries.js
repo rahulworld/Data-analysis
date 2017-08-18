@@ -941,11 +941,40 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 //Taking Input
                 var dataSta= Ext.getCmp("dataSta").getValue();
                 var quaSta= Ext.getCmp("quaSta").getValue();
-                var timeSta= Ext.getCmp("timeUseSta").getValue();
-                var beginSta= Ext.getCmp("beginSta").getValue();
-                var endSta= Ext.getCmp("endSta").getValue();
-                var timezoneSta= Ext.getCmp("timezoneSta").getValue();
+                
+                // var beginSta= Ext.getCmp("beginSta").getValue();
+                // var endSta= Ext.getCmp("endSta").getValue();
 
+                var timeSta= Ext.getCmp("timeUseSta").getValue();
+                var from = Ext.getCmp('beginSta').getValue();
+                var bt = Ext.getCmp('beginStaTime').getValue();
+
+                var to = Ext.getCmp('endSta').getValue();
+                var et = Ext.getCmp('endStaTime').getValue();
+
+                var timezoneSta= Ext.getCmp("timezoneSta").getValue();
+                if(timeSta==true){
+                    from.setHours(bt.getHours());
+                    from.setMinutes(bt.getMinutes());
+                    from.setSeconds(bt.getSeconds());
+                    
+                    to.setHours(et.getHours());
+                    to.setMinutes(et.getMinutes());
+                    to.setSeconds(et.getSeconds());
+
+                    var format = "Y-m-d H:i:s";
+                    from = Ext.Date.format(from,format);
+                    to = Ext.Date.format(to,format);
+                }
+
+                // var tz = Ext.getCmp('oeTZ').getValue();
+                // if(!Ext.isEmpty(tz)){
+
+                //     to = to + (Ext.isString(tz) ? tz: istsos.utils.minutesToTz(tz));
+                // }
+
+                console.log(from);
+                console.log(to);
 
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
@@ -963,8 +992,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "dataSta":dataSta,
                         "quaSta":quaSta,
                         "timeSta":timeSta,
-                        "beginSta":beginSta,
-                        "endSta": endSta,
+                        "beginSta":from,
+                        "endSta": to,
                         "timezoneSta": timezoneSta,
                         "index1": resdata1,
                         "values1": resdata2,
@@ -1259,9 +1288,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                         Ext.get('chartSeries').mask("Initializing chart..");
 
-                        rst_header = 'Hargreaves Params\ntime,value\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
 
                         this.chartdata = [];
                         for (var i = 0; i < json1['data'].length; i++) {
@@ -1272,6 +1298,21 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             this.chartdata.push(rec);
                         }
                         this.rederChart3(this.chartdata,'Hargreaves');
+
+                        rst_header = 'Hargreaves Params\ntime,value\n';
+
+
+                        this.downloadData = [];
+                        for (var i = 0; i < json1['data'].length; i++) {
+                            var rec = [];
+                            rec.push(new Date(parseInt(json1['data'][i][0])/1000).toISOString());
+                            var vals = json1['data'][i][1];
+                            rec = rec.concat(vals);
+                            this.downloadData.push(rec);
+                        }
+                        console.log(this.downloadData);
+                        var csv_array=this.downloadData;
+                        rst_data=csv_array;
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1284,6 +1325,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
             console.log('BUTTON SAVE CLICKED');
+
             this.download_csv(rst_data,rst_header);
         },this);
         Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){

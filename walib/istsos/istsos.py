@@ -390,22 +390,17 @@ class Statisticsmethod(waIstsos):
         df.index = df['date']
         del df['date']
 
-        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'data': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41],'quality': [200, 200, 200, 200, 200, 200, 200, 200, 200, 200]}
-        # #data1 = {'date': index1, 'value':values1}
-        # df = pd.DataFrame(data1,columns = ['date','data','quality'])
-        # df['date'] = pd.to_datetime(df['date'])
-        # df.index = df['date']
-        # # df.data=df['value']
-        # del df['date']
+        timezoneSta=int(timezoneSta)
+
         tbounds = [None, None]
         if timeSta:
-            timezone = ''
+            timezone = timezoneSta
             if timezone >= 0:
                 timez = "+" + "%02d:00" % (timezone)
             else:
                 timez = "-" + "%02d:00" % (abs(timezone))
-            begin_pos = '' + timez
-            end_pos = '' + timez
+            begin_pos = beginSta + timez
+            end_pos = endSta + timez
             tbounds = [begin_pos, end_pos]
 
         stat=Statistics(data=data, quality=quality, tbounds=tbounds)

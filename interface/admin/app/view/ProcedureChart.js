@@ -173,6 +173,91 @@ Ext.define('istsos.view.ProcedureChart', {
         }
         return [datepass, valuepass,valueFormatter,this.labels];       
     },
+    dataAccess2: function(){
+        this.obsprop1 = Ext.getCmp("oeCbObservedProperty").getValue();
+        var procs = [];
+        // get the json rapresentation of the tree menu of procedures
+        //var checked = Ext.getCmp('proceduresTree').getValues();
+        var visibility = []; // Initialize the chart series visibility
+
+        this.labels = ["isodate"];
+        this.colors = [];
+        var template = [];
+
+        this.chartStore = {};
+        var valueFormatter = {
+        }
+        var cc = 1;
+        var keys = Object.keys(pro);
+        keys = keys.sort();
+
+        //for (var key in this.procedures) {
+        for (var c = 0; c < keys.length; c++) {
+            var key = keys[c];
+            // check if procedures loaded have the requested observed property
+            if (Ext.Array.contains(pro[key].getObservedProperties(),this.obsprop1)) {
+                procs.push(pro[key]);
+                // Preparing labels and single native row template
+                template.push(null);
+                this.labels.push(key);
+                // this.colors.push(this.procedures[key].color);
+                valueFormatter[cc == 1 ? 'y': 'y'+cc] = {
+                    valueFormatter: function(ms, fn, p) {
+                        return ' '+ ms;
+                    }
+                }
+            }
+        }
+                // merging data
+        var idx = 0;
+        //for (var key in procs) {
+        for (var c = 0; c < procs.length; c++) {
+            var p = procs[c];
+
+            p.store.on("update",this._storeUpdated,this);
+            p.store.on("seriesupdated",this._storeSeriesUpdated,this);
+
+            var recs = p.store.getRange();
+            for (var j = 0, l = recs.length; j < l; j++) {
+                if (Ext.isEmpty(this.chartStore[recs[j].get("micro") ])) {
+                    this.chartStore[recs[j].get("micro")] = Ext.Array.clone(template);
+                }
+                // Set the property choosen in the chart store in the right column
+                var v = parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop]));
+                if (v<-900) {
+                    this.chartStore[recs[j].get("micro")][idx] = NaN;
+                }else{
+                    this.chartStore[recs[j].get("micro")][idx] = v;
+                }
+            }
+            idx++;
+        }
+        var sorted = Ext.Array.sort(Ext.Object.getKeys(this.chartStore),
+            function (d1, d2) {
+                d1 = parseInt(d1);
+                d2 = parseInt(d2);
+                if (d1 > d2) return 1;
+                if (d1 < d2) return -1;
+                return 0;
+            });
+        // Ext.Msg.show(
+        // {
+        //     title: 'Enter values:',
+        //     width: 8000,
+        //     height:2000,
+        //     buttons: Ext.Msg.OKCANCEL,
+        //     msg: this.chartStore,
+        // });
+        this.chartdata = [];
+        for (var i = 0; i < sorted.length; i++) {
+            var rec = [];
+            rec.push(parseInt(sorted[i]));
+            var vals = this.chartStore[sorted[i]];
+            rec = rec.concat(vals);
+            this.chartdata.push(rec);
+        }
+        return [this.chartdata];       
+    },
     rederChart: function(){
 
         this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
@@ -249,6 +334,8 @@ Ext.define('istsos.view.ProcedureChart', {
                 if (d1 < d2) return -1;
                 return 0;
             });
+        console.log('##################');
+        console.log(sorted);
         // Ext.Msg.show(
         // {
         //     title: 'Enter values:',
@@ -269,8 +356,7 @@ Ext.define('istsos.view.ProcedureChart', {
             this.chartdata.push(rec);
         }
         console.log('##################');
-        // console.log(this.labels);
-        // console.log(valueFormatter);
+        console.log(this.chartdata);
         var initChart = true;
         if (initChart) {
             Ext.getCmp("btnRangeDay").toggle(false,true);
@@ -574,6 +660,8 @@ Ext.define('istsos.view.ProcedureChart', {
             },this,{
                 single: true
             });
+            console.log('####################################################');
+            console.log('Get Observation request sucseesfully executed');
             this.procedures[key].getObservation(begin,end,
                 this.tz, // Setted timezoe
                 (Ext.isObject(this.procedures[key].aggregation)?this.procedures[key].aggregation:null) // Aggregation configuration

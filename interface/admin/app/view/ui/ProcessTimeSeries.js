@@ -1712,6 +1712,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         frame: false,
                                         height: 40,
+                                        margin:10,
+                                        border:0,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1735,8 +1737,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'panel',
-                                        margin: 10,
-                                        height: 80,
+                                        margin: 2,
+                                        height: 100,
+                                        border: 0,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1745,66 +1748,269 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'checkboxfield',
                                                 id:'timeUseSta',
+                                                padding: '10 10 0 10',
                                                 width: 50,
                                                 flex: 0.2,
                                                 fieldLabel: '',
-                                                boxLabel: 'Use time'
+                                                boxLabel: 'Use Time',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('staTime').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('staTime').disable();
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'panel',
-                                                flex: 1,
-                                                id:'timeUse',
-                                                height: 100,
-                                                layout: {
-                                                    type: 'hbox',
-                                                    align: 'stretch'
-                                                },
+                                                id:'staTime',
+                                                // disabled: true,
+                                                margin: 2,
+                                                flex:1,
+                                                layout:'hbox',
+                                                anchor: '100%',
                                                 items: [
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 2,
-                                                        height: 100,
+                                                        border: 0,
+                                                        flex:1,
+                                                        height: 80,
+                                                        id: 'plotdatafrm1',
                                                         layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                                    type: 'vbox'
+                                                                },
+                                                        padding: '5 5 0 5',
+                                                        title: '',
                                                         items: [
                                                             {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                id:'beginSta',
-                                                                height: 50,
-                                                                fieldLabel: 'Begin'
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                height: 40,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                fieldLabel: 'From',
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        width: 60,
+                                                                        text: 'Begin:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id: 'oeBegin1',
+                                                                        width: 60,
+                                                                        height: 40,
+                                                                        name: 'begin',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id: 'oeBeginTime1',
+                                                                        width: 60,
+                                                                        name: 'begintime',
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i ',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             },
                                                             {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                id:'endSta',
-                                                                height: 50,
-                                                                fieldLabel: 'End'
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        width: 60,
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        text: 'End:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id: 'oeEnd1',
+                                                                        width: 60,
+                                                                        name: 'end',
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id: 'oeEndTime1',
+                                                                        name: 'endtime',
+                                                                        width: 60,
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i ',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             }
                                                         ]
                                                     },
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 1,
-                                                        height: 50,
-                                                        layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                        border: 0,
+                                                        height: 40,
+                                                        width: 120,
+                                                        padding: '5 5 0 5',
+                                                        layout:'hbox',
+                                                        anchor: '100%',
                                                         items: [
+                                                            // {
+                                                            //     xtype: 'textfield',
+                                                            //     id: 'oeTZ1',
+                                                            //     width: 30,
+                                                            //     height: 20,
+                                                            //     labelWidth:60,
+                                                            //     name: 'timezone',
+                                                            //     fieldLabel: 'Timezone',
+                                                            //     allowBlank: false,
+                                                            //     validator: function (value){
+
+                                                            //         var tz = "TZ format shall be +HH:MM";
+                                                            //         if (value.length!=6) {
+                                                            //             return tz;
+                                                            //         }
+                                                            //         if (value[0]!='-' && value[0]!='+') {
+                                                            //             return tz;
+                                                            //         }
+                                                            //         if (value.indexOf(':')!=3){
+                                                            //             return tz;
+                                                            //         }
+                                                            //         var h = parseInt( (value[1]+value[2]));
+                                                            //         var m = parseInt( (value[4]+value[5]));
+                                                                    
+                                                            //         if (h>23){
+                                                            //             return tz;
+                                                            //         }
+                                                            //         if (m>59){
+                                                            //             return tz;
+                                                            //         }
+                                                            //         return true;
+                                                            //     },
+                                                            //     flex: 0.5
+                                                            // },
                                                             {
                                                                 xtype: 'spinnerfield',
-                                                                flex: 0,
-                                                                id:'timezoneSta',
-                                                                height: 50,
-                                                                fieldLabel: 'Timezone'
+                                                                width: 60,
+                                                                fieldLabel: 'Timezone',
+                                                                flex: 1,
+                                                                labelWidth: 60,
+                                                                id: "comboxLimit1",
+                                                                value: 0,
+                                                                step: -1,
+                                                                // override onSpinUp (using step isn't neccessary)
+                                                                onSpinUp: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                        me.setValue((val - me.step) + ' ');
+                                                                    }
+                                                                },
+                                                                // override onSpinDown
+                                                                onSpinDown: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                            me.setValue((val + me.step) + ' ');
+                                                                    }
+                                                                }
                                                             }
                                                         ]
                                                     }
                                                 ]
                                             }
+                                            // {
+                                            //     xtype: 'panel',
+                                            //     flex: 1,
+                                            //     id:'timeUse',
+                                            //     height: 100,
+                                            //     layout: {
+                                            //         type: 'hbox',
+                                            //         align: 'stretch'
+                                            //     },
+                                            //     items: [
+                                            //         {
+                                            //             xtype: 'panel',
+                                            //             flex: 2,
+                                            //             height: 100,
+                                            //             layout: {
+                                            //                 type: 'vbox',
+                                            //                 align: 'stretch'
+                                            //             },
+                                            //             items: [
+                                            //                 {
+                                            //                     xtype: 'spinnerfield',
+                                            //                     flex: 1,
+                                            //                     id:'beginSta',
+                                            //                     height: 50,
+                                            //                     fieldLabel: 'Begin'
+                                            //                 },
+                                            //                 {
+                                            //                     xtype: 'spinnerfield',
+                                            //                     flex: 1,
+                                            //                     id:'endSta',
+                                            //                     height: 50,
+                                            //                     fieldLabel: 'End'
+                                            //                 }
+                                            //             ]
+                                            //         },
+                                            //         {
+                                            //             xtype: 'panel',
+                                            //             flex: 1,
+                                            //             height: 50,
+                                            //             layout: {
+                                            //                 type: 'vbox',
+                                            //                 align: 'stretch'
+                                            //             },
+                                            //             items: [
+                                            //                 {
+                                            //                     xtype: 'spinnerfield',
+                                            //                     flex: 0,
+                                            //                     id:'timezoneSta',
+                                            //                     height: 50,
+                                            //                     fieldLabel: 'Timezone'
+                                            //                 }
+                                            //             ]
+                                            //         }
+                                            //     ]
+                                            // }
                                         ]
                                     }
                                 ]

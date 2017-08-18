@@ -466,8 +466,8 @@ class resamplingData(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
-
+            return int(time.mktime(dt.timetuple()))*1000000
+        # %Y-%m-%d %H:%M:%S.%f
         times_timestamp = map(convert_to_timestamp, times_string)
 
         data4 = []
@@ -834,7 +834,7 @@ class HydroSeparationTh(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
+            return int(time.mktime(dt.timetuple()))*1000000
 
         times_timestamp = map(convert_to_timestamp, times_string)
 
@@ -976,7 +976,7 @@ class QualityMethod(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
+            return int(time.mktime(dt.timetuple()))*1000000
 
         times_timestamp = map(convert_to_timestamp, times_string)
         data4 = []
@@ -1106,7 +1106,7 @@ class DataValuesMethod(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
+            return int(time.mktime(dt.timetuple()))*1000000
 
         times_timestamp = map(convert_to_timestamp, times_string)
         data4 = []
@@ -1185,7 +1185,7 @@ class fillMethod(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
+            return int(time.mktime(dt.timetuple()))*1000000
 
         times_timestamp = map(convert_to_timestamp, times_string)
 
@@ -1255,7 +1255,7 @@ class Hargreaves(waIstsos):
 
         def convert_to_timestamp(a):
             dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-            return int(time.mktime(dt.timetuple()))
+            return int(time.mktime(dt.timetuple()))*1000000
 
         times_timestamp = map(convert_to_timestamp, times_string)
 
@@ -1351,17 +1351,17 @@ class HydroIndices1():
                 #Exceedance is computed by interpolating between the ordered (descending) flow values.
                 #Divide the 10-percent exceedance value by the 90-percent value.
                 #exc = oat.process(ExceedanceProbability([4, 6, 10],etu='days')))
-                exc = Exceedance(perc=[10, 90]).execute1(temp_oat)
+                exc = Exceedance(perc=[10, 90]).execute1(tmp_oat)
                 value = exc[0]['value'] / exc[1]['value']
             elif self.code1 == 7:
                 #Range in daily flows is the ratio of the 20-percent to 80-percent exceedance values for the entire flow record.
-                exc = Exceedance(perc=[20,80]).execute1(temp_oat)
+                exc = Exceedance(perc=[20,80]).execute1(tmp_oat)
                 value = exc[0]['value'] / exc[1]['value']
             elif self.code1 == 8:
                 #Range in daily flows is the ratio of the 25-percent to 75-percent exceedance values for the entire flow record.
-                exc = Exceedance(perc=[25,75]).execute1(temp_oat)
+                exc = Exceedance(perc=[25,75]).execute1(tmp_oat)
                 value = exc[0]['value'] / exc[1]['value']
-            elif self.code == 9:
+            elif self.code1 == 9:
                 #Spread in daily flows is the ratio of the difference between the 90th and 10th percentile of the logs of the
                 #flow data to the log of the median of the entire flow record.
                 #Compute the log10 of the daily flows for the entire record.
@@ -1371,7 +1371,7 @@ class HydroIndices1():
                 #Compute MA9 as (90th –10th) /log10(MA2).
                 q = np.log10(tmp_oat["data"]).quantile([.10, .90])
                 value = (q[0.10] - q[0.90]) / np.log10(tmp_oat.median()['data'])
-            elif self.code == 10:
+            elif self.code1 == 10:
                 #Spread in daily flows is the ratio of the difference between the 80th and 20th percentile of the logs of the
                 #flow data to the log of the median of the entire flow record.
                 q = np.log10(tmp_oat["data"]).quantile([.20, .80])
@@ -1384,8 +1384,8 @@ class HydroIndices1():
             elif self.code1 in range(12, 24):
                 #Means (or medians) of monthly flow values. Compute the means for each month over the entire flow record.
                 #For example, MA12 is the mean of all January flow values over the entire record.
-                month_num = self.code - 11
-                b = Resample1(freq='1M', how='mean').execute1(temp_oat)
+                month_num = self.code1 - 11
+                b = Resample1(freq='1M', how='mean').execute1(tmp_oat)
                 try:
                     m = b.groupby(b.index.month).get_group(month_num)
                     v = m.mean()[0]
@@ -1396,7 +1396,7 @@ class HydroIndices1():
                 #Variability (coefficient of variation) of monthly flow values.
                 #Compute the standard deviation for each month in each year over the entire flow record.
                 #Divide the standard deviation by the mean for each month. Average (or take median of) these values for each month across all years.
-                month_num = self.code - 23
+                month_num = self.code1 - 23
                 #b = tmp_oat.process(Resample(freq='1M', how='std'))
                 m = df.groupby([df.index.year, df.index.month]).agg([np.mean, np.std])  # .dropna()
                 try:
@@ -1441,7 +1441,7 @@ class HydroIndices1():
                 m = df.groupby([df.index.year]).agg([np.mean])
                 value = (m.mean()[0] - m.median()[0]) / m.median()[0]
             else:
-                raise ValueError("the code number %s is not defined!" % self.code)
+                raise ValueError("the code number %s is not defined!" % self.code1)
 
             return value
 
@@ -1674,7 +1674,7 @@ class HydroEventsTh(waIstsos):
 
             def convert_to_timestamp(a):
                 dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-                return int(time.mktime(dt.timetuple()))
+                return int(time.mktime(dt.timetuple()))*1000000
 
             times_timestamp = map(convert_to_timestamp, times_string)
 

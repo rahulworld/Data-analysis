@@ -444,17 +444,14 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 2)
             {
-                // var resdata=this.dataAccess2();
-                // var resdata1=resdata[0];
-                // this.rederChart1(resdata1);
                 var resdata=this.dataAccess();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var valueForm=resdata[2];
-                var label=resdata[3];
-                var colr=resdata[4];
-                // console.log(resdata1);
-                // console.log(resdata2);
+                var resdata3=new Array();
+                for(var i=0;i<resdata1.length;i++){
+                    resdata3[i]=200;
+                }
+
                 var frequency= Ext.getCmp("edittextFrequency").getValue();
                 var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
                 var fillCombox= Ext.getCmp("comboxFill").getValue();
@@ -468,7 +465,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 show_result.setVisible(false);
                 rst_header = 'Resample\ntime,values\n';
 
-                historyString="Filter Digital Filter Params: frequency: "+frequency+"  How: "+timeSeriesMethods+"  fill: "+fillCombox+"  Limit: "+Limit+"  Quality: "+Quality+"\n"+historyString;
+                historyString="Filter Resample Params: frequency: "+frequency+"  How: "+timeSeriesMethods+"  fill: "+fillCombox+"  Limit: "+Limit+"  Quality: "+Quality+"\n"+historyString;
                 textHistory.setValue(historyString);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/resample', wa.url),
@@ -481,7 +478,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "limit":Limit,
                         "Quality":Quality,
                         "index1": resdata1,
-                        "values1": resdata2
+                        "values1": resdata2,
+                        "qual":resdata3
                         // "seriesdata":data
                     },
                     success: function(response){
@@ -503,11 +501,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                     var rec = [];
                                     rec.push(parseInt(json1['data'][i][0]));
                                     var vals = json1['data'][i][1];
+                                    var vals1 = json1['data'][i][2];
                                     rec = rec.concat(vals);
+                                    rec = rec.concat(vals1);
                                     this.chartdata.push(rec);
                                 }
                                 // this.rederChart2(this.chartdata,valueForm,label,colr);
-                                this.rederChart3(this.chartdata,'Resample');
+                                this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -529,28 +529,39 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var intgTimeUnit= Ext.getCmp("timeUnitsCombox").getValue();
                 var intgHow= Ext.getCmp("comboxIntegrateFlow").getValue();
                 var intgFactor= Ext.getCmp("integratefactor").getValue();
-
-                var intgUseTime= Ext.getCmp("checkUsetime").getValue();
-                var intgTimePanel= Ext.getCmp("UseTimePanel");
-                // intgTimePanel.disable();
-                // if(intgUseTime==){
-                //     intgTimePanel.enable()
-                // }
-                
-                // var intgFlow= Ext.getCmp("comboxIntegrateFlow").getValue();
                 var intgDateAsText= Ext.getCmp("integratedateastext").getValue();
-                var intgBegin= Ext.getCmp("edittextintegrateBegin").getValue();
-                var intgEnd= Ext.getCmp("edittextintegrateEnd").getValue();
-                var intgTimeZone= Ext.getCmp("integrateTimezone").getValue();
 
-                var exeeResult="";
+                //Use Time for calculation statistics
+                var timeuse= Ext.getCmp("checkUsetime").getValue();
+                //Time(Begin)
+                var from = Ext.getCmp('edittextintegrateBegin').getValue();
+                var bt = Ext.getCmp('edittextintegrateBeginTime').getValue();
+                //Time(End)
+                var to = Ext.getCmp('edittextintegrateEnd').getValue();
+                var et = Ext.getCmp('edittextintegrateEndTime').getValue();
+                //Time(Timezone)
+                var timezone= Ext.getCmp("integrateTimezone").getValue();
+                if(timeuse==true){
+                    from.setHours(bt.getHours());
+                    from.setMinutes(bt.getMinutes());
+                    from.setSeconds(bt.getSeconds());
+                    
+                    to.setHours(et.getHours());
+                    to.setMinutes(et.getMinutes());
+                    to.setSeconds(et.getSeconds());
+
+                    var format = "Y-m-d H:i:s";
+                    from = Ext.Date.format(from,format);
+                    to = Ext.Date.format(to,format);
+                }
 
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
                 show_result.setVisible(true);
+                console.log(from);
+                console.log(to);
 
-
-                historyString="Filter Integrate Params:  Integrate Time Unit: "+intgTimeUnit+"  Use Time: "+intgUseTime+"  Begin Time: "+intgBegin+"  End Time: "+intgEnd+"  TimeZone: "+intgTimeZone+"  How: "+intgHow+"  Factor: "+intgFactor+"  DateAsText: "+intgDateAsText+"\n"+historyString;
+                historyString="Filter Integrate Params:  Integrate Time Unit: "+intgTimeUnit+"  Use Time: "+timeuse+"  Begin Time: "+from+"  End Time: "+to+"  TimeZone: "+timezone+"  How: "+intgHow+"  Factor: "+intgFactor+"  DateAsText: "+intgDateAsText+"\n"+historyString;
                 textHistory.setValue(historyString);
 
                 Ext.Ajax.request({
@@ -564,10 +575,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "itimeunit":intgTimeUnit,
                         "ihow":intgHow,
                         "ifactor":intgFactor,
-                        "iusetime":intgUseTime,
-                        "ibegin":intgBegin,
-                        "iend":intgEnd,
-                        "itimezone":intgTimeZone,
+                        "iusetime":timeuse,
+                        "ibegin":from,
+                        "iend":to,
+                        "itimezone":timezone,
                         "idataastext":intgDateAsText,
                     },
                     success: function(response){
@@ -774,7 +785,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         }
                         // console.log(this.chartdata);
                         // this.rederChart3(this.chartdata,'Hydro Separation');
-                        this.rederChart1(this.chartdata);
+                        this.rederChart5(this.chartdata);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -800,16 +811,42 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var hyewindow= Ext.getCmp("hewindow").getValue();
                 var hyepeak= Ext.getCmp("hepeak").getValue();
                 var hyeseries= Ext.getCmp("heseries").getValue();
-                var hyetime= Ext.getCmp("hetime").getValue();
-                var hyebeg= Ext.getCmp("hebeg").getValue();
-                var hyeend= Ext.getCmp("heend").getValue();
+
+
+                // var hyetime= Ext.getCmp("hetime").getValue();
+                // var hyebeg= Ext.getCmp("hebeg").getValue();
+                // var hyeend= Ext.getCmp("heend").getValue();
+
+                //Use Time for calculation statistics
+                var timeuse= Ext.getCmp("hetime").getValue();
+                //Time(Begin)
+                var from = Ext.getCmp('hebeg').getValue();
+                var bt = Ext.getCmp('hebegTime').getValue();
+                //Time(End)
+                var to = Ext.getCmp('heend').getValue();
+                var et = Ext.getCmp('heendTime').getValue();
+                //Time(Timezone)
+                if(timeuse==true){
+                    from.setHours(bt.getHours());
+                    from.setMinutes(bt.getMinutes());
+                    from.setSeconds(bt.getSeconds());
+                    
+                    to.setHours(et.getHours());
+                    to.setMinutes(et.getMinutes());
+                    to.setSeconds(et.getSeconds());
+
+                    var format = "Y-m-d H:i:s";
+                    from = Ext.Date.format(from,format);
+                    to = Ext.Date.format(to,format);
+                }
+
 
                 Ext.get('chartSeries').mask("Initializing chart..");
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
 
-                historyString="Filter Hydro Events Params: rise: "+hyerise+"  fall: "+hyefall+"  window: "+hyewindow+"  peak: "+hyepeak+"  series: "+hyeseries+"  period: "+hyetime+"  begin: "+hyebeg+"  end: "+hyeend+"\n"+historyString;
+                historyString="Filter Hydro Events Params: rise:["+hyerise+"] | fall:["+hyefall+"] | window:["+hyewindow+"] | peak:["+hyepeak+"] | series:["+hyeseries+"] | period:["+timeuse+"] | begin:["+from+"] | end:["+to+"]\n"+historyString;
                 textHistory.setValue(historyString);
 
 
@@ -823,10 +860,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "hydwindow":hyewindow,
                         "hydpeak":hyepeak,
                         "hydseries":hyeseries,
-                        "hydtime":hyetime,
-                        "hydbeg":hyebeg,
-                        "hydend":hyeend,
-
+                        "hydtime":timeuse,
+                        "hydbeg":from,
+                        "hydend":to,
                         "index1": resdata1,
                         "values1": resdata2,
                         "qual":resdata3
@@ -878,9 +914,32 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var hiclass= Ext.getCmp("cbclass").getValue();
                 var himedian= Ext.getCmp("cbmedian").getValue();
                 var hidrainArea= Ext.getCmp("drainArea").getValue();
-                var hiperiod= Ext.getCmp("cbperiod").getValue();
-                var hibeg= Ext.getCmp("hibegin").getValue();
-                var hiend= Ext.getCmp("hiend").getValue();
+                // var hiperiod= Ext.getCmp("cbperiod").getValue();
+                // var hibeg= Ext.getCmp("hibegin").getValue();
+                // var hiend= Ext.getCmp("hiend").getValue();
+
+                //Use Time for calculation statistics
+                var timeuse= Ext.getCmp("cbperiod").getValue();
+                //Time(Begin)
+                var from = Ext.getCmp('hibegin').getValue();
+                var bt = Ext.getCmp('hibeginTime').getValue();
+                //Time(End)
+                var to = Ext.getCmp('hiend').getValue();
+                var et = Ext.getCmp('hiendTime').getValue();
+                //Time(Timezone)
+                if(timeuse==true){
+                    from.setHours(bt.getHours());
+                    from.setMinutes(bt.getMinutes());
+                    from.setSeconds(bt.getSeconds());
+                    
+                    to.setHours(et.getHours());
+                    to.setMinutes(et.getMinutes());
+                    to.setSeconds(et.getSeconds());
+
+                    var format = "Y-m-d H:i:s";
+                    from = Ext.Date.format(from,format);
+                    to = Ext.Date.format(to,format);
+                }
 
                 Ext.get('chartSeries').mask("Initializing chart..");
 
@@ -888,7 +947,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 chartPlot.setVisible(false);
                 show_result.setVisible(true);
 
-                historyString="Filter Hydro indicies Params:  alphacode: "+hialphacode+"  code indicies: "+hiindicies+"  component: "+hicomponent+"  classification: "+hiclass+"  median: "+himedian+" drain area: "+hidrainArea+"  period: "+hiperiod+"  begin: "+hibeg+"  end: "+hiend+"\n"+historyString;
+                historyString="Filter Hydro indicies Params:  alphacode: ["+hialphacode+"]  |  code indicies: ["+hiindicies+"]  |  component: ["+hicomponent+"]  |  classification: ["+hiclass+"]  |  median: ["+himedian+"] | drain area: ["+hidrainArea+"]  |  period: ["+timeuse+"]  |  begin: ["+from+"]  |  end: ["+to+"]\n"+historyString;
                 textHistory.setValue(historyString);
         
 
@@ -902,10 +961,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "hicomp":hicomponent,
                         "hicss":hiclass,
                         "himed":himedian,
-                        "hiper":hiperiod,
+                        "hiper":timeuse,
                         "hida":hidrainArea,
-                        "hib":hibeg,
-                        "hie":hiend,
+                        "hib":from,
+                        "hie":to,
                         "index1": resdata1,
                         "values1": resdata2,
                         "qual": resdata3
@@ -941,17 +1000,16 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 //Taking Input
                 var dataSta= Ext.getCmp("dataSta").getValue();
                 var quaSta= Ext.getCmp("quaSta").getValue();
-                
-                // var beginSta= Ext.getCmp("beginSta").getValue();
-                // var endSta= Ext.getCmp("endSta").getValue();
-
+            
+                //Use Time for calculation statistics
                 var timeSta= Ext.getCmp("timeUseSta").getValue();
+                //Time(Begin)
                 var from = Ext.getCmp('beginSta').getValue();
                 var bt = Ext.getCmp('beginStaTime').getValue();
-
+                //Time(End)
                 var to = Ext.getCmp('endSta').getValue();
                 var et = Ext.getCmp('endStaTime').getValue();
-
+                //Time(Timezone)
                 var timezoneSta= Ext.getCmp("timezoneSta").getValue();
                 if(timeSta==true){
                     from.setHours(bt.getHours());
@@ -966,12 +1024,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     from = Ext.Date.format(from,format);
                     to = Ext.Date.format(to,format);
                 }
-                
+
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
                 show_result.setVisible(true);
 
-                historyString="Filter Statistics Params: data: "+dataSta+"  quality: "+quaSta+"  time: "+timeSta+"  beginSta: "+beginSta+"  end: "+endSta+"  timezone: "+timezoneSta+"\n"+historyString;
+                historyString="Filter Statistics Params: data: ["+dataSta+"]|  quality: ["+quaSta+"]|  time: ["+timeSta+"]|  beginSta: ["+from+"]|  end: ["+to+"]|  timezone: ["+timezoneSta+"]\n"+historyString;
                 textHistory.setValue(historyString);
                 
 
@@ -1073,7 +1131,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
                         Ext.get('chartSeries').mask("Initializing chart..");
-                        rst_header = 'Fill Params\ntime,value\n';
+                        rst_header = 'Fill Params\ntime,value,quality\n';
                         var csv_array=json1['data'];
                         rst_data=csv_array;
                         this.chartdata = [];
@@ -1081,10 +1139,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             var rec = [];
                             rec.push(parseInt(json1['data'][i][0]));
                             var vals = json1['data'][i][1];
+                            var vals1 = json1['data'][i][2];
                             rec = rec.concat(vals);
+                            rec = rec.concat(vals1);
                             this.chartdata.push(rec);
                         }
-                        this.rederChart3(this.chartdata,'Fill');
+                        this.rederChart1(this.chartdata,'Fill');
                         // this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
@@ -1107,19 +1167,45 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 //Taking Input
                 var DataValue= Ext.getCmp("Qvalue").getValue();
                 var DataStat= Ext.getCmp("Qstat").getValue();
-                var DataTime= Ext.getCmp("Qtime").getValue();
-                var DataBegin= Ext.getCmp("Qbegin").getValue();
-                var DataEnd= Ext.getCmp("Qend").getValue();
-                var DataTimezone= Ext.getCmp("Qtimezone").getValue();
                 var DataLow= Ext.getCmp("Qlow").getValue();
                 var DataHigh= Ext.getCmp("Qhigh").getValue();
+
+                // var DataTime= Ext.getCmp("Qtime").getValue();
+                // var DataBegin= Ext.getCmp("Qbegin").getValue();
+                // var DataEnd= Ext.getCmp("Qend").getValue();
+                // var DataTimezone= Ext.getCmp("Qtimezone").getValue();
+
+                //Use Time for calculation statistics
+                var timeuse= Ext.getCmp("Qtime").getValue();
+                //Time(Begin)
+                var from = Ext.getCmp('Qbegin').getValue();
+                var bt = Ext.getCmp('QbeginTime').getValue();
+                //Time(End)
+                var to = Ext.getCmp('Qend').getValue();
+                var et = Ext.getCmp('QendTime').getValue();
+                //Time(Timezone)
+                var timezone= Ext.getCmp("Qtimezone").getValue();
+                if(timeuse==true){
+                    from.setHours(bt.getHours());
+                    from.setMinutes(bt.getMinutes());
+                    from.setSeconds(bt.getSeconds());
+                    
+                    to.setHours(et.getHours());
+                    to.setMinutes(et.getMinutes());
+                    to.setSeconds(et.getSeconds());
+
+                    var format = "Y-m-d H:i:s";
+                    from = Ext.Date.format(from,format);
+                    to = Ext.Date.format(to,format);
+                }
+
                 Ext.get('chartSeries').mask("Initializing chart..");
 
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
 
-                historyString="Filter Quality Params:  Values "+DataValue+"  Statistics:  "+DataStat+" Time: "+DataTime+" Begin: "+DataBegin+" End: "+DataEnd+" TimeZone: "+DataTimezone+" low: "+DataLow+" High: "+DataHigh+"\n"+historyString;
+                historyString="Filter Quality Params:  Values "+DataValue+"  Statistics:  "+DataStat+" Time: "+timeuse+" Begin: "+from+" End: "+to+" TimeZone: "+timezone+" low: "+DataLow+" High: "+DataHigh+"\n"+historyString;
                 textHistory.setValue(historyString);
                 Ext.Ajax.request({
                     url: Ext.String.format('{0}/istsos/operations/oat/qualitymethod', wa.url),
@@ -1131,10 +1217,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         "qual":resdata3,
                         "qvalue":DataValue,
                         "qstat":DataStat,
-                        "qtime":DataTime,
-                        "qbegin":DataBegin,
-                        "qend":DataEnd,
-                        "qtimezone":DataTimezone,
+                        "qtime":timeuse,
+                        "qbegin":from,
+                        "qend":to,
+                        "qtimezone":timezone,
                         "qlow":DataLow,
                         "qhigh":DataHigh
                     },
@@ -1152,10 +1238,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             var rec = [];
                             rec.push(parseInt(json1['data'][i][0]));
                             var vals = json1['data'][i][1];
+                            var vals1 = json1['data'][i][2];
                             rec = rec.concat(vals);
+                            rec = rec.concat(vals1);
                             this.chartdata.push(rec);
                         }
-                        this.rederChart3(this.chartdata,'Quality');
+                        this.rederChart1(this.chartdata,'Quality');
                         // this.rederChart1(this.chartdata);
                     },
                     failure: function (response) {
@@ -1285,10 +1373,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             var rec = [];
                             rec.push(parseInt(json1['data'][i][0]));
                             var vals = json1['data'][i][1];
+                            var vals1 = json1['data'][i][2];
                             rec = rec.concat(vals);
+                            rec = rec.concat(vals1);
                             this.chartdata.push(rec);
                         }
-                        this.rederChart3(this.chartdata,'Hargreaves');
+                        this.rederChart1(this.chartdata);
 
                         rst_header = 'Hargreaves Params\ntime,value\n';
 
@@ -1351,12 +1441,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     document.getElementById("chartSeries-body"),
                     this.chartdata,
                     {
-                        labels: [ 'Date', 'Y1', 'Y2'],
+                        labels: [ 'Date', 'Value', 'Quality'],
                         xlabel:'Time',
-                        ylabel: 'Y1',
-                        y2label: 'Y2',
-                        series: {
-                          'Y2': { axis: 'y2' }
+                        ylabel: 'Value',
+                        y2label: 'Quality',
+                        'Quality': {
+                          axis: {
+                          }
                         },
                         strokeWidth: 2,
                         digitsAfterDecimal: 6,
@@ -1381,6 +1472,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         axisLabelWidth: 150,
                         xAxisLabelWidth: 150,
                         highlightCircleSize: 4,
+                        colors: ['blue', 'red'],
                         axes: Ext.apply({
                             x: {
                                 valueFormatter: function(ms) {
@@ -1480,20 +1572,228 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             },
                             y: {
                                 valueFormatter: function(y) {
-                                  return 'Base(' + y + ')';
+                                  return y;
                                 },
                                 axisLabelFormatter: function(y) {
                                   return y;
+                                }
+                            },
+                            y2: {
+                                valueFormatter: function(y2) {
+                                  return y2;
                                 },
-                              },
-                              y2: {
+                                axisLabelFormatter: function(y2) {
+                                  return y2;
+                                }
+                            }
+                        },valueFormatter),
+                        clickCallback: function(e, x, pts) {
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            // Series selectd
+                            if (e.shiftKey && chartpanel.lastClick) {
+                                Ext.callback(function(e, x, pts){
+                                    this.fireEvent("seriesSelected", this, e, x, this.lastClick, pts);
+                                }, chartpanel, [e, x, pts]);
+
+                            }else{ // Single point selected
+                                chartpanel.lastClick = x;
+                                Ext.callback(function(e, x, pts){
+                                    this.fireEvent("clickCallback", this, e, x, pts);
+                                }, chartpanel, [e, x, pts]);
+                            }
+
+                        },
+                        pointClickCallback: function(e, p) {
+
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            Ext.callback(function(e, p){
+                                this.fireEvent("clickCallback", this, e, p['xval']);
+                            }, chartpanel, [e, p]);
+                        },
+                        underlayCallback: function(canvas, area, g) {
+                            var chartpanel = Ext.getCmp('serieschartpanel');
+                            Ext.callback(function(canvas, area, g){
+                                this.fireEvent("underlayCallback", this, canvas, area, g);
+                            }, chartpanel, [canvas, area, g]);
+                        }
+                    }
+                    );
+            }else if (!Ext.isEmpty(this.chart)) {
+                this.chart.updateOptions({
+                    file: this.chartdata,
+                    visibility: visibility,
+                    labels: this.labels
+                });
+            }
+            Ext.get('chartSeries-body').removeCls("viewerChart");
+            Ext.get('chartSeries').unmask();
+    },
+    rederChart5: function(chartdata){
+            this.chartdata=chartdata;
+            // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
+            // var procs = [];
+            // get the json rapresentation of the tree menu of procedures
+            //var checked = Ext.getCmp('proceduresTree').getValues();
+            var visibility = []; // Initialize the chart series visibility
+
+            this.labels = ["isodate"];
+            this.colors = [];
+            var template = [];
+
+            var valueFormatter = {
+
+            }
+            var initChart = true;
+            if (initChart) {
+                this.chart = new Dygraph(
+                    document.getElementById("chartSeries-body"),
+                    this.chartdata,
+                    {
+                        labels: [ 'Date', 'Value', 'Quality'],
+                        xlabel:'Time',
+                        ylabel: 'Value',
+                        y2label: 'Quality',
+                        'Quality': {
+                          axis: {
+                          }
+                        },
+                        strokeWidth: 2,
+                        digitsAfterDecimal: 6,
+                        connectSeparatedPoints: true,
+                        //visibility: visibility,
+                        legend: 'always',
+                        showRangeSelector: true,
+                        showRoller: true,
+                        rangeSelectorHeight: 30,
+                        rangeSelectorPlotStrokeColor: 'black',
+                        rangeSelectorPlotFillColor: 'green',
+                        labelsDivStyles: {
+                            'padding': '4px',
+                            'border': '1px solid black',
+                            'borderRadius': '3px',
+                            'boxShadow': '4px 4px 4px #888',
+                            'right': '10px'
+                        },
+                        labelsDivWidth: "100%",
+                        axisLineColor: 'green',
+                        axisLabelFontSize: 12,
+                        axisLabelWidth: 150,
+                        xAxisLabelWidth: 150,
+                        highlightCircleSize: 4,
+                        colors: ['blue', 'red'],
+                        axes: Ext.apply({
+                            x: {
+                                valueFormatter: function(ms) {
+                                    return istsos.utils.micro2iso(ms,istsos.utils.tzToMinutes(Ext.getCmp('oeTZ').getValue()));
+                                },
+                                axisLabelFormatter: function(ms, gran, b, chart){
+                                        // Get unix time in seconds
+                                    var unix = parseInt(ms/1000000);
+                                    // Extract microseconds only
+                                    var micro = ms-(unix*1000000);
+                                    // Date object without considering microseconds
+                                    var date = Ext.Date.parse(unix,'U');
+
+                                    var range = chart.xAxisRange();
+                                    var delta = range[1]-range[0];
+
+                                    var clip = function(m){
+                                        return (parseFloat('0.'+m)+"").substring(1);
+                                    }
+                                    if (delta<500000) { // less then a seconds range
+                                        if (micro == 0) {
+                                            if (date.getHours()==0
+                                                && date.getMinutes()==0
+                                                && date.getSeconds()==0) {
+                                                return Ext.Date.format(date,'Y-m-d');
+                                            }else{
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }
+                                        }else{
+                                            if (micro==200000 || micro==400000 || micro==600000 || micro==800000) {
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }else{
+                                                return micro/1000;
+                                            }
+                                        }
+                                    }else if (delta<1000000) { // less then a seconds range
+                                        if (micro == 0) {
+                                            if (date.getHours()==0
+                                                && date.getMinutes()==0
+                                                && date.getSeconds()==0) {
+                                                return Ext.Date.format(date,'Y-m-d');
+                                            }else{
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }
+                                        }else{
+                                            if (micro==500000) {
+                                                return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                            }else{
+                                                return micro/1000;
+                                            }
+                                        }
+                                    }else if(delta<1000000*60) { // less the a minute
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i:s')+clip(micro);
+                                        }
+                                    }else if(delta<1000000*60*60) { // less the an hour
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else if(delta<1000000*60*60*24) { // less the a day
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else if (date.getHours()==12
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d') + "T" +
+                                            Ext.Date.format(date,'H:i');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else if(delta<1000000*60*60*24*4) { // less the a day
+                                        if (date.getHours()==0
+                                            && date.getMinutes()==0
+                                            && date.getSeconds()==0) {
+                                            return Ext.Date.format(date,'Y-m-d');
+                                        }else if (date.getHours()==12) {
+                                            return Ext.Date.format(date,'Y-m-d') + "<br>" +
+                                            Ext.Date.format(date,'H:i');
+                                        }else{
+                                            return Ext.Date.format(date,'H:i');
+                                        }
+                                    }else  { // less the a day
+                                        return Ext.Date.format(date,'Y-m-d');
+                                    }
+
+                                }
+                            },
+                            y: {
+                                valueFormatter: function(y) {
+                                  return 'Base(' + y+ ')';
+                                },
+                                axisLabelFormatter: function(y2) {
+                                  return y2;
+                                }
+                            },
+                            y2: {
                                 valueFormatter: function(y2) {
                                   return 'Runoff(' + y2+ ')';
                                 },
                                 axisLabelFormatter: function(y2) {
                                   return y2;
                                 }
-                              }
+                            }
                         },valueFormatter),
                         clickCallback: function(e, x, pts) {
                             var chartpanel = Ext.getCmp('serieschartpanel');

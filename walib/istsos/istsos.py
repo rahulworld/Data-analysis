@@ -425,8 +425,11 @@ class resamplingData(waIstsos):
         fill=self.json['fill']
         limit=self.json['limit']
         quality=self.json['Quality']
+
         index1=self.json['index1']
-        values1=self.json['values1']
+        values2=self.json['values1']
+        qua=self.json['qual']
+
         if freq=="":
             freq='1H'
 
@@ -436,16 +439,8 @@ class resamplingData(waIstsos):
         if limit == -1:
             limit = None
 
-        # self.result = self.gui.oat.process(method.Resample(freq=freq, how=how, fill=fill, limit=limit,
-        #                                                    how_quality=quality), detailedresult=True)
-        # rea=method.Resample(freq=freq, how=how, fill=fill, limit=limit,how_quality=quality)
-        # res['resulth']=rea.execute(self,df,detailedresult=True)
-        # res=process(method.Resample(freq=freq, how=how, fill=fill,
-        #     limit=limit, how_quality=quality), detailedresult=True)
-        # aonao = pd.DataFrame({'AO':AO, 'NAO':NAO})
-        # data1 = {'date': ['2014-05-01 18:47:05.069722', '2014-05-01 18:47:05.119994', '2014-05-02 18:47:05.178768', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.230071', '2014-05-02 18:47:05.280592', '2014-05-03 18:47:05.332662', '2014-05-03 18:47:05.385109', '2014-05-04 18:47:05.436523', '2014-05-04 18:47:05.486877'],'value': [34, 25, 26, 15, 15, 14, 26, 25, 62, 41]}
-        data1 = {'date': index1, 'value':values1}
-        df = pd.DataFrame(data1,columns = ['date','value'])
+        data1 = {'date': index1, 'data':values2, 'quality':qua}
+        df = pd.DataFrame(data1,columns = ['date','data','quality'])
         df['date'] = pd.to_datetime(df['date'])
         df.index = df['date']
         del df['date']
@@ -453,7 +448,8 @@ class resamplingData(waIstsos):
         resample=Resample1(freq=freq, how=how, fill=fill, limit=int(limit), how_quality=quality)
         resdata=resample.execute1(df)
 
-        values = np.array(resdata['value'])
+        values = np.array(resdata['data'])
+        values1 = np.array(resdata['quality'])
         times = resdata.index
         times_string =[]
         for i in times:
@@ -467,7 +463,7 @@ class resamplingData(waIstsos):
 
         data4 = []
         for i in range(len(times_string)):
-            a = [times_timestamp[i], values[i]]
+            a = [times_timestamp[i], values[i], values1[i]]
             data4.append(a)
 
         # dictionary = {'data': data4}
@@ -681,18 +677,20 @@ class IntegrateMethod(waIstsos):
         ibegin=self.json['ibegin']
         iend=self.json['iend']
 
+        itimezone=int(itimezone)
+
         period = [(None, None)]
-        # if itimeuse:
-        #     timezone1 = itimezone
-        #     if timezone1 >= 0:
-        #         timez = "+" + "%02d:00" % (timezone1)
-        #     else:
-        #         timez = "-" + "%02d:00" % (abs(timezone1))
+        if itimeuse:
+            timezone1 = itimezone
+            if timezone1 >= 0:
+                timez = "+" + "%02d:00" % (timezone1)
+            else:
+                timez = "-" + "%02d:00" % (abs(timezone1))
 
-        #     begin_pos = ibegin + timez
-        #     end_pos = iend + timez
+            begin_pos = ibegin + timez
+            end_pos = iend + timez
 
-        #     period = [(begin_pos, end_pos)]
+            period = [(begin_pos, end_pos)]
 
         data1 = {'date': index1, 'data':values1, 'quality':qua}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
@@ -937,22 +935,27 @@ class QualityMethod(waIstsos):
         dvlow = self.json['qlow']
         dvhigh = self.json['qhigh']
 
+        dvlow=int(dvlow)
+        dvhigh=int(dvhigh)
+
         tbounds = [(None, None)]
         vbounds = [(None, None)]
 
-        # if time12:
-        #     if dvtimezone >= 0:
-        #         timez = "+" + "%02d:00" % (dvtimezone)
-        #     else:
-        #         timez = "-" + "%02d:00" % (abs(dvtimezone))
-        #     begin_pos = dvbegin + timez
-        #     end_pos = dvend + timez
-        #     tbounds = [(begin_pos, end_pos)]
+        dvtimezone=int(dvtimezone)
 
-        # if value:
-        #     min_val = dvlow
-        #     max_val = dvhigh
-        #     vbounds = [(min_val, max_val)]
+        if time12:
+            if dvtimezone >= 0:
+                timez = "+" + "%02d:00" % (dvtimezone)
+            else:
+                timez = "-" + "%02d:00" % (abs(dvtimezone))
+            begin_pos = dvbegin + timez
+            end_pos = dvend + timez
+            tbounds = [(begin_pos, end_pos)]
+
+        if value:
+            min_val = dvlow
+            max_val = dvhigh
+            vbounds = [(min_val, max_val)]
 
         data1 = {'date': index1, 'data':values1, 'quality':qua}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
@@ -964,6 +967,7 @@ class QualityMethod(waIstsos):
         resdata=setQualityStat.execute(df)
         # return resdata
         values = np.array(resdata['data'])
+        values1 = np.array(resdata['quality'])
         times = resdata.index
         times_string =[]
         for i in times:
@@ -976,7 +980,7 @@ class QualityMethod(waIstsos):
         times_timestamp = map(convert_to_timestamp, times_string)
         data4 = []
         for i in range(len(times_string)):
-            a = [times_timestamp[i], values[i]]
+            a = [times_timestamp[i], values[i],values1[i]]
             data4.append(a)
         # dictionary = {'data': data4}
         self.setData(data4)
@@ -1112,7 +1116,7 @@ class DataValuesMethod(waIstsos):
         self.setData(data4)
         self.setMessage("data values is successfully working")
 
-class Fill():
+class Fill1():
     """ """
     def __init__(self, fill=None, limit=None):
         """Different methods for No data filling
@@ -1158,6 +1162,7 @@ class fillMethod(waIstsos):
         qua=self.json['qual']
         fill = self.json['fillMethod1']
         limit = self.json['fillConsucutive1']
+
         if limit=='-1':
             limit=None
         else:
@@ -1169,10 +1174,11 @@ class fillMethod(waIstsos):
         df.index = df['date']
         del df['date']
         
-        fill1=Fill(fill, limit)
+        fill1=Fill1(fill, limit)
         resdata=fill1.execute(df)
 
         values = np.array(resdata['data'])
+        values1 = np.array(resdata['quality'])
         times = resdata.index
         times_string =[]
         for i in times:
@@ -1186,7 +1192,7 @@ class fillMethod(waIstsos):
 
         data4 = []
         for i in range(len(times_string)):
-            a = [times_timestamp[i], values[i]]
+            a = [times_timestamp[i], values[i],values1[i]]
             data4.append(a)
 
         # dictionary = {'data': data4}
@@ -1243,6 +1249,7 @@ class Hargreaves(waIstsos):
         haygreaves=HargreavesETo1()
         resdata=haygreaves.execute1(df)
         values = np.array(resdata['data'])
+        values1 = np.array(resdata['quality'])
         times = resdata.index
         times_string =[]
         for i in times:
@@ -1256,7 +1263,7 @@ class Hargreaves(waIstsos):
 
         data4 = []
         for i in range(len(times_string)):
-            a = [times_timestamp[i], values[i]]
+            a = [times_timestamp[i], values[i],values1[i]]
             data4.append(a)
 
         # dictionary = {'data': data4}
@@ -1560,7 +1567,7 @@ class HydroEvents12():
         # da=self.window
         win_dt = dttd(days=self.window)
 
-        if None:
+        if self.period:
             signal = df[self.period[0]:self.period[1]]['data'].values
         else:
             signal = df['data'].values

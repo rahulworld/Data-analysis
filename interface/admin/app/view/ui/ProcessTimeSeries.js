@@ -199,7 +199,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     margin: 5,
                                     flex: 1,
-                                    height: 50,
+                                    height: 60,
                                     border:false,
                                     layout:
                                     {
@@ -209,11 +209,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                     {
                                         xtype: 'spinnerfield',
-                                        flex: 1,
+                                        width: 180,
                                         fieldLabel: 'low cutoff freq.',
                                         id:'digLowcutOff',
                                         margin: '5 0 0 5',
-
+                                        labelWidth: 100,
                                         value: 0.00,
                                         step: -0.10,
                                         // override onSpinUp (using step isn't neccessary)
@@ -239,10 +239,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'spinnerfield',
-                                        flex: 1,
+                                        width: 180,
                                         id:'digHigcutOff',
                                         margin: '5 0 0 5',
                                         fieldLabel: 'high cutoff freq.',
+                                        labelWidth: 100,
                                         value: 0.00,
                                         step: -0.10,
                                         // override onSpinUp (using step isn't neccessary)
@@ -270,8 +271,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     xtype: 'panel',
                                     margin: 5,
-                                    flex: 1,
-                                    height: 50,
+                                    height: 60,
                                     border:false,
                                     layout:
                                     {
@@ -282,12 +282,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'spinnerfield',
                                         id:'digOrder',
-                                        flex: 1,
-                                        padding: '5 0 0 5',
+                                        margin: '5 0 0 5',
+                                        width: 110,
                                         fieldLabel: 'Order',
+                                        labelWidth: 50,
                                         value: 0,
                                         step: -1,
-                                        // override onSpinUp (using step isn't neccessary)
                                         onSpinUp: function()
                                         {
                                             var me = this;
@@ -297,7 +297,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 me.setValue((val - me.step) + ' ');
                                             }
                                         },
-                                        // override onSpinDown
                                         onSpinDown: function()
                                         {
                                             var me = this;
@@ -311,10 +310,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'combobox',
                                         id:'digiType',
-                                        flex: 1,
-                                        padding: '5 0 0 5',
+                                        width: 200,
                                         fieldLabel: 'filter type',
-                                        "value": "highpass",
+                                        value: 'highpass',
+                                        margin: '5 0 0 5',
+                                        labelWidth: 70,
                                         store: Ext.create('Ext.data.Store',
                                         {
                                             fields: ['abbr', 'name'],
@@ -328,9 +328,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 'name': 'lowpass'
                                             }]
                                         }),
-                                        "matchFieldWidth": false,
-                                        "valueField": "abbr",
-                                        "displayField": "name",
+                                        matchFieldWidth: false,
+                                        valueField: 'abbr',
+                                        displayField: 'name',
                                         queryMode: 'local',
                                         forceSelection: true
                                     }]
@@ -364,17 +364,17 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'textfield',
                                         id:'exeeValues',
                                         margin: '0 10 0 0',
-                                        width: '',
-                                        flex:1,
-                                        height: 30,
+                                        width: 220,
+                                        height: 25,
                                         fieldLabel: 'exceedance values',
                                         labelWidth: 120
                                     },
                                     {
                                         xtype: 'textfield',
                                         id:'exeeProbability',
-                                        height: 30,
-                                        flex:1,
+                                        margin: '0 10 0 0',
+                                        width: 240,
+                                        height: 25,
                                         fieldLabel: 'exceedance probability',
                                         labelWidth: 140
                                     }]
@@ -396,10 +396,10 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         id:'exeeTime',
                                         margin: '0 15 0 0',
                                         height: 50,
-                                        flex:1,
+                                        width: 200,
                                         fieldLabel: 'exceedance time unit',
                                         labelWidth: 130,
-                                        "value": "hours",
+                                        value: 'hours',
                                         store: Ext.create('Ext.data.Store',
                                         {
                                             fields: ['abbr', 'name'],
@@ -429,9 +429,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 'name': 'years'
                                             }]
                                         }),
-                                        "matchFieldWidth": false,
-                                        "valueField": "abbr",
-                                        "displayField": "name",
+                                        matchFieldWidth: false,
+                                        valueField: 'abbr',
+                                        displayField: 'name',
                                         queryMode: 'local',
                                         forceSelection: true
                                     },
@@ -469,8 +469,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'spinnerfield',
-                                            flex: 1,
-                                            labelWidth:150,
+                                            width: 260,
+                                            labelWidth:200,
                                             id:'fillConsucutive',
                                             height: 40,
                                             margin: 5,
@@ -513,14 +513,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'combobox',
-                                            flex: 0.5,
+                                            width: 250,
                                             height: 40,
                                             margin: 5,
                                             id:'fillMethod',
                                             labelWidth:150,
                                             fieldLabel: 'filling no data method',
                                             value: "bfill",
-                                            flex: 1,
                                             store: Ext.create('Ext.data.Store',
                                             {
                                                 fields: ['abbr', 'name'],
@@ -576,7 +575,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     "xtype": "panel",
                                     "border": false,
-                                    "padding": 5,
+                                    "margin": 10,
                                     "flex":1,
                                     "layout":
                                     {
@@ -587,22 +586,19 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         "xtype": "textfield",
                                         "id": "edittextFrequency",
-                                        "flex":0.5,
-                                        "margin": "0 0 10 5",
-                                        "width": "",
+                                        "margin": "0 5 5 0",
+                                        "width": 120,
                                         "fieldLabel": "Frequency",
                                         "labelWidth": 70
                                     },
                                     {
                                         "xtype": "combobox",
-                                        "margins": "",
+                                        "width": 200,
                                         "id": "comboxSmapling",
-                                        "flex":0.5,
-                                        "margin": "0 0 10 10",
+                                        "margin": "0 5 5 0",
                                         "fieldLabel": "Sampling Method",
                                         "labelWidth": 100,
                                         "value": "mean",
-                                        "flex": 1,
                                         store: Ext.create('Ext.data.Store',
                                         {
                                             fields: ['abbr', 'name'],
@@ -790,7 +786,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     {
                                         xtype: 'combobox',
                                         id:'timeUnitsCombox',
-                                        flex: 1,
+                                        width: 150,
+                                        labelWidth: 60,
                                         fieldLabel: 'time units',
                                         value: "seconds",
                                         store: Ext.create('Ext.data.Store',
@@ -825,113 +822,201 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         forceSelection: true
                                     }]
                                 },
+
                                 {
-                                    xtype: 'panel',
-                                    width: 150,
-                                    height: 80,
-                                    margin: '5 0 0 0',
-                                    border: false,
-                                    layout:
-                                    {
-                                        type: 'hbox',
-                                        align: 'middle'
-                                    },
-                                    items: [
-                                    {
-                                        xtype: 'checkboxfield',
-                                        id:'checkUsetime',
-                                        flex: 0.2,
-                                        fieldLabel: '',
-                                        height: 40,
-                                        boxLabel: 'Use time'
-                                    },
-                                    {
                                         xtype: 'panel',
-                                        height: 80,
-                                        flex: 1,
-                                        id:'UseTimePanel',
-                                        layout:
-                                        {
+                                        margin: 2,
+                                        height: 100,
+                                        border: 0,
+                                        layout: {
                                             type: 'hbox',
                                             align: 'stretch'
                                         },
-                                        border: false,
                                         items: [
-                                        {
-                                            xtype: 'panel',
-                                            flex: 2,
-                                            height: 100,
-                                            layout:
                                             {
-                                                type: 'vbox',
-                                                align: 'stretch'
-                                            },
-                                            border: false,
-                                            items: [
-                                            {
-                                                "xtype": "textfield",
-                                                "id": "edittextintegrateBegin",
-                                                flex: 1,
-                                                height: 30,
-                                                margin: '5 5 0 0',
-                                                fieldLabel: 'Begin',
-                                                labelWidth: 50
-                                            },
-                                            {
-                                                "xtype": "textfield",
-                                                "id": "edittextintegrateEnd",
-                                                flex: 1,
-                                                height: 30,
-                                                margin: '5 5 0 0',
-                                                fieldLabel: 'End',
-                                                labelWidth: 50
-                                            }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            flex: 1,
-                                            height: 40,
-                                            layout:
-                                            {
-                                                type: 'vbox',
-                                                align: 'stretch'
-                                            },
-                                            border: false,
-                                            items: [
-                                            {
-                                                xtype: 'spinnerfield',
-                                                id:'integrateTimezone',
-                                                flex: 0,
-                                                height: 40,
-                                                fieldLabel: 'Timezone',
-                                                labelWidth: 70,
-                                                value: 0,
-                                                step: -1,
-                                                // override onSpinUp (using step isn't neccessary)
-                                                onSpinUp: function()
-                                                {
-                                                    var me = this;
-                                                    if (!me.readOnly)
-                                                    {
-                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                        me.setValue((val - me.step) + ' ');
-                                                    }
-                                                },
-                                                // override onSpinDown
-                                                onSpinDown: function()
-                                                {
-                                                    var me = this;
-                                                    if (!me.readOnly)
-                                                    {
-                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
-                                                        me.setValue((val + me.step) + ' ');
+                                                xtype: 'checkboxfield',
+                                                id:'checkUsetime',
+                                                padding: '10 0 0 0',
+                                                width: 50,
+                                                flex: 0.2,
+                                                fieldLabel: '',
+                                                boxLabel: 'Use Time',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('UseTimePanel').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('UseTimePanel').disable();
+                                                        }
                                                     }
                                                 }
-                                            }]
-                                        }]
-                                    }]
-                                },
+                                            },
+                                            {
+                                                xtype: 'panel',
+                                                id:'UseTimePanel',
+                                                disabled: true,
+                                                margin: 2,
+                                                flex:1,
+                                                layout:'hbox',
+                                                anchor: '100%',
+                                                items: [
+                                                    {
+                                                        xtype: 'panel',
+                                                        border: 0,
+                                                        flex:1,
+                                                        height: 80,
+                                                        id: 'plotdatafrm1',
+                                                        layout: {
+                                                                    type: 'vbox'
+                                                                },
+                                                        padding: '5 5 0 5',
+                                                        title: '',
+                                                        items: [
+                                                            {
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                height: 40,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                fieldLabel: 'From',
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        width: 60,
+                                                                        text: 'Begin:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'edittextintegrateBegin',
+                                                                        width: 60,
+                                                                        height: 40,
+                                                                        name: 'begin',
+                                                                        value: '2015-05-27',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'edittextintegrateBeginTime',
+                                                                        width: 60,
+                                                                        name: 'begintime',
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        width: 60,
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        text: 'End:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'edittextintegrateEnd',
+                                                                        width: 60,
+                                                                        name: 'end',
+                                                                        fieldLabel: 'Label',
+                                                                        value:'2015-06-03',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'edittextintegrateEndTime',
+                                                                        name: 'endtime',
+                                                                        width: 60,
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        xtype: 'panel',
+                                                        border: 0,
+                                                        height: 40,
+                                                        width: 120,
+                                                        padding: '5 5 0 5',
+                                                        layout:'hbox',
+                                                        anchor: '100%',
+                                                        items: [
+                                                            {
+                                                                xtype: 'spinnerfield',
+                                                                width: 60,
+                                                                fieldLabel: 'Timezone',
+                                                                id:'integrateTimezone',
+                                                                flex: 1,
+                                                                labelWidth: 60,
+                                                                value: 0,
+                                                                step: -1,
+                                                                // override onSpinUp (using step isn't neccessary)
+                                                                onSpinUp: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                        me.setValue((val - me.step) + ' ');
+                                                                    }
+                                                                },
+                                                                // override onSpinDown
+                                                                onSpinDown: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                            me.setValue((val + me.step) + ' ');
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+
                                 {
                                     xtype: 'panel',
                                     height: 40,
@@ -1186,6 +1271,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'qualityPanel',
                                 flex:1,
+                                padding: 10,
                                 height: 250,
                                 hidden: true,
                                 border:false,
@@ -1199,6 +1285,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         frame: false,
                                         height: 40,
+                                        margin: 2,
                                         border:'false',
                                         layout: {
                                             type: 'hbox',
@@ -1208,9 +1295,10 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'spinnerfield',
                                                 height: 40,
-                                                width: '',
+                                                width: 120,
                                                 id:'Qvalue',
-                                                fieldLabel: 'value',
+                                                fieldLabel: 'Value',
+                                                labelWidth: 50,
                                                 value: 0.00,
                                                 step: -1.00,
                                                 // override onSpinUp (using step isn't neccessary)
@@ -1236,10 +1324,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             },
                                             {
                                                 xtype: 'combobox',
-                                                margin: 0,
+                                                margin: 2,
                                                 height: 40,
                                                 id:'Qstat',
-                                                flex:1,
+                                                flex:0.5,
+                                                width: 50,
+                                                labelWidth: 100,
                                                 fieldLabel: 'Type of statistics',
                                                 value: "VAR",
                                                 store: Ext.create('Ext.data.Store',
@@ -1278,8 +1368,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'panel',
-                                        border:'false',
-                                        height: 80,
+                                        margin: 2,
+                                        height: 100,
+                                        border: 0,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1287,74 +1378,167 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                             {
                                                 xtype: 'checkboxfield',
-                                                flex: 0.2,
-                                                height: 80,
                                                 id:'Qtime',
+                                                padding: '10 0 0 0',
+                                                width: 50,
+                                                flex: 0.2,
                                                 fieldLabel: '',
-                                                boxLabel: 'Use time'
+                                                boxLabel: 'Use Time',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('QTime').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('QTime').disable();
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'panel',
-                                                flex: 1,
-                                                height: 80,
-                                                border:'false',
-                                                layout: {
-                                                    type: 'hbox',
-                                                    align: 'stretch'
-                                                },
+                                                id:'QTime',
+                                                disabled: true,
+                                                margin: 2,
+                                                flex:1,
+                                                layout:'hbox',
+                                                anchor: '100%',
                                                 items: [
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 1,
-                                                        height: 40,
-                                                        border:'false',
+                                                        border: 0,
+                                                        flex:1,
+                                                        height: 80,
                                                         layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                                    type: 'vbox'
+                                                                },
+                                                        padding: '5 5 0 5',
+                                                        title: '',
                                                         items: [
                                                             {
-                                                                xtype: 'spinnerfield',
+                                                                xtype: 'panel',
+                                                                border: 0,
                                                                 height: 40,
-                                                                id:'Qbegin',
-                                                                flex: 1,
-                                                                fieldLabel: 'Begin',
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                fieldLabel: 'From',
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        width: 60,
+                                                                        text: 'Begin:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'Qbegin',
+                                                                        width: 60,
+                                                                        height: 40,
+                                                                        name: 'begin',
+                                                                        value: '2015-05-27',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'QbeginTime',
+                                                                        width: 60,
+                                                                        name: 'begintime',
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             },
                                                             {
-                                                                xtype: 'spinnerfield',
-                                                                height: 40,
-                                                                flex: 1,
-                                                                id:'Qend',
-                                                                fieldLabel: 'End'
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        width: 60,
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        text: 'End:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'Qend',
+                                                                        width: 60,
+                                                                        name: 'end',
+                                                                        fieldLabel: 'Label',
+                                                                        value:'2015-06-03',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'QendTime',
+                                                                        name: 'endtime',
+                                                                        width: 60,
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             }
                                                         ]
                                                     },
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 1,
+                                                        border: 0,
                                                         height: 40,
-                                                        border:'false',
-                                                        layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                        width: 120,
+                                                        padding: '5 5 0 5',
+                                                        layout:'hbox',
+                                                        anchor: '100%',
                                                         items: [
                                                             {
                                                                 xtype: 'spinnerfield',
-                                                                height: 40,
-                                                                flex: 1,
-                                                                id:'Qtimezone',
+                                                                width: 60,
                                                                 fieldLabel: 'Timezone',
-                                                                value: 0.00,
-                                                                step: -1.00,
+                                                                id:'Qtimezone',
+                                                                flex: 1,
+                                                                labelWidth: 60,
+                                                                value: 0,
+                                                                step: -1,
                                                                 // override onSpinUp (using step isn't neccessary)
                                                                 onSpinUp: function()
                                                                 {
                                                                     var me = this;
                                                                     if (!me.readOnly)
                                                                     {
-                                                                        var val = parseFloat(me.getValue());
-                                                                        me.setValue(val - me.step);
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                        me.setValue((val - me.step) + ' ');
                                                                     }
                                                                 },
                                                                 // override onSpinDown
@@ -1363,8 +1547,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                     var me = this;
                                                                     if (!me.readOnly)
                                                                     {
-                                                                        var val = parseFloat(me.getValue());
-                                                                        me.setValue(val + me.step);
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                            me.setValue((val + me.step) + ' ');
                                                                     }
                                                                 }
                                                             }
@@ -1384,17 +1568,29 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         },
                                         items: [
                                             {
-                                                xtype: 'checkboxfield',
-                                                flex: 0.3,
+                                                xtype: 'checkbox',
+                                                flex: 0.2,
                                                 id:'Qlimit',
                                                 height: 40,
                                                 border:'false',
                                                 fieldLabel: '',
-                                                boxLabel: 'Use limit'
+                                                boxLabel: 'Use limit',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('Qlimitation').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('Qlimitation').disable();
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'panel',
                                                 flex: 1,
+                                                id:'Qlimitation',
+                                                disabled: true,
                                                 border:'false',
                                                 layout: {
                                                     type: 'hbox',
@@ -1403,10 +1599,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 items: [
                                                     {
                                                         xtype: 'spinnerfield',
+                                                        width: 100,
                                                         height: 40,
+                                                        margin: 2,
                                                         id:'Qlow',
                                                         flex: 1,
                                                         fieldLabel: 'low',
+                                                        labelWidth: 40,
                                                         value: 0.00,
                                                         step: -1.00,
                                                         // override onSpinUp (using step isn't neccessary)
@@ -1433,9 +1632,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                     {
                                                         xtype: 'spinnerfield',
                                                         flex: 1,
+                                                        width: 100,
                                                         id:'Qhigh',
                                                         height: 40,
+                                                        margin: 2,
                                                         fieldLabel: 'high',
+                                                        labelWidth: 40,
                                                         value: 0.00,
                                                         step: -1.00,
                                                         // override onSpinUp (using step isn't neccessary)
@@ -1470,6 +1672,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'DataValuesPanel',
                                 flex:1,
                                 height: 300,
+                                padding: 10,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1522,9 +1725,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'panel',
-                                        margin: 5,
+                                        margin: 2,
                                         height: 100,
-                                        border:false,
+                                        border: 0,
                                         layout: {
                                             type: 'hbox',
                                             align: 'stretch'
@@ -1532,68 +1735,179 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                             {
                                                 xtype: 'checkboxfield',
-                                                flex: 0.2,
                                                 id:'dvtime',
-                                                height: 80,
-                                                border:false,
+                                                padding: '10 0 0 0',
+                                                width: 50,
+                                                flex: 0.2,
                                                 fieldLabel: '',
-                                                boxLabel: 'Use time'
+                                                boxLabel: 'Use Time',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('dvTime').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('dvTime').disable();
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'panel',
-                                                flex: 1,
-                                                height: 80,
-                                                border:false,
-                                                layout: {
-                                                    type: 'hbox',
-                                                    align: 'stretch'
-                                                },
+                                                id:'dvTime',
+                                                disabled: true,
+                                                margin: 2,
+                                                flex:1,
+                                                layout:'hbox',
+                                                anchor: '100%',
                                                 items: [
                                                     {
                                                         xtype: 'panel',
+                                                        border: 0,
+                                                        flex:1,
                                                         height: 80,
-                                                        border:false,
-                                                        flex: 2,
                                                         layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                                    type: 'vbox'
+                                                                },
+                                                        padding: '5 5 0 5',
+                                                        title: '',
                                                         items: [
                                                             {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                id:'dvbegin',
-                                                                border:false,
+                                                                xtype: 'panel',
+                                                                border: 0,
                                                                 height: 40,
-                                                                fieldLabel: 'Begin'
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                fieldLabel: 'From',
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        width: 60,
+                                                                        text: 'Begin:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'dvbegin',
+                                                                        width: 60,
+                                                                        height: 40,
+                                                                        name: 'begin',
+                                                                        value: '2015-05-27',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'dvbeginTime',
+                                                                        width: 60,
+                                                                        name: 'begintime',
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             },
                                                             {
-                                                                xtype: 'spinnerfield',
-                                                                flex: 1,
-                                                                id:'dvend',
-                                                                border:false,
-                                                                height: 40,
-                                                                fieldLabel: 'End'
+                                                                xtype: 'panel',
+                                                                border: 0,
+                                                                width: 300,
+                                                                defaults: {
+                                                                    flex: 1,
+                                                                    hideLabel: true
+                                                                },
+                                                                layout: {
+                                                                    type: 'hbox'
+                                                                },
+                                                                labelWidth: 35,
+                                                                anchor: '100%',
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'label',
+                                                                        width: 60,
+                                                                        height: 22,
+                                                                        padding: '2px 0px 0px 10px',
+                                                                        text: 'End:',
+                                                                        flex: 0
+                                                                    },
+                                                                    {
+                                                                        xtype: 'datefield',
+                                                                        id:'dvend',
+                                                                        width: 60,
+                                                                        name: 'end',
+                                                                        fieldLabel: 'Label',
+                                                                        value:'2015-06-03',
+                                                                        allowBlank: false,
+                                                                        format: 'Y-m-d',
+                                                                        flex: 0.3
+                                                                    },
+                                                                    {
+                                                                        xtype: 'timefield',
+                                                                        id:'dvendTime',
+                                                                        name: 'endtime',
+                                                                        width: 60,
+                                                                        fieldLabel: 'Label',
+                                                                        allowBlank: false,
+                                                                        format: 'H:i:s',
+                                                                        value:'00:00:00',
+                                                                        increment: 10,
+                                                                        flex: 0.2
+                                                                    }
+                                                                ]
                                                             }
                                                         ]
                                                     },
                                                     {
                                                         xtype: 'panel',
-                                                        flex: 1,
-                                                        height: 80,
-                                                        border:false,
-                                                        layout: {
-                                                            type: 'vbox',
-                                                            align: 'stretch'
-                                                        },
+                                                        border: 0,
+                                                        height: 40,
+                                                        width: 120,
+                                                        padding: '5 5 0 5',
+                                                        layout:'hbox',
+                                                        anchor: '100%',
                                                         items: [
                                                             {
                                                                 xtype: 'spinnerfield',
+                                                                width: 60,
+                                                                fieldLabel: 'Timezone',
                                                                 id:'dvtimezone',
-                                                                border:false,
-                                                                height: 80,
-                                                                flex: 0,
-                                                                fieldLabel: 'Timezone'
+                                                                flex: 1,
+                                                                labelWidth: 60,
+                                                                value: 0,
+                                                                step: -1,
+                                                                // override onSpinUp (using step isn't neccessary)
+                                                                onSpinUp: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                        me.setValue((val - me.step) + ' ');
+                                                                    }
+                                                                },
+                                                                // override onSpinDown
+                                                                onSpinDown: function()
+                                                                {
+                                                                    var me = this;
+                                                                    if (!me.readOnly)
+                                                                    {
+                                                                        var val = parseInt(me.getValue().split(' '), 10) || 0;
+                                                                            me.setValue((val + me.step) + ' ');
+                                                                    }
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1603,7 +1917,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     },
                                     {
                                         xtype: 'panel',
-                                        margin: 5,
                                         height: 40,
                                         border:'false',
                                         layout: {
@@ -1612,18 +1925,29 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         },
                                         items: [
                                             {
-                                                xtype: 'checkboxfield',
-                                                flex: 0.3,
-                                                margins: '5',
+                                                xtype: 'checkbox',
+                                                flex: 0.2,
                                                 id:'dvlimit',
                                                 height: 40,
+                                                border:'false',
                                                 fieldLabel: '',
-                                                boxLabel: 'Use limit'
+                                                boxLabel: 'Use limit',
+                                                listeners: {
+                                                    change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                        if( newValue ) {
+                                                            Ext.getCmp('dvlimitation').enable();
+                                                        }
+                                                        else {
+                                                            Ext.getCmp('dvlimitation').disable();
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 xtype: 'panel',
                                                 flex: 1,
-                                                height: 40,
+                                                id:'dvlimitation',
+                                                disabled: true,
                                                 border:'false',
                                                 layout: {
                                                     type: 'hbox',
@@ -1632,11 +1956,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 items: [
                                                     {
                                                         xtype: 'spinnerfield',
-                                                        margins: '0',
-                                                        id:'dvlow',
+                                                        width: 100,
                                                         height: 40,
-                                                        flex: 0.7,
+                                                        margin: 2,
+                                                        id:'dvlow',
+                                                        flex: 1,
                                                         fieldLabel: 'low',
+                                                        labelWidth: 40,
                                                         value: 0.00,
                                                         step: -1.00,
                                                         // override onSpinUp (using step isn't neccessary)
@@ -1645,7 +1971,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                             var me = this;
                                                             if (!me.readOnly)
                                                             {
-                                                                var val = parseInt(me.getValue());
+                                                                var val = parseFloat(me.getValue());
                                                                 me.setValue(val - me.step);
                                                             }
                                                         },
@@ -1655,17 +1981,20 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                             var me = this;
                                                             if (!me.readOnly)
                                                             {
-                                                                var val = parseInt(me.getValue());
+                                                                var val = parseFloat(me.getValue());
                                                                 me.setValue(val + me.step);
                                                             }
                                                         }
                                                     },
                                                     {
                                                         xtype: 'spinnerfield',
-                                                        flex: 0.7,
+                                                        flex: 1,
+                                                        width: 100,
                                                         id:'dvhigh',
                                                         height: 40,
+                                                        margin: 2,
                                                         fieldLabel: 'high',
+                                                        labelWidth: 40,
                                                         value: 0.00,
                                                         step: -1.00,
                                                         // override onSpinUp (using step isn't neccessary)
@@ -1674,7 +2003,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                             var me = this;
                                                             if (!me.readOnly)
                                                             {
-                                                                var val = parseInt(me.getValue());
+                                                                var val = parseFloat(me.getValue());
                                                                 me.setValue(val - me.step);
                                                             }
                                                         },
@@ -1684,7 +2013,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                             var me = this;
                                                             if (!me.readOnly)
                                                             {
-                                                                var val = parseInt(me.getValue());
+                                                                var val = parseFloat(me.getValue());
                                                                 me.setValue(val + me.step);
                                                             }
                                                         }
@@ -1700,6 +2029,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'StataticsPanel',
                                 flex:1,
                                 height: 300,
+                                padding: 5,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1712,7 +2042,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         xtype: 'panel',
                                         frame: false,
                                         height: 40,
-                                        margin:10,
+                                        margin:2,
                                         border:0,
                                         layout: {
                                             type: 'hbox',
@@ -1721,14 +2051,14 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         items: [
                                             {
                                                 xtype: 'checkboxfield',
-                                                flex: 1,
+                                                width: 80,
                                                 id:'dataSta',
                                                 fieldLabel: '',
                                                 boxLabel: 'Data'
                                             },
                                             {
                                                 xtype: 'checkboxfield',
-                                                flex: 1,
+                                                width: 80,
                                                 id:'quaSta',
                                                 fieldLabel: '',
                                                 boxLabel: 'Quality'
@@ -1748,7 +2078,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'checkboxfield',
                                                 id:'timeUseSta',
-                                                padding: '10 10 0 10',
+                                                padding: '10 0 0 0',
                                                 width: 50,
                                                 flex: 0.2,
                                                 fieldLabel: '',
@@ -1767,7 +2097,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             {
                                                 xtype: 'panel',
                                                 id:'staTime',
-                                                // disabled: true,
+                                                disabled: true,
                                                 margin: 2,
                                                 flex:1,
                                                 layout:'hbox',
@@ -1815,6 +2145,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                         width: 60,
                                                                         height: 40,
                                                                         name: 'begin',
+                                                                        value: '2015-05-27',
                                                                         allowBlank: false,
                                                                         format: 'Y-m-d',
                                                                         flex: 0.3
@@ -1861,6 +2192,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                                         width: 60,
                                                                         name: 'end',
                                                                         fieldLabel: 'Label',
+                                                                        value:'2015-06-03',
                                                                         allowBlank: false,
                                                                         format: 'Y-m-d',
                                                                         flex: 0.3
@@ -1967,6 +2299,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'HydroEventsPanel',
                                 flex:1,
                                 height: 250,
+                                padding: 5,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -1989,10 +2322,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'spinnerfield',
                                             id:'herise',
                                             margin:1,
-                                            width: '',
+                                            width: 200,
                                             height: 40,
                                             border:false,
                                             fieldLabel: 'Days prior the peak',
+                                            labelWidth: 140,
                                             value: 2.00,
                                             step: -1,
                                             // override onSpinUp (using step isn't neccessary)
@@ -2020,9 +2354,11 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'spinnerfield',
                                             id:'hefall',
                                             margin:1,
+                                            width: 200,
                                             height: 40,
                                             border:false,
                                             fieldLabel: 'Days following the peak',
+                                            labelWidth: 140,
                                             value: 2.00,
                                             step: -1,
                                             // override onSpinUp (using step isn't neccessary)
@@ -2062,7 +2398,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'spinnerfield',
                                             id:'hewindow',
                                             margin:1,
-                                            width: '',
+                                            width: 200,
+                                            labelWidth: 140,
                                             height: 40,
                                             fieldLabel: 'Min days between peak',
                                             value: 2,
@@ -2092,6 +2429,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'spinnerfield',
                                             id:'hepeak',
                                             margin:1,
+                                            width: 200,
+                                            labelWidth: 140,
                                             height: 40,
                                             fieldLabel: 'Minimun value for a peak',
                                             value: 3.00,
@@ -2122,7 +2461,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 {
                                     xtype: 'panel',
                                     border:false,
-                                    height: 40,
+                                    height: 25,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2132,16 +2471,19 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'textfield',
                                             id:'heseries',
                                             margin:1,
-                                            height: 40,
+                                            width: 250,
+                                            height: 25,
                                             value:'start',
+                                            labelWidth: 120,
                                             fieldLabel: 'Name of time series'
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'panel',
-                                    border:false,
-                                    height: 40,
+                                    margin: 2,
+                                    height: 50,
+                                    border: 0,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2150,38 +2492,108 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'checkboxfield',
                                             id:'hetime',
-                                            margin:1,
-                                            flex: 0.15,
-                                            height: 40,
-                                            boxLabel: 'time'
+                                            width: 65,
+                                            fieldLabel: '',
+                                            boxLabel: 'time',
+                                            listeners: {
+                                                change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                    if( newValue ) {
+                                                        Ext.getCmp('staTime2').enable();
+                                                    }
+                                                    else {
+                                                        Ext.getCmp('staTime2').disable();
+                                                    }
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'panel',
-                                            margin:1,
-                                            flex: 1,
-                                            border:false,
-                                            height: 40,
-                                            layout: {
-                                                type: 'hbox',
-                                                align: 'stretch'
-                                            },
+                                            id:'staTime2',
+                                            disabled: true,
+                                            flex:1,
+                                            layout:'hbox',
+                                            anchor: '100%',
                                             items: [
                                                 {
-                                                    xtype: 'spinnerfield',
-                                                    id:'hebeg',
-                                                    margin:1,                                                    
-                                                    margins: '0',
-                                                    height: 40,
-                                                    flex: 1,
-                                                    fieldLabel: 'Begin'
-                                                },
-                                                {
-                                                    xtype: 'spinnerfield',
-                                                    id:'heend',
-                                                    margin:1,
-                                                    flex: 1,
-                                                    height: 40,
-                                                    fieldLabel: 'End'
+                                                    xtype: 'panel',
+                                                    border: false,
+                                                    height: 50,
+                                                    margin :2,
+                                                    width: 450,
+                                                    defaults: {
+                                                        flex: 1,
+                                                        hideLabel: true
+                                                    },
+                                                    layout: {
+                                                        type: 'hbox'
+                                                    },
+                                                    fieldLabel: 'From',
+                                                    labelWidth: 30,
+                                                    anchor: '100%',
+                                                    items: [
+                                                        {
+                                                            xtype: 'label',
+                                                            height: 22,
+                                                            padding: '2px 0px 0px 10px',
+                                                            width: 50,
+                                                            text: 'Begin:',
+                                                            flex: 0
+                                                        },
+                                                        {
+                                                            xtype: 'datefield',
+                                                            id:'hebeg',
+                                                            width: 70,
+                                                            height: 40,
+                                                            name: 'begin',
+                                                            value: '2015-05-27',
+                                                            allowBlank: false,
+                                                            format: 'Y-m-d',
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'timefield',
+                                                            id:'hebegTime',
+                                                            width: 60,
+                                                            name: 'begintime',
+                                                            fieldLabel: 'Label',
+                                                            allowBlank: false,
+                                                            format: 'H:i:s',
+                                                            value:'00:00:00',
+                                                            increment: 10,
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'label',
+                                                            width: 35,
+                                                            height: 22,
+                                                            padding: '2px 0px 0px 10px',
+                                                            text: 'End:',
+                                                            flex: 0
+                                                        },
+                                                        {
+                                                            xtype: 'datefield',
+                                                            id:'heend',
+                                                            width: 70,
+                                                            name: 'end',
+                                                            fieldLabel: 'Label',
+                                                            value:'2015-06-03',
+                                                            allowBlank: false,
+                                                            format: 'Y-m-d',
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'timefield',
+                                                            id:'heendTime',
+                                                            name: 'endtime',
+                                                            width: 60,
+                                                            fieldLabel: 'Label',
+                                                            allowBlank: false,
+                                                            format: 'H:i:s',
+                                                            value:'00:00:00',
+                                                            increment: 10,
+                                                            flex: 0.2
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -2194,6 +2606,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'HydroIndicesPanel',
                                 flex:1,
                                 height: 300,
+                                padding:5,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -2206,8 +2619,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     frame: false,
                                     border:false,
-                                    margin:5,
-                                    height:40,
+                                    margin:2,
+                                    height:25,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2216,11 +2629,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'combobox',
                                             id:'alphacode',
-                                            width: '',
-                                            height:40,
+                                            width: 220,
+                                            labelWidth: 120,
+                                            height:25,
                                             margin: 1,
                                             fieldLabel: 'alphanumeric code',
-                                            value: "MA",
+                                            value: 'MA',
                                             store: Ext.create('Ext.data.Store',
                                             {
                                                 fields: ['abbr', 'name'],
@@ -2267,8 +2681,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 }]
                                             }),
                                             matchFieldWidth: false,
-                                            valueField: "abbr",
-                                            displayField: "name",
+                                            valueField: 'abbr',
+                                            displayField: 'name',
                                             queryMode: 'local',
                                             forceSelection: true
                                         },
@@ -2276,7 +2690,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             xtype: 'textfield',
                                             id:'indicies',
                                             margin: 1,
-                                            height:40,
+                                            width: 220,
+                                            labelWidth: 120,
+                                            height:20,
                                             fieldLabel: 'indices to calculate'
                                         }
                                     ]
@@ -2285,7 +2701,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     xtype: 'panel',
                                     frame: false,
                                     border:false,
-                                    margin:5,
+                                    margin:2,
                                     height:40,
                                     layout: {
                                         type: 'hbox',
@@ -2294,12 +2710,13 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'combobox',
-                                            width: '',
+                                            width: 250,
+                                            labelWidth: 80,
                                             id:'cbcompo',
                                             height:40,
                                             margin: 1,
                                             fieldLabel: 'component',
-                                            value: "AVERAGE_MAGNITUDE",
+                                            value: 'AVERAGE_MAGNITUDE',
                                             store: Ext.create('Ext.data.Store',
                                             {
                                                 fields: ['abbr', 'name'],
@@ -2346,18 +2763,20 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 }]
                                             }),
                                             matchFieldWidth: false,
-                                            valueField: "abbr",
-                                            displayField: "name",
+                                            valueField: 'abbr',
+                                            displayField: 'name',
                                             queryMode: 'local',
                                             forceSelection: true
                                         },
                                         {
                                             xtype: 'combobox',
                                             id:'cbclass',
+                                            width: 250,
+                                            labelWidth: 80,
                                             margin: 1,
                                             height:40,
                                             fieldLabel: 'classification',
-                                            value: "HARSH_INTERMITTENT",
+                                            value: 'HARSH_INTERMITTENT',
                                             store: Ext.create('Ext.data.Store',
                                             {
                                                 fields: ['abbr', 'name'],
@@ -2392,8 +2811,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 }]
                                             }),
                                             matchFieldWidth: false,
-                                            valueField: "abbr",
-                                            displayField: "name",
+                                            valueField: 'abbr',
+                                            displayField: 'name',
                                             queryMode: 'local',
                                             forceSelection: true
                                         }
@@ -2401,9 +2820,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 },
                                 {
                                     xtype: 'panel',
-                                    margin: 10,
                                     border:false,
-                                    margin:5,
+                                    margin:2,
                                     height:50,
                                     layout: {
                                         type: 'hbox',
@@ -2413,7 +2831,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'checkboxfield',
                                             id:'cbmedian',
-                                            flex: 0.1,
+                                            width: 100,
+                                            labelWidth: 60,
                                             height:40,
                                             fieldLabel: '',
                                             boxLabel: 'median'
@@ -2421,10 +2840,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'spinnerfield',
                                             id:'drainArea',
-                                            flex: 0.6,
+                                            width: 150,
                                             height:40,
-                                            width:60,
-                                            labelWidth:60,
+                                            labelWidth:70,
                                             fieldLabel: 'drain area',
                                             value: 1,
                                             step: -1,
@@ -2453,9 +2871,9 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 },
                                 {
                                     xtype: 'panel',
-                                    height:50,
-                                    border:false,
-                                    margin:5,
+                                    margin: 2,
+                                    height: 50,
+                                    border: 0,
                                     layout: {
                                         type: 'hbox',
                                         align: 'stretch'
@@ -2463,38 +2881,109 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
-                                            flex: 0.2,
                                             id:'cbperiod',
-                                            height:40,
+                                            width: 65,
                                             fieldLabel: '',
-                                            boxLabel: 'period'
+                                            boxLabel: 'Period',
+                                            listeners: {
+                                                change: function (checkbox, newValue, oldValue, eOpts ) {
+                                                    if( newValue ) {
+                                                        Ext.getCmp('staTime1').enable();
+                                                    }
+                                                    else {
+                                                        Ext.getCmp('staTime1').disable();
+                                                    }
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'panel',
-                                            flex: 1,
-                                            height:40,
-                                            border:false,
-                                            layout: {
-                                                type: 'hbox',
-                                                align: 'stretch'
-                                            },
+                                            id:'staTime1',
+                                            disabled: true,
+                                            flex:1,
+                                            layout:'hbox',
+                                            anchor: '100%',
                                             items: [
                                                 {
-                                                    xtype: 'spinnerfield',
-                                                    id:'hibegin',
-                                                    margins: '0',
-                                                    height:40,
-                                                    flex: 1,
-                                                    labelWidth:40,
-                                                    fieldLabel: 'Begin'
-                                                },
-                                                {
-                                                    xtype: 'spinnerfield',
-                                                    id:'hiend',
-                                                    flex: 1,
-                                                    labelWidth:40,
-                                                    height:40,
-                                                    fieldLabel: 'End'
+                                                    xtype: 'panel',
+                                                    border: false,
+                                                    height: 50,
+                                                    margin :2,
+                                                    width: 450,
+                                                    defaults: {
+                                                        flex: 1,
+                                                        hideLabel: true
+                                                    },
+                                                    layout: {
+                                                        type: 'hbox'
+                                                    },
+                                                    fieldLabel: 'From',
+                                                    labelWidth: 30,
+                                                    anchor: '100%',
+                                                    items: [
+                                                        {
+                                                            xtype: 'label',
+                                                            height: 22,
+                                                            padding: '2px 0px 0px 10px',
+                                                            width: 50,
+                                                            text: 'Begin:',
+                                                            flex: 0
+                                                        },
+                                                        {
+                                                            xtype: 'datefield',
+                                                            id:'hibegin',
+                                                            width: 70,
+                                                            height: 40,
+                                                            name: 'begin',
+                                                            value: '2015-05-27',
+                                                            allowBlank: false,
+                                                            format: 'Y-m-d',
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'timefield',
+                                                            id:'hibeginTime',
+                                                            width: 60,
+                                                            name: 'begintime',
+                                                            fieldLabel: 'Label',
+                                                            allowBlank: false,
+                                                            format: 'H:i:s',
+                                                            value:'00:00:00',
+                                                            increment: 10,
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'label',
+                                                            width: 35,
+                                                            height: 22,
+                                                            padding: '2px 0px 0px 10px',
+                                                            text: 'End:',
+                                                            flex: 0
+                                                        },
+                                                        {
+                                                            xtype: 'datefield',
+                                                            id:'hiend',
+                                                            width: 70,
+                                                            name: 'end',
+                                                            fieldLabel: 'Label',
+                                                            value:'2015-06-03',
+                                                            allowBlank: false,
+                                                            format: 'Y-m-d',
+                                                            flex: 0.2
+                                                        },
+                                                        {
+                                                            xtype: 'timefield',
+                                                            id:'hiendTime',
+                                                            name: 'endtime',
+                                                            width: 60,
+                                                            fieldLabel: 'Label',
+                                                            allowBlank: false,
+                                                            format: 'H:i:s',
+                                                            value:'00:00:00',
+                                                            increment: 10,
+                                                            flex: 0.2
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -2507,6 +2996,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'HydroSeparationPanel',
                                 flex:1,
                                 height: 250,
+                                padding: 5,
                                 hidden: true,
                                 border:false,
                                 layout:
@@ -2528,11 +3018,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                         {
                                             xtype: 'combobox',
                                             height: 40,
-                                            width: '',
+                                            width: 140,
                                             id:'HSmode',
-                                            margin:'5 0 0 15',
+                                            margin:'5 0 0 5',
                                             fieldLabel: 'mode',
-                                            value: "TPDF",
+                                            labelWidth: 60,
+                                            value: 'TPDF',
                                             store: Ext.create('Ext.data.Store',
                                             {
                                                 fields: ['abbr', 'name'],
@@ -2547,8 +3038,8 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 }]
                                             }),
                                             matchFieldWidth: false,
-                                            valueField: "abbr",
-                                            displayField: "name",
+                                            valueField: 'abbr',
+                                            displayField: 'name',
                                             queryMode: 'local',
                                             forceSelection: true
                                         }
@@ -2556,7 +3047,6 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 },
                                 {
                                     xtype: 'panel',
-                                    margin: 10,
                                     height: 50,
                                     border:false,
                                     layout: {
@@ -2576,11 +3066,10 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                             items: [
                                                 {
                                                     xtype: 'spinnerfield',
-                                                    margins: '0',
+                                                    width: 120,
+                                                    margin:'5 0 0 5',
                                                     height: 40,
                                                     id:'HSalpha',
-                                                    flex: 0.7,
-                                                    margin:5,
                                                     fieldLabel: 'alpha',
                                                     labelWidth: 50,
                                                     value: 0.98,
@@ -2608,11 +3097,12 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                                 },
                                                 {
                                                     xtype: 'spinnerfield',
-                                                    flex: 0.7,
+                                                    width: 120,
                                                     height: 40,
                                                     id:'bsalpha',
-                                                    margin:5,
+                                                    margin:'5 0 0 5',
                                                     fieldLabel: 'bfl_max',
+                                                    labelWidth: 60,
                                                     value: 1,
                                                     step: -1,
                                                     // override onSpinUp (using step isn't neccessary)
@@ -2647,6 +3137,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 xtype: 'panel',
                                 id:'SubtractPanel',
                                 flex:1,
+                                padding: 5,
                                 height: 250,
                                 hidden: true,
                                 border:false,
@@ -2699,6 +3190,7 @@ Ext.define('istsos.view.ui.ProcessTimeSeries',
                                 id:'ComparePanel',
                                 flex:1,
                                 height: 250,
+                                padding: 5,
                                 hidden: true,
                                 border:false,
                                 layout:

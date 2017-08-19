@@ -966,16 +966,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     from = Ext.Date.format(from,format);
                     to = Ext.Date.format(to,format);
                 }
-
-                // var tz = Ext.getCmp('oeTZ').getValue();
-                // if(!Ext.isEmpty(tz)){
-
-                //     to = to + (Ext.isString(tz) ? tz: istsos.utils.minutesToTz(tz));
-                // }
-
-                console.log(from);
-                console.log(to);
-
+                
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(false);
                 show_result.setVisible(true);

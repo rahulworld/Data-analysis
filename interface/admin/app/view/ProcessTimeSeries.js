@@ -425,16 +425,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1['data']);
+                        //Table
+                        var csv_array=json1['data'];
+                        data = JSON.parse(JSON.stringify(csv_array));
+                        this.tabulate(data,['percentage', 'frequency','value']);
+                        //Download data
                         rst_header = 'Exeedance Params\npercentage,frequency,value\n';
-                        // ExeeTextView.setValue(strg); 
-                        var initialData;
-                        var data;
-                            initialData = json1['data'];
-                            var csv_array=json1['data'];
-                            rst_data=csv_array;
-                            data = JSON.parse(JSON.stringify(initialData));
-                            this.tabulate(data,['percentage', 'frequency','value']);
+                        rst_data=csv_array;
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -484,30 +481,18 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1['data']);
+
+                        // var x=Object.keys(test['value']);
+                        // var y=Object.values(test['value']);
+                        // console.log(x,y);
+                        
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
+                        this.rederChart1(this.chartdata);
+
+                        //Download Data Section Hargreaves
                         rst_header = 'Resample Params\ntime,value\n';
-                        // ExeeTextView.setValue(strg); 
-                            var initialData;
-                            initialData = json1['data'];
-                            var csv_array=json1['data'];
-                            rst_data=csv_array;
-                                // Mask the container with loading message
-                                
-                                // var x=Object.keys(test['value']);
-                                // var y=Object.values(test['value']);
-                                // console.log(x,y);
-                                this.chartdata = [];
-                                for (var i = 0; i < json1['data'].length; i++) {
-                                    var rec = [];
-                                    rec.push(parseInt(json1['data'][i][0]));
-                                    var vals = json1['data'][i][1];
-                                    var vals1 = json1['data'][i][2];
-                                    rec = rec.concat(vals);
-                                    rec = rec.concat(vals1);
-                                    this.chartdata.push(rec);
-                                }
-                                // this.rederChart2(this.chartdata,valueForm,label,colr);
-                                this.rederChart1(this.chartdata);
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -583,14 +568,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
+                        //Table
+                        var csv_array=json1['data'];
+                        var data = JSON.parse(JSON.stringify(csv_array));
+                        this.tabulate(data,['from', 'to','value']);
+                        //Download data
                         rst_header = 'Integrate Params\nfrom,to,value\n';
-                        var initialData;
-                        var data;
-                            initialData = json1['data'];
-                            var csv_array=json1['data'];
-                            rst_data=csv_array;
-                            data = JSON.parse(JSON.stringify(initialData));
-                            this.tabulate(data,['from', 'to','value']);
+                        rst_data=csv_array;
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -699,36 +683,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 //     }
                 // });
             }
-
-            // if(methods==6){
-            //     // console.log('BUTTON EXECUTE CLICKED'); 
-            //     var frequency= Ext.getCmp("edittextFrequency").getValue();
-            //     var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
-            //     var fillCombox= Ext.getCmp("comboxFill").getValue();
-            //     var Limit= Ext.getCmp("comboxLimit").getValue();
-            //     var Quality= Ext.getCmp("comboxHowquality").getValue();
-            //     Ext.get('chartSeries').mask("Initializing chart..");
-            //         Ext.Ajax.request({
-            //         url: Ext.String.format('{0}/istsos/operations/oat/regularization', wa.url),
-            //         scope: this,
-            //         method: "GET",
-            //         success: function(response){
-            //             var json1 = Ext.decode(response.responseText);
-            //             console.log('REQUEST OF DATA FROM to TO ALL PROPERTY');
-            //             console.log('this success response');
-            //             var text1 = response.responseText;
-            //             console.log(json1);
-            //         },
-            //         failure: function (response) {
-            //             console.log('this failure response');
-            //           // var jsonResp = Ext.util.JSON.decode(response.responseText);
-            //           // Ext.Msg.alert("Error",jsonResp.error);
-            //             var text2 = response.responseText;
-            //             console.log(text2);
-            //             }
-            //         });
-            // }
-
             if (methods == 6)
             {
                 // Data
@@ -768,24 +722,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        Ext.get('chartSeries').mask("Initializing chart..");
-                        rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            var vals1=json1['data'][i][2]
-                            rec = rec.concat(vals);
-                            rec = rec.concat(vals1);
-                            this.chartdata.push(rec);
-                        }
-                        // console.log(this.chartdata);
-                        // this.rederChart3(this.chartdata,'Hydro Separation');
+
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
                         this.rederChart5(this.chartdata);
+                        //Download Data Section Hargreaves
+                        rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -811,11 +754,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 var hyewindow= Ext.getCmp("hewindow").getValue();
                 var hyepeak= Ext.getCmp("hepeak").getValue();
                 var hyeseries= Ext.getCmp("heseries").getValue();
-
-
-                // var hyetime= Ext.getCmp("hetime").getValue();
-                // var hyebeg= Ext.getCmp("hebeg").getValue();
-                // var hyeend= Ext.getCmp("heend").getValue();
 
                 //Use Time for calculation statistics
                 var timeuse= Ext.getCmp("hetime").getValue();
@@ -869,11 +807,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        // console.log(json1);
-                        Ext.get('chartSeries').mask("Initializing chart..");
-                        rst_header = 'Hydro Events Params\ntime,value,quality\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
                         // this.chartdata = [];
                         // for (var i = 0; i < json1['data'].length; i++) {
                         //     var rec = [];
@@ -887,6 +820,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         // // console.log(this.chartdata);
                         // // this.rederChart3(this.chartdata,'Hydro Events');
                         // this.rederChart1(this.chartdata);
+                        
+                        // rst_header = 'Hydro Events Params\ntime,value,quality\n';
+                        // var csv_array=json1['data'];
+                        // rst_data=csv_array;
                         
                         this.chartdata = [];
                         for (var i =0;i<json1['data'].length; i++) {
@@ -916,6 +853,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         }
                         arr.sort();
                         this.rederChart2(arr);
+                        //Download Section
+                        rst_header = 'Hydro Events Params\ntime,quality,Event1,Event2,Event3,Event4,Event5,Event6,Event7\n';
+                        var csv_array=json1['data'];
+                        rst_data=csv_array;
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -997,13 +938,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        rst_header = 'Hydro indicies Params\n index,value\n';
                         var csv_array=json1['data']['data'];
-                        rst_data=csv_array;
+                        //Table show 
                         data = JSON.parse(JSON.stringify(csv_array));
                         this.tabulate(data,['index', 'value']);
-                        // console.log(response.responseText);
+                        //Download data
+                        rst_header = 'Hydro indicies Params\n index,value\n';
+                        rst_data=csv_array;
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1077,7 +1018,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
                         rst_header = 'Statistics Params\ncount,std,min,max,50%,25%,75%,mean\n';
-                        // ExeeTextView.setValue(strg); 
                         var initialData;
                         var data;
                         if(dataSta && quaSta){
@@ -1110,8 +1050,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             data = JSON.parse(JSON.stringify(initialData));
                             this.tabulate(data,['data', 'value']);
                         }
-                        // this.showResultGrid(data);
-
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1156,22 +1094,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        Ext.get('chartSeries').mask("Initializing chart..");
+
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
+                        this.rederChart1(this.chartdata);
+                        //Download Data Section Hargreaves
                         rst_header = 'Fill Params\ntime,value,quality\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            var vals1 = json1['data'][i][2];
-                            rec = rec.concat(vals);
-                            rec = rec.concat(vals1);
-                            this.chartdata.push(rec);
-                        }
-                        this.rederChart1(this.chartdata,'Fill');
-                        // this.rederChart1(this.chartdata);
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1250,25 +1179,14 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // console.log(response.responseText);
-                        // Mask the container with loading message
-                        Ext.get('chartSeries').mask("Initializing chart..");
-                        rst_header = 'Quality Params\ntime,value\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            var vals1 = json1['data'][i][2];
-                            rec = rec.concat(vals);
-                            rec = rec.concat(vals1);
-                            this.chartdata.push(rec);
-                        }
+
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
                         this.rederChart1(this.chartdata);
-                        // this.rederChart1(this.chartdata);
+                        
+                        //Download Data Section Hargreaves
+                        rst_header = 'Quality Params\ntime,value\n';
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1349,27 +1267,14 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        console.log(json1);
-                        // console.log(response.responseText);
-                        // Mask the container with loading message
-                        rst_header = 'Data Values Params\ntime,value\n';
-                        var csv_array=json1['data'];
-                        rst_data=csv_array;
-                        
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            var vals1 = json1['data'][i][2];
-                            rec = rec.concat(vals);
-                            rec = rec.concat(vals1);
-                            this.chartdata.push(rec);
-                        }
-                        console.log(this.chartdata);
-                        // this.rederChart1(this.chartdata);
+
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
                         this.rederChart1(this.chartdata);
-                        // this.rederChart1(this.chartdata1);
+                        
+                        //Download Data Section Hargreaves
+                        rst_header = 'Data Values Params\ntime,value,quality\n';
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1389,12 +1294,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     resdata3[i]=200;
                 }
 
-                // console.log(resdata);
-                // console.log(resdata3);
-                //Taking Input
-                // var fillMethod= Ext.getCmp("fillMethod").getValue();
-                // var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
-                var exeeResult="";
+                Ext.get('chartSeries').mask("Initializing chart..");
+
                 Resulttext.setVisible(false);
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
@@ -1413,36 +1314,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-
-                        Ext.get('chartSeries').mask("Initializing chart..");
-
-
-                        this.chartdata = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(parseInt(json1['data'][i][0]));
-                            var vals = json1['data'][i][1];
-                            var vals1 = json1['data'][i][2];
-                            rec = rec.concat(vals);
-                            rec = rec.concat(vals1);
-                            this.chartdata.push(rec);
-                        }
+                        //Graph Plot Section Hargreaves
+                        this.chartdata =json1['data'];
                         this.rederChart1(this.chartdata);
-
-                        rst_header = 'Hargreaves Params\ntime,value\n';
-
-
-                        this.downloadData = [];
-                        for (var i = 0; i < json1['data'].length; i++) {
-                            var rec = [];
-                            rec.push(new Date(parseInt(json1['data'][i][0])/1000).toISOString());
-                            var vals = json1['data'][i][1];
-                            rec = rec.concat(vals);
-                            this.downloadData.push(rec);
-                        }
-                        console.log(this.downloadData);
-                        var csv_array=this.downloadData;
-                        rst_data=csv_array;
+                        //Download Data Section Hargreaves
+                        rst_header = 'Hargreaves Params\ntime,value,quality\n';
+                        rst_data=this.download_format(json1);
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1454,8 +1331,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         },this);
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
-            console.log('BUTTON SAVE CLICKED');
-
             this.download_csv(rst_data,rst_header);
         },this);
         Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){
@@ -1908,7 +1783,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     document.getElementById("chartSeries-body"),
                     this.chartdata,
                     {
-                        labels: [ 'Date', 'Value', 'Quality'],
+                        labels: [ 'Date', 'Base', 'Runoff'],
                         xlabel:'Time',
                         ylabel: 'Value',
                         y2label: 'Quality',
@@ -2755,16 +2630,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
     download_csv: function(csv_data,csv_header) {
         // var csv = 'Name,Color,Size\n';
         var csv = csv_header;
-        // Create Object
-        // var items = [
-        //       { name: "Item 1", color: "Green", size: "X-Large" },
-        //       { name: "Item 2", color: "Green", size: "X-Large" },
-        //       { name: "Item 3", color: "Green", size: "X-Large" }];
-        // Convert Object to JSON
-        // var jsonObject = JSON.stringify(csv_data);
-        // Convert JSON to CSV & Display CSV
-        // csv+= this.ConvertToCSV(jsonObject);
-        // console.log(csv_data);
         csv+= this.ConvertToCSV(csv_data);
         console.log(csv);
         var hiddenElement = document.createElement('a');
@@ -2772,5 +2637,19 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         hiddenElement.target = '_blank';
         hiddenElement.download = 'statistics_result.csv';
         hiddenElement.click();
+    },
+    download_format: function(jsondata) {
+        this.downloadData = [];
+        for (var i = 0; i < jsondata['data'].length; i++) {
+            var rec = [];
+            // rec.push(new Date(parseInt(jsondata['data'][i][0])/1000).toISOString());
+            rec.push(istsos.utils.micro2iso(parseInt(jsondata['data'][i][0]),istsos.utils.tzToMinutes(Ext.getCmp('oeTZ').getValue())));
+            var vals = jsondata['data'][i][1];
+            var vals1 = jsondata['data'][i][2];
+            rec = rec.concat(vals);
+            rec = rec.concat(vals1);
+            this.downloadData.push(rec);
+        }
+        return this.downloadData;
     }
 });

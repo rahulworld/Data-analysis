@@ -926,12 +926,13 @@ class QualityMethod(waIstsos):
 
         value = self.json['qvalue']
         stat = self.json['qstat']
-        time12 = self.json['qtime']
-        dvbegin = self.json['qbegin']
 
+        timeuse = self.json['qtime']
+        dvbegin = self.json['qbegin']
         dvend = self.json['qend']
         dvtimezone = self.json['qtimezone']
 
+        limituse = self.json['qlimit']
         dvlow = self.json['qlow']
         dvhigh = self.json['qhigh']
 
@@ -943,7 +944,7 @@ class QualityMethod(waIstsos):
 
         dvtimezone=int(dvtimezone)
 
-        if time12:
+        if timeuse:
             if dvtimezone >= 0:
                 timez = "+" + "%02d:00" % (dvtimezone)
             else:
@@ -952,7 +953,7 @@ class QualityMethod(waIstsos):
             end_pos = dvend + timez
             tbounds = [(begin_pos, end_pos)]
 
-        if value:
+        if limituse:
             min_val = dvlow
             max_val = dvhigh
             vbounds = [(min_val, max_val)]
@@ -988,7 +989,7 @@ class QualityMethod(waIstsos):
 
 
 
-class SetDataValues():
+class SetDataValues1():
     """ Class to assign constant values """
 
     def __init__(self, value, vbounds=[(None, None)], tbounds=[(None, None)]):
@@ -1022,12 +1023,15 @@ class SetDataValues():
 
     def execute(self, dataframe):
         """ aaply statistics acording to conditions """
-        df=dataframe
+        # df=dataframe
+        import copy
+        df=copy.deepcopy(dataframe)
+        tmp=copy.deepcopy(dataframe)
         #apply the value to all observations
         #Here is df placed of df.loc['data']
         if self.vbounds == [(None, None)] and self.tbounds == [(None, None)]:
             df.loc['data'] = df['data'].apply(lambda d: self.value)
-            # df.loc['data'] = df['data'].apply(lambda d: self.value)
+            resdata=tmp
         #apply value to combination of time intervals and vaue intervals (periods and tresholds)
         elif self.tbounds and self.vbounds:
             tmin = df.index.min()
@@ -1040,8 +1044,9 @@ class SetDataValues():
                 for v in self.vbounds:
                     v0 = v[0] or vmin
                     v1 = v[1] or vmax
-                    df.loc[(df.index >= t0) & (df.index <= t1) & (df['data'] >= v0) & (df['data'] <= v1),'data'] = self.value
-        resdata=df
+                    df.loc[(df.index >= t0) & (df.index <= t1) & (df['data'] >= v0) & (df['data'] <= v1),'data'] = self.value    
+            resdata=df
+
         return resdata
 
 class DataValuesMethod(waIstsos):
@@ -1062,31 +1067,37 @@ class DataValuesMethod(waIstsos):
         qua=self.json['qual']
 
         value = self.json['dvvalue']
-        time12 = self.json['dvtime']
-        dvbegin = self.json['dvbegin']
+        value = float(value)
 
+        timeuse = self.json['dvtime']
+        dvbegin = self.json['dvbegin']
         dvend = self.json['dvend']
         dvtimezone = self.json['dvtimezone']
+        dvtimezone=int(dvtimezone)
 
+        limituse = self.json['dvlimit']
         dvlow = self.json['dvlow']
         dvhigh = self.json['dvhigh']
+
+        dvlow=float(dvlow)
+        dvhigh=float(dvhigh)
 
         tbounds = [(None, None)]
         vbounds = [(None, None)]
 
-        # if time12:
-        #     if dvtimezone >= 0:
-        #         timez = "+" + "%02d:00" % (dvtimezone)
-        #     else:
-        #         timez = "-" + "%02d:00" % (abs(dvtimezone))
-        #     begin_pos = dvbegin + timez
-        #     end_pos = dvend + timez
-        #     tbounds = [(begin_pos, end_pos)]
+        if timeuse:
+            if dvtimezone >= 0:
+                timez = "+" + "%02d:00" % (dvtimezone)
+            else:
+                timez = "-" + "%02d:00" % (abs(dvtimezone))
+            begin_pos = dvbegin + timez
+            end_pos = dvend + timez
+            tbounds = [(begin_pos, end_pos)]
 
-        # if value:
-        #     min_val = dvlow
-        #     max_val = dvhigh
-        #     vbounds = [(min_val, max_val)]
+        if limituse:
+            min_val = dvlow
+            max_val = dvhigh
+            vbounds = [(min_val, max_val)]
 
         data1 = {'date': index1, 'data':values1, 'quality':qua}
         df = pd.DataFrame(data1,columns = ['date','data','quality'])
@@ -1094,10 +1105,11 @@ class DataValuesMethod(waIstsos):
         df.index = df['date']
         del df['date']
 
-        setDataValues=SetDataValues(value=value, vbounds=vbounds, tbounds=tbounds)
+        setDataValues=SetDataValues1(value=value, vbounds=vbounds, tbounds=tbounds)
         resdata=setDataValues.execute(df)
         # return resdata
         values = np.array(resdata['data'])
+        values2 = np.array(resdata['quality'])
         times = resdata.index
         times_string =[]
         for i in times:
@@ -1110,7 +1122,7 @@ class DataValuesMethod(waIstsos):
         times_timestamp = map(convert_to_timestamp, times_string)
         data4 = []
         for i in range(len(times_string)):
-            a = [times_timestamp[i], values[i]]
+            a = [times_timestamp[i], values[i], values2[i]]
             data4.append(a)
         # dictionary = {'data': data4}
         self.setData(data4)
@@ -1664,11 +1676,31 @@ class HydroEventsTh(waIstsos):
 
         HyE=HydroEvents12(rise_lag=rise, fall_lag=fall, window=window,min_peak=peak, suffix=suffix, period=period)
         resdata=HyE.execute12(df)
-        dataFull=[]
-        data4 = []
 
+        # dataFull=[]
+        # data4 = []
+        # for i in range(len(resdata)):
+        #     values = np.array(resdata[i]['data'])
+        #     times = resdata[i].index
+        #     times_string =[]
+        #     for i in times:
+        #         times_string.append(str(i))
+
+        #     def convert_to_timestamp(a):
+        #         dt = datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
+        #         return int(time.mktime(dt.timetuple()))*1000000
+
+        #     times_timestamp = map(convert_to_timestamp, times_string)
+
+        #     for i in range(len(times_string)):
+        #         a = [times_timestamp[i], values[i]]
+        #         data4.append(a)
+            # dataFull.append(data4)
+
+        dataFull=[]
         for i in range(len(resdata)):
             values = np.array(resdata[i]['data'])
+            values2 = np.array(resdata[i]['quality'])
             times = resdata[i].index
             times_string =[]
             for i in times:
@@ -1679,13 +1711,13 @@ class HydroEventsTh(waIstsos):
                 return int(time.mktime(dt.timetuple()))*1000000
 
             times_timestamp = map(convert_to_timestamp, times_string)
-
+            data4 = []
             for i in range(len(times_string)):
-                a = [times_timestamp[i], values[i]]
+                a = [times_timestamp[i], values[i],values2[i]]
                 data4.append(a)
-            # dataFull.append(data4)
+            dataFull.append(data4)
 
-        self.setData(data4)
+        self.setData(dataFull)
         self.setMessage("Hydro events is successfully working")
 
 

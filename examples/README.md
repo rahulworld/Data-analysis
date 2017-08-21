@@ -1,9 +1,12 @@
 ## istSOS-Data Analysis and statistical tool suite 
 
 This section comprises of following parts:
-* Installation Details
-* OAT(Observation Analysis Tools) library
+* OAT installation
 * Implemented OAT methods
+
+OAT is a Python package which is integrated in the FREEWAT environment through an interface exposing its features to modellers and non programmer users. OAT library implements two main classes: the Sensor class that is designated to handle time­series data and metadata and the Method class which is designated to represent a processing method. The library applies the behavioral visitor pattern which allows the separation of an algorithm from the object on which it operates: thanks to this design pattern it is possible to add a new processing capability by simply extending the Method class without the need to modify the Sensor class. 
+
+From a dependency point of view, OAT takes advantage of the PANDAS (McKinney, 2010), NUMPY and SCIPY (Van der Walt et. al. 2011) packages.
 
 Following implemented OAT methods in istSOS web-api:
 

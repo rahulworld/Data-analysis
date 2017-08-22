@@ -19,7 +19,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
     initComponent: function() {
         var me = this;
         me.callParent(arguments);
-
         this.pchoose = Ext.getCmp('pchoose');
         this.chartpanel = Ext.getCmp('chartpanel');
         this.serieschartpanel = Ext.getCmp('serieschartpanel');
@@ -441,7 +440,12 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 2)
             {
-                var resdata=this.dataAccess();
+
+
+
+
+
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -502,7 +506,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 3)
             {
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -686,7 +690,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 6)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
 
@@ -740,7 +744,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 7)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -868,7 +872,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 8)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -956,7 +960,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 9)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -1061,7 +1065,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 10)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -1112,7 +1116,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 11)
             {
                 // Data 
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -1198,7 +1202,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 12)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -1286,7 +1290,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 13)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.dataAccess5();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
                 var resdata3=new Array();
@@ -2651,5 +2655,56 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             this.downloadData.push(rec);
         }
         return this.downloadData;
+    },
+    dataAccess5: function(){
+        this.obsprop1 = Ext.getCmp("oeCbObservedProperty").getValue();
+        var procs = [];
+        console.log('################################');
+        console.log(pro);
+        // get the json rapresentation of the tree menu of procedures
+        //var checked = Ext.getCmp('proceduresTree').getValues();
+        var template = [];
+
+        this.chartStore1 = {};
+        var cc = 1;
+        var keys = Object.keys(pro);
+        keys = keys.sort();
+
+        //for (var key in this.procedures) {
+        for (var c = 0; c < keys.length; c++) {
+            var key = keys[c];
+            // check if procedures loaded have the requested observed property
+            if (Ext.Array.contains(pro[key].getObservedProperties(),this.obsprop1)) {
+                procs.push(pro[key]);
+            }
+        }
+        // merging data
+        var idx = 0;
+        // Variable for pass
+        var datepass = new Array();
+        var valuepass = new Array();
+        var qualitypass = new Array();
+        //for (var key in procs) {
+        for (var c = 0; c < procs.length; c++) {
+            var p = procs[c];
+
+            p.store.on("update",this._storeUpdated,this);
+            p.store.on("seriesupdated",this._storeSeriesUpdated,this);
+            console.log(p.storeConvertFieldToId[this.obsprop1]);
+            console.log(this.obsprop1);
+            var recs = p.store.getRange();
+            for (var j = 0, l = recs.length; j < l; j++) {
+                if (Ext.isEmpty(this.chartStore1[recs[j].get("micro") ])) {
+                    this.chartStore1[recs[j].get("micro")] = Ext.Array.clone(template);
+                }
+                // Set the property choosen in the chart store in the right column
+                var v = parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop1]));
+                datepass[j]=recs[j].get("iso8601");
+                valuepass[j]=v;
+                qualitypass[j]=parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop1]));
+            }
+            idx++;
+        }
+        return [datepass, valuepass];       
     }
 });

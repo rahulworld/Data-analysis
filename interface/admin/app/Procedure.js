@@ -476,14 +476,8 @@ Ext.define('istsos.Sensor', {
         for (var i = 0; i < this.meta.outputs.length; i++) {
             if (this.meta.outputs[i]['definition']!=this.isodef) {
                 ret.push(this.meta.outputs[i]['definition']);
-                // console.log('GET OBSERVED PROPERTY IN REDER CHART');
-                // console.log(this.meta.outputs[i]['definition']);
-                // console.log(this.isodef);
             }
         }
-        console.log('GET OBSERVED PROPERTY IN REDER CHART');
-        console.log(ret);
-        console.log(this.isodef);
         return ret;
     },
     getObservedPropertiesName: function(){

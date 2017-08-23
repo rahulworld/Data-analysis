@@ -3,79 +3,63 @@
 
 >Mentors : [@massimiliano-cannata](https://github.com/massimiliano-cannata), [@mantonovic](https://github.com/mantonovic)
 
-##Summary
-The primary goal of my project was to create OAT(Data analysis and statistics) extension in RESTFull Web api and OAT extension having data analysis and statistical tools for istSOS which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
 
 ---
 ###istSOS
+
 istSOS is an OGC SOS server implementation written in Python. istSOS allows for managing and dispatch observations from monitoring sensors according to the Sensor Observation Service standard.
 
 The project provides also a Graphical user Interface that allows for easing the daily operations and a RESTful Web api for automatizing administration procedures.
 
-For further information, please refer to the istSOS website: <http://istsos.org/>
-[Data analysis and statistics tools suit](https://github.com/rahulworld/Data-analysis/commits/master)
+![For installation and further information](http://istsos.org/)
 
-[Individual Commits](https://github.com/rahulworld/Data-analysis/commits/master)
+[istSOS2 Github Repo.](https://github.com/istSOS/istsos2)
 
-[Celluloid Pool](https://github.com/celluloid/celluloid-pool/pull/16) - Increased performance by upto 3 times.
+[Download istsos2 source code](https://sourceforge.net/projects/istsos/)
 
-[Instruction to Clone and run Celluloid](https://github.com/celluloid/celluloid/pull/721)
-
-[Individual Commits](https://github.com/rahulworld/Data-analysis/commits/master)
-
-####Abstract
-The benchmarking suite was created to measure the performance improvements done while making tweaks to the code. Changes made in pool resulted in the performance increase of about 3x times.
-
-#### Before	
-	Rehearsal ----------------------------------------------
-	pool - 10    0.060000   0.000000   0.060000 (  0.065491)
-	pool - 100   0.050000   0.000000   0.050000 (  0.058047)
-	------------------------------------- total: 0.110000sec
-                user     system      total        real
-	pool - 10    0.140000   0.000000   0.140000 (  0.145850)
-	pool - 100   0.040000   0.000000   0.040000 (  0.040523)
-
-#### After
-	Rehearsal ----------------------------------------------
-	pool - 10    0.060000   0.000000   0.060000 (  0.061735)
-	pool - 100   0.050000   0.000000   0.050000 (  0.058645)
-	------------------------------------- total: 0.110000sec
-
-                 user     system      total        real
-	pool - 10    0.040000   0.000000   0.040000 (  0.043268)
-	pool - 100   0.040000   0.010000   0.050000 (  0.041099)
-	
-![OAT Extension](images/quality1.png)
+[Developers docs](http://istsos.org/en/latest/doc/#developers-docs)
 
 ---
+
 ###OAT(Observation Analysis Tool)
+
 OAT is a Python package which is integrated in the istSOS through an interface exposing its features to modellers and non programmer users. OAT library Method class which is designated to represent a processing method. The library applies the behavioral visitor pattern which allows the separation of an algorithm from the object on which it operates.
 
-From a dependency point of view, OAT takes advantage of the PANDAS (McKinney, 2010), NUMPY and SCIPY (Van der Walt et. al. 2011) packages.
+From a dependency point of view, OAT takes advantage of the ![PANDAS](http://pandas.pydata.org/)(McKinney, 2010), ![NUMPY](http://www.numpy.org/) and ![SCIPY](https://www.scipy.org/) (Van der Walt et. al. 2011) packages.
 
-####Abstract
-Reel is Celluloid::IO native, non-blocking evented server. The main aim here was to improve the test suite which can be seen in the above link and create a benchmarking suite, which couldn't be completed. This is something I plan on doing after the completion of GSoC.
+[Download OAT](http://www.freewat.eu/)
+
+
+##Summary
+
+The primary goal of my project was to create OAT(Data analysis and statistics) extension in RESTFull Web api and OAT extension having data analysis and statistical tools for istSOS which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
+
+[Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
+
+![Implemented OAT methods](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
+
+![OAT Extension](images/quality1.png)
+
 
 ##Tools Used
-1. [RubyProf](https://github.com/ruby-prof/ruby-prof)
-2. [StackProf](https://github.com/tmm1/stackprof)
-3. [Method Profiler](https://github.com/change/method_profiler)
-4. [QCacheGrind](https://kcachegrind.github.io/html/Home.html)
+2. [Pandas](http://pandas.pydata.org/)
+3. [NUMPY](http://www.numpy.org/)
+4. [SCIPY](https://www.scipy.org/)
+1. [d3.js](https://github.com/ruby-prof/ruby-prof)
 
 #Challenges
-1. Understanding meta-programming
-2. Working with profiling tools in a concurrent environment.
-3. Developing consistent benchmark results.
+1. Understanding istSOS structure and OAT package
+2. Working with extjs tools in a concurrent environment.
+3. Developing consistent suits.
 
 # Scope for future improvements
-1. Based on the benchmark results, Sidekiq 4 calls a method called `safe_thread` for creating new Threads whereas Celluloid deals with `mutex` and suspending `Threads`.
-2. Method Profiler reported that Fiber being called 10000 for only 2000 job in the Mutex profile. This might a place where we could further explore and make tweaks to make improvements. ![Method Profile of Fiber](http://i.imgur.com/NJf4VqM.png)
-3. Celluloid is using thread per actor so the `pool` benchmark is creating about `n` native threads. [Concurrent Ruby Actor](http://ruby-concurrency.github.io/concurrent-ruby/Concurrent/Actor.html) is using constant number of threads. 
-4. There could be a possible bottleneck in the architecture of how Celluloid is written. We could definitely consider making architectural changes. [https://github.com/celluloid/celluloid/blob/master/architecture.md](https://github.com/celluloid/celluloid)blob/master/architecture.md)
+1. fuctionality add sensor through (CSV, istSOS, Raw)data in `Add sensor name` GUI in OAT extenstion.
+2. fuctionality add in `Mangae sensor`.
+3. functionalty add in `Compare sensor`.
 
 # Commits
 
-###Celluloid Pool
+###Data analysis and statistics tool suit Pool
 [Removed redundant code, improves performance by upto 3 times](https://github.com/prathmeshranaut/celluloid-pool/commit/b4e42515cfe6095372ce436fd9a2a991b7f3ea5e)
 
 ###Celluloid
@@ -136,8 +120,7 @@ Reel is Celluloid::IO native, non-blocking evented server. The main aim here was
 * [Commits](https://github.com/rahulworld/Data-analysis/commits/master)
 * [Cloning Repo.](https://github.com/istSOS/istsos2)
 * [Blog](https://rahulworld.github.io/GSoC.html)
-* [istSOS2](https://github.com/istSOS/istsos2)
-* [Images and documentation](https://github.com/celluloid/reel)
+* [Images and documentation](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
 * [istSOS Web](http://istsos.org/)
 * [Github](https://github.com/rahulworld)
 * [Wiki](https://wiki.osgeo.org/wiki/GSoC_17:_istSOS-Data_analysis_and_statistical_tools_suite)

@@ -843,18 +843,6 @@ Ext.define('istsos.view.ui.addSensor',
                 {
                     "xtype": "panel",
                     "title": "Raw"
-                },
-                {
-                    "xtype": "panel",
-                    "title": "listfile"
-                },
-                {
-                    "xtype": "panel",
-                    "title": "hobfile"
-                },
-                {
-                    "xtype": "panel",
-                    "title": "gagefile"
                 }]
             }]
         });

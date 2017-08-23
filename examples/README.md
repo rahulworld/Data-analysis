@@ -137,7 +137,7 @@ It uses the following parameters:
 ![method](images/datavalues.png)
 
 ### 11. Hargreaves method 
-The Hargreaves-Somani equation can be used to estimate the reference crop evapotransipration using minimum climatological data. In OAT the daily reference evapotransipration can be calculated from a given Sensor with a resolution smaller than 1 day, by clicking the “Execute” button. The parameters needed by the Hargreaves equation are automatically extracted and a new time series is produced with daily evapotransiration values..
+The Hargreaves-Somani equation can be used to estimate the reference crop evapotransipration using minimum climatological data. In OAT the daily reference evapotransipration can be calculated from a given Sensor with a resolution smaller than 1 day, by clicking the “Execute” button. The parameters needed by the Hargreaves equation are automatically extracted and a new time series is produced with daily evapotransiration values
 
 ![method](images/hargreaves.png)
 

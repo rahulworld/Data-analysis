@@ -30,11 +30,12 @@ It uses the following parameters:
 * **Under**: change the calculation to specify when values are not ecceeded (bool)
 * **Exceedance values**: A discharge value for which the exceedance probability will be calculated (list of float)
 * **Exceedance probability**: The discharge values that correspond to a given exceedance probability float
+![method234](images/exeedance.png)
 
-![method23](images/exeedance.png)
 
 ### 3. Integrate method 
 Several methods are available for integrating a Sensors time-series with respect to time.
+![method234](images/integrate.png)
 
 It uses the following parameters:
 * **Time units**: The time units of data employed by the time-series (string)
@@ -42,9 +43,6 @@ It uses the following parameters:
 * **Factor**:  a factor by which integrated volumes or masses are multiplied before storage generally used for unit conversion (flaot)
 * **how**: Used to specify the hydrologic regime as defined in Olden and Poff (2003) (string)
 * **Dates as text**: defines if dates have to be returned as text (True) or Timestamp
-
-![method234](images/integrate.png)
-
 ![method1](images/integrate1.png)
 
 ### 4. Hydrograph separation method 

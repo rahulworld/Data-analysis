@@ -87,20 +87,20 @@ The calculate statistics method returns some basic satistics for the Sensor time
 
 The statistics calculated are:
 
-* **count**: returns the number of data values in the series;
-* **std**: the standard deviation of the series;
-* **min**: the minimum value in the series;
-* **max**: the maximum value in the series;
-* **50%**: the median value in the series;
-* **25%**: the first quartile value in the series;
-* **75%**: the third quartile value in the series;
-* **mean**: the mean of the series.
+* **count**: returns the number of data values in the series
+* **std**: the standard deviation of the series
+* **min**: the minimum value in the series
+* **max**: the maximum value in the series
+* **50%**: the median value in the series
+* **25%**: the first quartile value in the series
+* **75%**: the third quartile value in the series
+* **mean**: the mean of the series
 
 It uses the following parameters:
 * **Data**: A flag to determinewether to compute statistics of data (bool)
 * **Quality**: A flag to determine wether to compute statistics of quality (string)
-* **Use time**: used when setting upper and lower time limits for statistic calculation. The bounds are closed bounds (t0 >= t <= t1) (date, date)
-
+* **Use time**: used when setting upper and lower time limits for statistic calculation 
+The bounds are closed bounds (t0 >= t <= t1) (date, date)
 ![method](images/statistics.png)
 ![method](images/statistics1.png)
 
@@ -141,4 +141,3 @@ The Hargreaves-Somani equation can be used to estimate the reference crop evapot
 
 ![method](images/hargreaves.png)
 
-### Methods

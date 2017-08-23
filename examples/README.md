@@ -29,7 +29,7 @@ It uses the following parameters:
 * **Exceedance time unit**: the time unit in which the exceedance frequency will be displayed (string)
 * **Under**: change the calculation to specify when values are not ecceeded (bool)
 * **Exceedance values**: A discharge value for which the exceedance probability will be calculated (list of float)
-* **Exceedance probability**: The discharge values that correspond to a given exceedance probability (list of float)
+* **Exceedance probability**: The discharge values that correspond to a given exceedance probability float
 
 ![method23](images/exeedance.png)
 
@@ -41,9 +41,10 @@ It uses the following parameters:
 * **Use time**: A list of tuples with upper and lower time limits for volumes computation (date, date)
 * **Factor**:  a factor by which integrated volumes or masses are multiplied before storage generally used for unit conversion (flaot)
 * **how**: Used to specify the hydrologic regime as defined in Olden and Poff (2003) (string)
-* **Dates as text**: defines if dates have to be returned as text (True) or Timestamp (False) (bool)
+* **Dates as text**: defines if dates have to be returned as text (True) or Timestamp
 
 ![method234](images/integrate.png)
+
 ![method1](images/integrate1.png)
 
 ### 4. Hydrograph separation method 

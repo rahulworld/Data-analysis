@@ -36,7 +36,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         // methodserch.disable();
         // methodpanel.disable();
         downloadResult.disable();
-        var rst_data, rst_header;
+        this.rst_header;
+        this.rst_data;
+        this.rst_name;
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
@@ -52,9 +54,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
 
             var value = combo.getValue();
-            // console.log(value);
-            // console.log('in the combox');
-
+            //All Methods Panels
             var digital_filter = Ext.getCmp('digitalPanel');
             var exeedance = Ext.getCmp('exeedancePanel');
             var resample = Ext.getCmp('resamplePanel');
@@ -333,13 +333,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 0)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var digLow= Ext.getCmp("digLowcutOff").getValue();
@@ -390,12 +387,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 1)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=resdata[2];
                 var frequency;
-                                var percentage;
-                                var value;
+                var percentage;
+                var value;
 
                 //Taking Input
                 var exceeValues= Ext.getCmp("exeeValues").getValue();
@@ -429,8 +427,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         data = JSON.parse(JSON.stringify(csv_array));
                         this.tabulate(data,['percentage', 'frequency','value']);
                         //Download data
-                        rst_header = 'Exeedance Params\npercentage,frequency,value\n';
-                        rst_data=csv_array;
+                        this.rst_header = 'Exeedance Params\npercentage,frequency,value\n';
+                        this.rst_data=csv_array;
+                        this.rst_name='Exeedance';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -441,17 +440,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 2)
             {
 
-
-
-
-
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 var frequency= Ext.getCmp("edittextFrequency").getValue();
                 var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
@@ -495,8 +487,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.rederChart1(this.chartdata);
 
                         //Download Data Section Hargreaves
-                        rst_header = 'Resample Params\ntime,value\n';
-                        rst_data=this.download_format(json1);
+                        // rst_header = 'Resample Params\ntime,value\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='Resample';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -506,13 +499,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 3)
             {
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var intgTimeUnit= Ext.getCmp("timeUnitsCombox").getValue();
@@ -577,8 +567,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var data = JSON.parse(JSON.stringify(csv_array));
                         this.tabulate(data,['from', 'to','value']);
                         //Download data
-                        rst_header = 'Integrate Params\nfrom,to,value\n';
-                        rst_data=csv_array;
+                        this.rst_header = 'Integrate Params\nfrom,to,value\n';
+                        this.rst_data=csv_array;
+                        this.rst_name='Integration';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -590,9 +581,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 4)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
@@ -639,9 +631,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 5)
             {
                 // Data
-                var resdata=this.dataAccess();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
@@ -690,14 +683,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 6)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=30;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var hsmode1= Ext.getCmp("HSmode").getValue();
@@ -731,8 +720,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.chartdata =json1['data'];
                         this.rederChart5(this.chartdata);
                         //Download Data Section Hargreaves
-                        rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
-                        rst_data=this.download_format(json1);
+                        this.rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='HydroSeparation';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -744,13 +734,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 7)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var hyerise= Ext.getCmp("herise").getValue();
@@ -811,24 +798,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        // this.chartdata = [];
-                        // for (var i = 0; i < json1['data'].length; i++) {
-                        //     var rec = [];
-                        //     rec.push(parseInt(json1['data'][i][0]));
-                        //     var vals = json1['data'][i][1];
-                        //     // var vals1=json1['data'][i][2]
-                        //     rec = rec.concat(vals);
-                        //     // rec = rec.concat(vals1);
-                        //     this.chartdata.push(rec);
-                        // }
-                        // // console.log(this.chartdata);
-                        // // this.rederChart3(this.chartdata,'Hydro Events');
-                        // this.rederChart1(this.chartdata);
-                        
-                        // rst_header = 'Hydro Events Params\ntime,value,quality\n';
-                        // var csv_array=json1['data'];
-                        // rst_data=csv_array;
-                        
                         this.chartdata = [];
                         for (var i =0;i<json1['data'].length; i++) {
                             for(var j=0; j<json1['data'][i].length;j++){
@@ -858,9 +827,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         arr.sort();
                         this.rederChart2(arr);
                         //Download Section
-                        rst_header = 'Hydro Events Params\ntime,quality,Event1,Event2,Event3,Event4,Event5,Event6,Event7\n';
+                        this.rst_header = 'Hydro Events Params\ntime,quality,Event1,Event2,Event3,Event4,Event5,Event6,Event7\n';
                         var csv_array=json1['data'];
-                        rst_data=csv_array;
+                        this.rst_data=csv_array;
+                        this.rst_name='HydroEvents';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -872,14 +842,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 8)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
-
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var hialphacode= Ext.getCmp("alphacode").getValue();
@@ -947,8 +913,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         data = JSON.parse(JSON.stringify(csv_array));
                         this.tabulate(data,['index', 'value']);
                         //Download data
-                        rst_header = 'Hydro indicies Params\n index,value\n';
-                        rst_data=csv_array;
+                        this.rst_header = 'Hydro indicies Params\n index,value\n';
+                        this.rst_data=csv_array;
+                        this.rst_name='HydroIndices';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -960,13 +927,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 9)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var dataSta= Ext.getCmp("dataSta").getValue();
@@ -1021,7 +985,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                     },
                     success: function(response){
                         var json1 = Ext.decode(response.responseText);
-                        rst_header = 'Statistics Params\ncount,std,min,max,50%,25%,75%,mean\n';
+                        this.rst_header = 'Statistics Params\ncount,std,min,max,50%,25%,75%,mean\n';
+                        this.rst_name='Statistics';
                         var initialData;
                         var data;
                         if(dataSta && quaSta){
@@ -1050,9 +1015,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                                   { data: "75%", value: json1['data']['75%'] }
                             ]
                             var csv_array=json1['data'];
-                            rst_data=[csv_array];
                             data = JSON.parse(JSON.stringify(initialData));
                             this.tabulate(data,['data', 'value']);
+                            this.rst_data=[csv_array];
                         }
                     },
                     failure: function (response) {
@@ -1065,13 +1030,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 10)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
@@ -1103,8 +1065,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.chartdata =json1['data'];
                         this.rederChart1(this.chartdata);
                         //Download Data Section Hargreaves
-                        rst_header = 'Fill Params\ntime,value,quality\n';
-                        rst_data=this.download_format(json1);
+                        // this.rst_header = 'Fill Params\ntime,value,quality\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='Fill';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1116,13 +1079,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 11)
             {
                 // Data 
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
                 //Taking Input
                 var DataValue= Ext.getCmp("Qvalue").getValue();
                 var DataStat= Ext.getCmp("Qstat").getValue();
@@ -1189,8 +1149,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.rederChart1(this.chartdata);
                         
                         //Download Data Section Hargreaves
-                        rst_header = 'Quality Params\ntime,value\n';
-                        rst_data=this.download_format(json1);
+                        // rst_header = 'Quality Params\ntime,value\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='Quality';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1202,13 +1163,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 12)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 //Taking Input
                 var DataValue= Ext.getCmp("dvvalue").getValue();
@@ -1277,8 +1235,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.rederChart1(this.chartdata);
                         
                         //Download Data Section Hargreaves
-                        rst_header = 'Data Values Params\ntime,value,quality\n';
-                        rst_data=this.download_format(json1);
+                        // rst_header = 'Data Values Params\ntime,value,quality\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='Data Value';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1290,13 +1249,10 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 13)
             {
                 // Data
-                var resdata=this.dataAccess5();
+                var resdata=this.SelectedPropertyData();
                 var resdata1=resdata[0];
                 var resdata2=resdata[1];
-                var resdata3=new Array();
-                for(var i=0;i<resdata1.length;i++){
-                    resdata3[i]=200;
-                }
+                var resdata3=resdata[2];
 
                 Ext.get('chartSeries').mask("Initializing chart..");
 
@@ -1322,8 +1278,9 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         this.chartdata =json1['data'];
                         this.rederChart1(this.chartdata);
                         //Download Data Section Hargreaves
-                        rst_header = 'Hargreaves Params\ntime,value,quality\n';
-                        rst_data=this.download_format(json1);
+                        // rst_header = 'Hargreaves Params\ntime,value,quality\n';
+                        this.rst_data=this.download_format(json1);
+                        this.rst_name='Hargreaves';
                     },
                     failure: function (response) {
                         var jsonResp = Ext.util.JSON.decode(response.responseText);
@@ -1335,7 +1292,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         },this);
 
         Ext.getCmp("buttonSave").on("click",function(btn, e, eOpts){
-            this.download_csv(rst_data,rst_header);
+            this.download_csv(this.rst_data,this.rst_header,this.rst_name);
         },this);
         Ext.getCmp("checkboxOverwrite").on("click",function(btn, e, eOpts){
             console.log('checkboxOverwrite');
@@ -2631,7 +2588,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         }
         return str;
     },
-    download_csv: function(csv_data,csv_header) {
+    download_csv: function(csv_data,csv_header,csv_name) {
         // var csv = 'Name,Color,Size\n';
         var csv = csv_header;
         csv+= this.ConvertToCSV(csv_data);
@@ -2639,7 +2596,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         var hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
         hiddenElement.target = '_blank';
-        hiddenElement.download = 'statistics_result.csv';
+        hiddenElement.download = csv_name+'.csv';
         hiddenElement.click();
     },
     download_format: function(jsondata) {
@@ -2656,26 +2613,25 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         }
         return this.downloadData;
     },
-    dataAccess5: function(){
+    SelectedPropertyData: function(){
         this.obsprop1 = Ext.getCmp("oeCbObservedProperty").getValue();
         var procs = [];
-        console.log('################################');
-        console.log(pro);
         // get the json rapresentation of the tree menu of procedures
         //var checked = Ext.getCmp('proceduresTree').getValues();
         var template = [];
+        var rst_label=[];
 
         this.chartStore1 = {};
         var cc = 1;
         var keys = Object.keys(pro);
         keys = keys.sort();
-
         //for (var key in this.procedures) {
         for (var c = 0; c < keys.length; c++) {
             var key = keys[c];
             // check if procedures loaded have the requested observed property
             if (Ext.Array.contains(pro[key].getObservedProperties(),this.obsprop1)) {
                 procs.push(pro[key]);
+                rst_label.push(key);
             }
         }
         // merging data
@@ -2692,6 +2648,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             p.store.on("seriesupdated",this._storeSeriesUpdated,this);
             console.log(p.storeConvertFieldToId[this.obsprop1]);
             console.log(this.obsprop1);
+            this.rst_header=rst_label+"\n"+this.obsprop1+':iso8601'+","+this.obsprop1+","+this.obsprop1+':qualityIndex'+"\n";
             var recs = p.store.getRange();
             for (var j = 0, l = recs.length; j < l; j++) {
                 if (Ext.isEmpty(this.chartStore1[recs[j].get("micro") ])) {
@@ -2699,12 +2656,13 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 }
                 // Set the property choosen in the chart store in the right column
                 var v = parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop1]));
+                var q =parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop1+':qualityIndex']))
                 datepass[j]=recs[j].get("iso8601");
                 valuepass[j]=v;
-                qualitypass[j]=parseFloat(recs[j].get(p.storeConvertFieldToId[this.obsprop1]));
+                qualitypass[j]=q;
             }
             idx++;
         }
-        return [datepass, valuepass];       
+        return [datepass, valuepass,qualitypass];       
     }
 });

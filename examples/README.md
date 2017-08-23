@@ -20,7 +20,7 @@ It uses the following parameters:
 * **Limit**: if not null it defines the maximum numbers of allowed consecutive no-data valuas to be filled (integer)
 * **How quality**: the sampling method for observation quality index (string)
 
-![method](images/resample1.png)
+![method322](images/resample1.png)
 
 ### 2. Exceedance filter method 
 The Exceedance probability method calculates the exceedance probability after Searcy (1959) for a particular Sensor
@@ -31,7 +31,7 @@ It uses the following parameters:
 * **Exceedance values**: A discharge value for which the exceedance probability will be calculated (list of float)
 * **Exceedance probability**: The discharge values that correspond to a given exceedance probability (list of float)
 
-![method](images/exeedance.png)
+![method23](images/exeedance.png)
 
 ### 3. Integrate method 
 Several methods are available for integrating a Sensors time-series with respect to time.
@@ -43,8 +43,8 @@ It uses the following parameters:
 * **how**: Used to specify the hydrologic regime as defined in Olden and Poff (2003) (string)
 * **Dates as text**: defines if dates have to be returned as text (True) or Timestamp (False) (bool)
 
-![method](images/integrate.png)
-![method](images/integrate1.png)
+![method234](images/integrate.png)
+![method1](images/integrate1.png)
 
 ### 4. Hydrograph separation method 
 The hydrograph separation method is a filter which produces two time-series, storm-flow and baseflow hydrograph, from stream discharge. Either the Two Parameter Digital Filter (Eckhardt, 2005) or Single Parameter Digital Filter (Nathan & McMahon, 1990) may be used.
@@ -102,7 +102,7 @@ It uses the following parameters:
 * **Use time**: used when setting upper and lower time limits for statistic calculation 
 The bounds are closed bounds (t0 >= t <= t1) (date, date)
 ![method](images/statistics.png)
-![method](images/statistics1.png)
+![method12](images/statistics1.png)
 
 
 ### 8. FIll filter method 
@@ -124,7 +124,7 @@ It uses the following parameters:
 * **Use limit**: A flag to determine upper and lower value limits for weigth assignment. The bounds are closed bounds (min >= x <= max) e.g: [(None,0.2),(0.5,1.5),(11,None)] will apply: if data is lower then 0.2 –> (None,0.2) or data is between 0.5 and 1.5 –> (0.5,1.5) or data is higher then 11 –> (11,None)
 
 ![method](images/quality.png)
-![method](images/quality1.png)
+![method32](images/quality1.png)
 
 ### 10. Data values method 
 The data values method can be used to set uniform data values for a Sensor within time bounds, or to remove values that fall outside of specified value bounds.

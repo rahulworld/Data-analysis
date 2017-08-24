@@ -1,25 +1,3 @@
-# -*- coding: utf-8 -*-
-# =============================================================================
-#
-# Authors: Massimiliano Cannata, Milan Antonovic
-#
-# Copyright (c) 2016 IST-SUPSI (www.supsi.ch/ist)
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or (at your
-# option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#
-# =============================================================================
 from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
 
@@ -36,177 +14,10 @@ import json
 import scipy
 from walib.OAT import Methods
 
-
-try:
-    from oatlib import oat_algorithms as oa
-except:
-    import oat_algorithms as oa
-
-
 class waIstsos(resource.waResourceAdmin):
     def __init__(self, waEnviron):
         resource.waResourceAdmin.__init__(self, waEnviron)
         pass
-
-class waStatus(waIstsos):
-    """
-    Class to execute /istsos/operations/serverstatus
-    """
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-        pass
-
-    def executeGet(self):
-        """
-        Execute GET request investigating set-up services
-
-        @note: This method creates a C{self.data} object in the form of a
-        list of dictionaries as below:
-
-        >>> template = {
-                "service" : None,
-                "offerings" : None,
-                "procedures" : None,
-                "observedProperties" : None,
-                "featuresOfInterest" : None,
-                "getCapabilities" : None,
-                "describeSensor" : None,
-                "getObservations" : None,
-                "registerSensor" : None,
-                "insertObservation" : None,
-                "getFeatureOfInterest" : None,
-                "availability" : "up"
-            }
-        """
-        services = utils.getServiceList(
-            self.waconf.paths["services"],
-            listonly=True)
-
-        if self.user and not self.user.isAdmin():
-            servicesAllowed = []
-            for item in services:
-                if self.user.allowedService(item):
-                    servicesAllowed.append(item)
-            services = servicesAllowed
-
-        data = []
-        for service in services:
-            srv = {}
-            srv["service"] = service
-
-            # get service configuration
-            defaultcfgpath = os.path.join(
-                self.waconf.paths["services"],
-                "default.cfg")
-
-            servicecfgpath = "%s.cfg" % os.path.join(
-                self.waconf.paths["services"],
-                service, service)
-
-            config = configManager.waServiceConfig(
-                defaultcfgpath, servicecfgpath)
-
-            # test if service is active (check answer to GetCapabilities)
-            if config.serviceurl["default"] is True:
-                urlget = config.serviceurl["url"] + "/" + service
-            else:
-                urlget = config.serviceurl["url"]
-
-            request = ("?request=getCapabilities&"
-                       "section=serviceidentification&service=SOS")
-
-            srv["availability"] = utils.verifyxmlservice(
-                urlget+request, self.waEnviron)
-
-            # test if connection is valid
-            connection = config.get("connection")
-
-            try:
-                servicedb = databaseManager.PgDB(
-                    connection['user'],
-                    connection['password'],
-                    connection['dbname'],
-                    connection['host'],
-                    connection['port']
-                )
-                srv["database"] = "active"
-
-            except:
-                srv["database"] = "not connectable"
-                srv["offerings"] = None
-                srv["procedures"] = None
-                srv["observedProperties"] = None
-                srv["featuresOfInterest"] = None
-
-            try:
-                #count offerings
-                srv["offerings"] = len(
-                    utils.getOfferingNamesList(servicedb, service))
-            except:
-                srv["offerings"] = None
-
-            try:
-                #count procedures
-                srv["procedures"] = len(
-                    utils.getProcedureNamesList(
-                        servicedb, service, offering=None))
-            except:
-                srv["procedures"] = None
-
-            try:
-                #count observed properties
-                srv["observedProperties"] = len(
-                    utils.getObsPropNamesList(
-                        servicedb, service, offering=None))
-            except:
-                srv["observedProperties"] = None
-
-            try:
-                #count features of interest
-                srv["featuresOfInterest"] = len(
-                    utils.getFoiNamesList(servicedb, service, offering=None))
-            except:
-                srv["featuresOfInterest"] = None
-
-            #get available requests
-            requests_ON = config.parameters["requests"].split(",")
-            for operation in [
-                    "getcapabilities", "describesensor", "getobservation",
-                    "getfeatureofinterest", "insertobservation",
-                    "registersensor"]:
-
-                if operation in requests_ON:
-                    srv[operation] = True
-                else:
-                    srv[operation] = False
-            data.append(srv)
-
-        self.setData(data)
-        self.setMessage("Serverstatus request successfully executed")
-
-
-class waLog(waIstsos):
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-        pass
-
-
-class waAbout(waIstsos):
-
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-
-    def executeGet(self):
-        from istsoslib import sos_version
-        data = {}
-        data["istsos_version"] = str(sos_version.version)
-        data["latest_istsos_version"] = ""
-        data["latest_istsos_changelog"] = ""
-        data["download_url"] = "https://sourceforge.net/projects/istsos"
-        data["istsos_message"] = "updates not found"
-        data["istsos_update"] = False
-        self.setData(data)
-        self.setMessage("istSOS \"About\" information successfully retrived")
 
 class DigitalThread(waIstsos):
     """
@@ -238,12 +49,11 @@ class DigitalThread(waIstsos):
             
             digital=Methods.DigitalFilter(lowcut, highcut, order=order, btype=filter_type)
             dig=digital.execute(df)
-
-        except:
-            dig = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(dig)
-        self.setMessage("digital filter is successfully working")
+        self.setMessage("digital filter requested successfully executed")
 
 
 class Statisticsmethod(waIstsos):
@@ -290,10 +100,10 @@ class Statisticsmethod(waIstsos):
 
             stat=Methods.Statistics(data=data, quality=quality, tbounds=tbounds)
             st=stat.execute(df)
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
         self.setData(st['data'])
-        self.setMessage("Statistics is successfully working")
+        self.setMessage("Statistics requested successfully executed")
 
 class resamplingData(waIstsos):
     def __init__(self, waEnviron):
@@ -355,11 +165,11 @@ class resamplingData(waIstsos):
                 data4.append(a)
 
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(data4)
-        self.setMessage("resampling is successfully working")
+        self.setMessage("resampling requested successfully executed")
 
 class ExceedanceData(waIstsos):
     """
@@ -369,35 +179,38 @@ class ExceedanceData(waIstsos):
         waIstsos.__init__(self, waEnviron)
 
     def executePost(self):
-        res={}
-        val = self.json['exceevalues']
-        if len(val) != 0:
-            values = map(float, val.split(','))
-        else:
-            values = None
+        try:
+            res={}
+            val = self.json['exceevalues']
+            if len(val) != 0:
+                values = map(float, val.split(','))
+            else:
+                values = None
 
-        perc = self.json['exceeperc']
+            perc = self.json['exceeperc']
 
-        if len(perc) != 0:
-            perc = map(float, perc.split(','))
-        else:
-            perc = None
+            if len(perc) != 0:
+                perc = map(float, perc.split(','))
+            else:
+                perc = None
 
-        etu = self.json['etu']
-        under = self.json['exceeunder']
-        index1=self.json['index1']
-        value1=self.json['values1']
+            etu = self.json['etu']
+            under = self.json['exceeunder']
+            index1=self.json['index1']
+            value1=self.json['values1']
 
-        data1 = {'date': index1, 'data':value1}
-        df = pd.DataFrame(data1,columns = ['date','data'])
-        df['date'] = pd.to_datetime(df['date'])
-        df.index = df['date']
-        del df['date']
+            data1 = {'date': index1, 'data':value1}
+            df = pd.DataFrame(data1,columns = ['date','data'])
+            df['date'] = pd.to_datetime(df['date'])
+            df.index = df['date']
+            del df['date']
 
-        exeedance=Methods.Exceedance(perc=perc, values=values, etu=etu, under=under)
-        resdata=exeedance.execute1(df)
+            exeedance=Methods.Exceedance(perc=perc, values=values, etu=etu, under=under)
+            resdata=exeedance.execute1(df)
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
         self.setData(resdata)
-        self.setMessage("exceedance is successfully working")
+        self.setMessage("Exceedance requested successfully executed")
 
 
 class IntegrateMethod(waIstsos):
@@ -442,11 +255,11 @@ class IntegrateMethod(waIstsos):
             
             Intgrt=Methods.Integrate(periods=period, tunit=tunit, factor=factor, how=how,astext=astext)
             IG=Intgrt.execute(df)
-        except:
-            IG = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(IG)
-        self.setMessage("Integrate is successfully working")
+        self.setMessage("Integrate requested successfully executed")
 
 
 class HydroSeparationTh(waIstsos):
@@ -502,11 +315,11 @@ class HydroSeparationTh(waIstsos):
                 data4.append(a)
 
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(data4)
-        self.setMessage("hydrosepration is successfully working")
+        self.setMessage("Hydrosepration requested successfully executed")
 
 class QualityMethod(waIstsos):
     """
@@ -586,10 +399,10 @@ class QualityMethod(waIstsos):
                 a = [times_timestamp[i], values[i],values1[i]]
                 data4.append(a)
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
         self.setData(data4)
-        self.setMessage("data values is successfully working")
+        self.setMessage("Quality requested successfully executed")
 
 class DataValuesMethod(waIstsos):
     """
@@ -668,8 +481,8 @@ class DataValuesMethod(waIstsos):
                 a = [times_timestamp[i], values[i], values2[i]]
                 data4.append(a)
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
         self.setData(data4)
         self.setMessage("data values is successfully working")
 
@@ -727,11 +540,11 @@ class fillMethod(waIstsos):
                 data4.append(a)
 
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(data4)
-        self.setMessage("resampling is successfully working")
+        self.setMessage("Fill requested successfully executed")
 
 
 class Hargreaves(waIstsos):
@@ -778,11 +591,11 @@ class Hargreaves(waIstsos):
                 data4.append(a)
 
             # dictionary = {'data': data4}
-        except:
-            data4 = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(data4)
-        self.setMessage("Hargreaves is successfully working")
+        self.setMessage("Hargreaves requested successfully executed")
 
 
 class HydroIndices(waIstsos):
@@ -813,27 +626,27 @@ class HydroIndices(waIstsos):
             # hindicies = '1,3'
 
             if htype != 'MA':
-                self.exception.emit(Exception("Sorry, only Ma is supported (Alphanumeric Code)"))
+                raise Exception("Sorry, only Ma is supported (Alphanumeric Code)")
                 return
 
             if hindicies == '':
-                self.exception.emit(Exception("Please define code"))
+                raise Exception("Please define code")
                 return
 
             code1 = map(int, hindicies.split(','))
             # code = [1,3]
 
             if len(code1) != 2:
-                self.exception.emit(Exception("Please change code"))
+                raise Exception("Please change code")
                 return
             elif code1[0] > code1[1]:
-                self.exception.emit(Exception('code 1 must be lower than code 2'))
+                raise Exception('code 1 must be lower than code 2')
                 return
             elif code1[0] < 1:
-                self.exception.emit(Exception("Code 1 shoul'd be >= 1"))
+                raise Exception("Code 1 shoul'd be >= 1")
                 return
             elif code1[1] > 45:
-                self.exception.emit(Exception("Code 2 shoul'd be <= 45"))
+                raise Exception("Code 2 shoul'd be <= 45")
                 return
 
             comp = self.json['hicomp']
@@ -862,11 +675,11 @@ class HydroIndices(waIstsos):
                 HyI = Methods.HydroIndices1(htype=htype, code1=c, flow_component=comp,stream_classification=classification,median=median,drain_area=drain, period=period)
                 result=HyI.execute(df)
                 result1['data'].append({"index": c, "value": result})
-        except:
-            result1[data] = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
 
         self.setData(result1)
-        self.setMessage("Hydro Indicies is successfully working")
+        self.setMessage("Hydro Indicies requested successfully executed")
 
 
 class HydroEventsTh(waIstsos):
@@ -934,31 +747,7 @@ class HydroEventsTh(waIstsos):
                     a = [times_timestamp[i], values[i],values2[i]]
                     data4.append(a)
                 dataFull.append(data4)
-
-        except:
-            dataFull = "inactive"
+        except Exception as error:
+            raise Exception(repr(error)+"%s. method" % self.__class__.__name__)
         self.setData(dataFull)
-        self.setMessage("Hydro events is successfully working")
-
-
-class waValidatedb(waIstsos):
-    def __init__(self, waEnviron):
-        waIstsos.__init__(self, waEnviron)
-
-    def executePost(self):
-        from walib.utils import validatedb
-        res = {}
-        try:
-            test_conn = validatedb(
-                self.json["user"],
-                self.json["password"],
-                self.json["dbname"],
-                self.json["host"],
-                self.json["port"])
-            res["database"] = "active"
-
-        except:
-            res["database"] = "inactive"
-
-        self.setData(res)
-        self.setMessage("Database validation request successfully executed")
+        self.setMessage("Hydro events requested successfully executed")

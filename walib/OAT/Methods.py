@@ -5,11 +5,6 @@ from __future__ import absolute_import, division
 import pandas as pd
 import numpy as np
 
-try:
-    from walib.oat.oatlib import oat_algorithms as oa
-except:
-    import walib.oat.oat_algorithms as oa
-
 result1 = {
             "type": None,
             "data": None

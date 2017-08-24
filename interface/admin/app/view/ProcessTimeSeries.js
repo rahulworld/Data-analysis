@@ -425,6 +425,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         //Table
                         var csv_array=json1['data'];
                         data = JSON.parse(JSON.stringify(csv_array));
+                        console.log(data);
                         this.tabulate(data,['percentage', 'frequency','value']);
                         //Download data
                         this.rst_header = 'Exeedance Params\npercentage,frequency,value\n';

@@ -65,47 +65,47 @@ def initResource(waEnviron):
                 resource = pathinfo.pop(0)
 
                 if resource == "resample":
-                    from walib.istsos import istsos
-                    return istsos.resamplingData(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.resamplingData(waEnviron)
                 elif resource == "digitalfilter":
-                    from walib.istsos import istsos
-                    return istsos.DigitalThread(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.DigitalThread(waEnviron)
                 elif resource == "exceedance":
-                    from walib.istsos import istsos
-                    return istsos.ExceedanceData(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.ExceedanceData(waEnviron)
                 elif resource == "he":
-                    from walib.istsos import istsos
-                    return istsos.HydroEventsTh(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.HydroEventsTh(waEnviron)
                 elif resource == "hi":
-                    from walib.istsos import istsos
-                    return istsos.HydroIndices(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.HydroIndices(waEnviron)
                 elif resource == "qualitymethod":
-                    from walib.istsos import istsos
-                    return istsos.QualityMethod(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.QualityMethod(waEnviron)
                 elif resource == "datavalue":
-                    from walib.istsos import istsos
-                    return istsos.DataValuesMethod(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.DataValuesMethod(waEnviron)
                 elif resource == "hysap":
-                    from walib.istsos import istsos
-                    return istsos.HydroSeparationTh(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.HydroSeparationTh(waEnviron)
                 elif resource == "intgrate":
-                    from walib.istsos import istsos
-                    return istsos.IntegrateMethod(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.IntegrateMethod(waEnviron)
                 elif resource == "compare":
-                    from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.regularization(waEnviron)
                 elif resource == "subtract":
-                    from walib.istsos import istsos
-                    return istsos.regularization(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.regularization(waEnviron)
                 elif resource == "fill":
-                    from walib.istsos import istsos
-                    return istsos.fillMethod(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.fillMethod(waEnviron)
                 elif resource == "statistics":
-                    from walib.istsos import istsos
-                    return istsos.Statisticsmethod(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.Statisticsmethod(waEnviron)
                 elif resource == "hargreaves":
-                    from walib.istsos import istsos
-                    return istsos.Hargreaves(waEnviron)
+                    from walib.OAT import ProcessThread
+                    return ProcessThread.Hargreaves(waEnviron)
                 
                     
 

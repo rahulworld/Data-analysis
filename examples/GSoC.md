@@ -23,7 +23,7 @@ The project provides also a Graphical user Interface that allows for easing the 
 
 ###OAT(Observation Analysis Tool)
 
-OAT is a Python package which is integrated in the istSOS through an interface exposing its features to modellers and non programmer users. OAT library Method class which is designated to represent a processing method. The library applies the behavioral visitor pattern which allows the separation of an algorithm from the object on which it operates.
+`OAT` is a Python package which is integrated in the istSOS through an interface exposing its features to modellers and non programmer users. OAT library Method class which is designated to represent a processing method. The library applies the behavioral visitor pattern which allows the separation of an algorithm from the object on which it operates.
 
 From a dependency point of view, OAT takes advantage of the ![PANDAS](http://pandas.pydata.org/)(McKinney, 2010), ![NUMPY](http://www.numpy.org/) and ![SCIPY](https://www.scipy.org/) (Van der Walt et. al. 2011) packages.
 
@@ -32,7 +32,7 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 
 ##Summary
 
-The primary goal of my project was to create OAT(Data analysis and statistics) extension in RESTFull Web api and OAT extension having data analysis and statistical tools for istSOS which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
+The primary goal of my project was to create `OAT(Data analysis and statistics)` extension in RESTFull Web api and `OAT extension` having data analysis and statistical tools for `istSOS` which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
 
 [Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
 
@@ -42,10 +42,11 @@ The primary goal of my project was to create OAT(Data analysis and statistics) e
 
 
 ##Tools Used
-2. [Pandas](http://pandas.pydata.org/)
-3. [NUMPY](http://www.numpy.org/)
-4. [SCIPY](https://www.scipy.org/)
-1. [d3.js](https://github.com/ruby-prof/ruby-prof)
+
+1. [Pandas](http://pandas.pydata.org/)
+2. [NUMPY](http://www.numpy.org/)
+3. [SCIPY](https://www.scipy.org/)
+4. [d3.js](https://github.com/ruby-prof/ruby-prof)
 
 #Challenges
 1. Understanding istSOS structure and OAT package
@@ -53,7 +54,8 @@ The primary goal of my project was to create OAT(Data analysis and statistics) e
 3. Developing consistent suits.
 
 # Scope for future improvements
-1. fuctionality add sensor through (CSV, istSOS, Raw)data in `Add sensor name` GUI in OAT extenstion.
+1. fuctionality add sensor through (CSV, istSOS, Raw)data in `Add sensor name` GUI in `OAT extenstion`.
+![Add sensor name](images/addSensorName.png)
 2. fuctionality add in `Mangae sensor`.
 3. functionalty add in `Compare sensor`.
 
@@ -100,21 +102,6 @@ The primary goal of my project was to create OAT(Data analysis and statistics) e
 
 [Merge branch 'multiplex' of https://github.com/celluloid/celluloid](https://github.com/prathmeshranaut/celluloid/commit/d96ea3699d0a
 ---41583ade963a512b81a7f31a3dd1)
-
-###Reel
-[Extracted the example request string](https://github.com/prathmeshranaut/reel/commit/9a8ed5fb91935ab8c90c2f1f47b9194d30057ac9)
-
-[Added test for array and non-string websocket messages](https://github.com/prathmeshranaut/reel/commit/bd7f592c4f54a8269b96aaaa031ffe737af2c511)
-
-[Spec to write array messages](https://github.com/prathmeshranaut/reel/commit/ff9047a52c817fae4b2f1628d43530ea9d5e7606)
-
-[Refactored a test](https://github.com/prathmeshranaut/reel/commit/1dfca6bcdd7ad9d986bc665b1648bb2eb87a1873)
-
-[Added a test to make sure that the connection detaches successfully](https://github.com/prathmeshranaut/reel/commit/09afb91c1242bb1b7d74615bbb721c00242bfce0)
-
-[Added tests for Reel::Request](https://github.com/prathmeshranaut/reel/commit/f36f4cf2e58d3314addbbc7a552a24f8c7cc1043)
-
-[Updated web socket specs to new Celluloid internal APIs](https://github.com/prathmeshranaut/reel/commit/60e408ae0b31abd5ce757da4d4bc87e5a8bd3a2e)
 
 ##Other Links
 * [Commits](https://github.com/rahulworld/Data-analysis/commits/master)

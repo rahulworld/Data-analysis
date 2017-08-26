@@ -23,8 +23,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         this.chartpanel = Ext.getCmp('chartpanel');
         this.serieschartpanel = Ext.getCmp('serieschartpanel');
 
-        // this.chartpanel1=Ext.getCmp('chartpanelmethod');
-        // timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
+        this.chartpanel1=Ext.getCmp('chartpanelmethod');
+        timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
         var historyString='   ';
         
 
@@ -32,8 +32,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
         var methodserch=Ext.getCmp('buttonExecute');
         var downloadResult=Ext.getCmp('buttonSave');
         
-        // methodserch.disable();
-        // methodpanel.disable();
+        methodserch.disable();
+        methodpanel.disable();
         downloadResult.disable();
         this.rst_header;
         this.rst_data;
@@ -41,8 +41,8 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
         this.pchoose.on("procedureAdded",function(procedure) {
             this.chartpanel.addProcedure(procedure);
-            // methodserch.enable();
-            // methodpanel.enable();
+            methodserch.enable();
+            methodpanel.enable();
         },this);
         
         this.pchoose.on("procedureRemoved",function(procedure) {
@@ -629,7 +629,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
 
-
+                Ext.get('chartSeries').mask("Initializing chart..");
 
                 historyString="Filter Hydro Separation Params:  mode:["+hsmode1+"] | alpha:["+hsalpha1+"] | bsalpha:["+bsalpha1+"]\n"+historyString;
                 textHistory.setValue(historyString);

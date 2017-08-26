@@ -1,4 +1,4 @@
-# istSOS-Data Analysis and statistical tool suite 
+# istSOS-Data Analysis and statistical tool suite (GSoC 2017)
 > istsos2 provides easily manage your sensor network and distribute your data in a standard way.
 
 >Mentors : [@massimiliano-cannata](https://github.com/massimiliano-cannata), [@mantonovic](https://github.com/mantonovic)
@@ -7,7 +7,7 @@
 
 The primary goal of my project was to create `OAT(Data analysis and statistics)` extension in RESTFull Web api and `OAT extension` having data analysis and statistical tools for `istSOS` which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
 
-[Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
+![GSoC Project link](https://summerofcode.withgoogle.com/projects/#6301175977607168)
 
 ![Implemented OAT methods](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
 
@@ -19,8 +19,6 @@ The primary goal of my project was to create `OAT(Data analysis and statistics)`
 istSOS is an OGC SOS server implementation written in Python. istSOS allows for managing and dispatch observations from monitoring sensors according to the Sensor Observation Service standard.
 
 The project provides also a Graphical user Interface that allows for easing the daily operations and a RESTful Web api for automatizing administration procedures.
-
-![For installation and further information](http://istsos.org/)
 
 [istSOS2 Github Repo.](https://github.com/istSOS/istsos2)
 
@@ -62,7 +60,7 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 
 ###Data analysis and statistics tool suit Pool
 
-[Individuals commits](https://github.com/rahulworld/Data-analysis/commits/master)
+[Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
 
 ###Data analysis and statistics tool suit
 

@@ -13,28 +13,28 @@
 Ext.define('istsos.view.ProcessTimeSeries', {
     extend: 'istsos.view.ui.ProcessTimeSeries',
     alias: 'widget.viewerpanel1',
-    mixins: {
-        dataAccess: 'istsos.view.ProcedureChart'
-    },
+
     initComponent: function() {
         var me = this;
         me.callParent(arguments);
+
         this.pchoose = Ext.getCmp('pchoose');
         this.chartpanel = Ext.getCmp('chartpanel');
-        this.serieschartpanel = Ext.getCmp('serieschartpanel');
 
+        //OAT time series method panel
+        this.serieschartpanel = Ext.getCmp('serieschartpanel');
         this.chartpanel1=Ext.getCmp('chartpanelmethod');
         timeSeriesGraph=Ext.getCmp('timeSeriesGraph');
-        var historyString='   ';
-        
-
+        //OAT Method panel and execute and download buttons
         var methodpanel=Ext.getCmp('methodstabs');
         var methodserch=Ext.getCmp('buttonExecute');
         var downloadResult=Ext.getCmp('buttonSave');
-        
-        methodserch.disable();
         methodpanel.disable();
+        methodserch.disable();
         downloadResult.disable();
+
+        //Variable for download csv header name, csv header data, csv data and history 
+        var historyString='';
         this.rst_header;
         this.rst_data;
         this.rst_name;
@@ -49,289 +49,112 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             this.chartpanel.removeProcedure(procedure);
         },this);
         
+        //Var for OAT methods panel
+        var digital_filter = Ext.getCmp('digitalPanel');
+        var exeedance = Ext.getCmp('exeedancePanel');
+        var resample = Ext.getCmp('resamplePanel');
+        var integrate = Ext.getCmp('integratePanel');
+        var regularization = Ext.getCmp('regularizationPanel');
+        var fill = Ext.getCmp('fillPanel1');
+        var dataValues = Ext.getCmp('DataValuesPanel');
+        var quality = Ext.getCmp('qualityPanel');
+        var statistics = Ext.getCmp('StataticsPanel');
+        var hydro_indices = Ext.getCmp('HydroIndicesPanel');
+        var hydro_events = Ext.getCmp('HydroEventsPanel');
+        var hargreaves = Ext.getCmp('hargreavesPanel');
+        var compare = Ext.getCmp('ComparePanel');
+        var subtract = Ext.getCmp('SubtractPanel');
+        var hydro_separation = Ext.getCmp('HydroSeparationPanel');        
+
+        //Combox for choose OAT Methods and select from the combox
         Ext.getCmp("methodsCombox").select(0);
         Ext.getCmp("methodsCombox").on("select",function(combo, records, eOpts){
-
+            digital_filter.setVisible(false);
+            exeedance.setVisible(false);
+            resample.setVisible(false);
+            integrate.setVisible(false);
+            regularization.setVisible(false);
+            fill.setVisible(false);
+            dataValues.setVisible(false);
+            quality.setVisible(false);
+            statistics.setVisible(false);
+            hydro_indices.setVisible(false);
+            hydro_events.setVisible(false);
+            hargreaves.setVisible(false);
+            compare.setVisible(false);
+            subtract.setVisible(false);
+            hydro_separation.setVisible(false);
+            //OAT method name position value
             var value = combo.getValue();
-            //All Methods Panels
-            var digital_filter = Ext.getCmp('digitalPanel');
-            var exeedance = Ext.getCmp('exeedancePanel');
-            var resample = Ext.getCmp('resamplePanel');
-            var integrate = Ext.getCmp('integratePanel');
-            var regularization = Ext.getCmp('regularizationPanel');
-            var fill = Ext.getCmp('fillPanel1');
-            var dataValues = Ext.getCmp('DataValuesPanel');
-            var quality = Ext.getCmp('qualityPanel');
-            var statistics = Ext.getCmp('StataticsPanel');
-            var hydro_indices = Ext.getCmp('HydroIndicesPanel');
-            var hydro_events = Ext.getCmp('HydroEventsPanel');
-            var hargreaves = Ext.getCmp('hargreavesPanel');
-            var compare = Ext.getCmp('ComparePanel');
-            var subtract = Ext.getCmp('SubtractPanel');
-            var hydro_separation = Ext.getCmp('HydroSeparationPanel');
+
             switch (value) {
                 case 0:
                     digital_filter.setVisible(true);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                   break;
                 case 1:
-                    digital_filter.setVisible(false);
                     exeedance.setVisible(true);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                   break;
                 case 2:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
                     resample.setVisible(true);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                   break;
                 case 3:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
                     integrate.setVisible(true);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                   break;
                 case 4:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
                     compare.setVisible(true);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                   break;
                 case 5:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
                     subtract.setVisible(true);
-                    hydro_separation.setVisible(false);
                     break;
                 case 6:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
                     hydro_separation.setVisible(true);
                     break;
                 case 7:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
                     hydro_events.setVisible(true);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 8:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
                     hydro_indices.setVisible(true);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 9:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
                     statistics.setVisible(true);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 10:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
                     fill.setVisible(true);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 11:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
                     quality.setVisible(true);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 12:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
                     dataValues.setVisible(true);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
-                    hargreaves.setVisible(false);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
                 case 13:
-                    digital_filter.setVisible(false);
-                    exeedance.setVisible(false);
-                    resample.setVisible(false);
-                    integrate.setVisible(false);
-                    regularization.setVisible(false);
-                    fill.setVisible(false);
-                    dataValues.setVisible(false);
-                    quality.setVisible(false);
-                    statistics.setVisible(false);
-                    hydro_indices.setVisible(false);
-                    hydro_events.setVisible(false);
                     hargreaves.setVisible(true);
-                    compare.setVisible(false);
-                    subtract.setVisible(false);
-                    hydro_separation.setVisible(false);
                     break;
             }
         });
 
         Ext.getCmp("buttonExecute").on("click",function(btn, e, eOpts){
-            //OAT methods Chooser
-            var methods=Ext.getCmp("methodsCombox").getValue();
-            // Edit Text For History(View) 
+            // For History(View) 
             var textHistory=Ext.getCmp('textAreaHistory');
-            
             //Dygraph Chart Plotting
             var chartPlot=Ext.getCmp('chartSeries');
             //Show result in table
             var show_result=Ext.getCmp('show_result');
-
+            //Show Download Result button
             downloadResult.enable();
-
+            // Selected data to perform OAT methods
+            var resdata=this.SelectedPropertyData();
+            //time data
+            var resdata1=resdata[0];
+            //value data
+            var resdata2=resdata[1];
+            //quality data
+            var resdata3=resdata[2];
+            //OAT methods Chooser
+            var methods=Ext.getCmp("methodsCombox").getValue();
+            // resample
             if (methods == 0)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var digLow= Ext.getCmp("digLowcutOff").getValue();
                 var digHigh= Ext.getCmp("digHigcutOff").getValue();
@@ -379,11 +202,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 1)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
                 var frequency;
                 var percentage;
                 var value;
@@ -434,11 +252,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             if (methods == 2)
             {
 
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 var frequency= Ext.getCmp("edittextFrequency").getValue();
                 var timeSeriesMethods= Ext.getCmp("comboxSmapling").getValue();
                 var fillCombox= Ext.getCmp("comboxFill").getValue();
@@ -477,7 +290,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart1(this.chartdata);
+                        this.draw_result_chart(this.chartdata);
 
                         //Download Data Section Hargreaves
                         // rst_header = 'Resample Params\ntime,value\n';
@@ -492,11 +305,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 3)
             {
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var intgTimeUnit= Ext.getCmp("timeUnitsCombox").getValue();
                 var intgHow= Ext.getCmp("comboxIntegrateFlow").getValue();
@@ -573,12 +381,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 4)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
                 var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
@@ -615,12 +417,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             }
             if (methods == 6)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var hsmode1= Ext.getCmp("HSmode").getValue();
                 var hsalpha1= Ext.getCmp("HSalpha").getValue();
@@ -651,7 +447,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart5(this.chartdata);
+                        this.hydro_separation_chart(this.chartdata);
                         //Download Data Section Hargreaves
                         this.rst_header = 'Hydro Saparation Params\ntime,base,runoff\n';
                         this.rst_data=this.download_format(json1);
@@ -666,12 +462,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 7)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var hyerise= Ext.getCmp("herise").getValue();
                 var hyefall= Ext.getCmp("hefall").getValue();
@@ -758,7 +548,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                             }
                         }
                         arr.sort();
-                        this.rederChart2(arr);
+                        this.hydro_events_chart(arr);
                         //Download Section
                         this.rst_header = 'Hydro Events Params\ntime,quality,Event1,Event2,Event3,Event4,Event5,Event6,Event7\n';
                         var csv_array=json1['data'];
@@ -774,12 +564,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 8)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var hialphacode= Ext.getCmp("alphacode").getValue();
                 var hiindicies= Ext.getCmp("indicies").getValue();
@@ -859,12 +643,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 9)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var dataSta= Ext.getCmp("dataSta").getValue();
                 var quaSta= Ext.getCmp("quaSta").getValue();
@@ -962,12 +740,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 10)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var fillMethod= Ext.getCmp("fillMethod").getValue();
                 var fillConsucutive= Ext.getCmp("fillConsucutive").getValue();
@@ -996,7 +768,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart1(this.chartdata);
+                        this.draw_result_chart(this.chartdata);
                         //Download Data Section Hargreaves
                         // this.rst_header = 'Fill Params\ntime,value,quality\n';
                         this.rst_data=this.download_format(json1);
@@ -1011,11 +783,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 11)
             {
-                // Data 
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
                 //Taking Input
                 var DataValue= Ext.getCmp("Qvalue").getValue();
                 var DataStat= Ext.getCmp("Qstat").getValue();
@@ -1079,7 +846,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart1(this.chartdata);
+                        this.draw_result_chart(this.chartdata);
                         
                         //Download Data Section Hargreaves
                         // rst_header = 'Quality Params\ntime,value\n';
@@ -1095,12 +862,6 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 12)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 //Taking Input
                 var DataValue= Ext.getCmp("dvvalue").getValue();
 
@@ -1165,7 +926,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart1(this.chartdata);
+                        this.draw_result_chart(this.chartdata);
                         
                         //Download Data Section Hargreaves
                         // rst_header = 'Data Values Params\ntime,value,quality\n';
@@ -1181,14 +942,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
 
             if (methods == 13)
             {
-                // Data
-                var resdata=this.SelectedPropertyData();
-                var resdata1=resdata[0];
-                var resdata2=resdata[1];
-                var resdata3=resdata[2];
-
                 Ext.get('chartSeries').mask("Initializing chart..");
-
                 
                 chartPlot.setVisible(true);
                 show_result.setVisible(false);
@@ -1209,7 +963,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
                         var json1 = Ext.decode(response.responseText);
                         //Graph Plot Section Hargreaves
                         this.chartdata =json1['data'];
-                        this.rederChart1(this.chartdata);
+                        this.draw_result_chart(this.chartdata);
                         //Download Data Section Hargreaves
                         // rst_header = 'Hargreaves Params\ntime,value,quality\n';
                         this.rst_data=this.download_format(json1);
@@ -1236,7 +990,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             console.dir(arguments);
         });*/
     },
-    rederChart1: function(chartdata){
+    draw_result_chart: function(chartdata){
             this.chartdata=chartdata;
             // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
             // var procs = [];
@@ -1446,7 +1200,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
     },
-    rederChart2: function(chartdata){
+    hydro_events_chart: function(chartdata){
             this.chartdata=chartdata;
             // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
             // var procs = [];
@@ -1656,7 +1410,7 @@ Ext.define('istsos.view.ProcessTimeSeries', {
             Ext.get('chartSeries-body').removeCls("viewerChart");
             Ext.get('chartSeries').unmask();
     },
-    rederChart5: function(chartdata){
+    hydro_separation_chart: function(chartdata){
             this.chartdata=chartdata;
             // this.obsprop = Ext.getCmp("oeCbObservedProperty").getValue();
             // var procs = [];

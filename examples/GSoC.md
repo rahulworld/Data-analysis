@@ -7,7 +7,6 @@
 
 The primary goal of my project was to create `OAT(Data analysis and statistics)` extension in RESTFull Web api and `OAT extension` having data analysis and statistical tools for `istSOS` which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
 
-![GSoC Project link](https://summerofcode.withgoogle.com/projects/#6301175977607168)
 
 ![Implemented OAT methods](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
 
@@ -20,10 +19,6 @@ istSOS is an OGC SOS server implementation written in Python. istSOS allows for 
 
 The project provides also a Graphical user Interface that allows for easing the daily operations and a RESTful Web api for automatizing administration procedures.
 
-[istSOS2 Github Repo.](https://github.com/istSOS/istsos2)
-
-[Download istsos2 source code](https://sourceforge.net/projects/istsos/)
-
 [Developers docs](http://istsos.org/en/latest/doc/#developers-docs)
 
 ---
@@ -34,7 +29,7 @@ The project provides also a Graphical user Interface that allows for easing the 
 
 From a dependency point of view, OAT takes advantage of the ![PANDAS](http://pandas.pydata.org/)(McKinney, 2010), ![NUMPY](http://www.numpy.org/) and ![SCIPY](https://www.scipy.org/) (Van der Walt et. al. 2011) packages.
 
-[Download OAT](http://www.freewat.eu/)
+[OAT](http://www.freewat.eu/)
 
 ---
 
@@ -59,6 +54,10 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 # Commits
 
 ###Data analysis and statistics tool suit Pool
+
+[istSOS2 github Repo.](https://github.com/istSOS/istsos2)
+
+[forked github Repo.](https://github.com/rahulworld/istsos2)
 
 [Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
 

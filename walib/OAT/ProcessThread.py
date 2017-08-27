@@ -6,13 +6,17 @@ import sys
 import os
 import xml.etree.ElementTree as ET
 import urllib2
-from walib.oat.oatlib import method
 
-import pandas as pd
-import numpy as np
-import json
-import scipy
 from walib.OAT import Methods
+import pandas as pd
+from pandas import read_csv
+from pandas import datetime
+import numpy as np
+import scipy
+import datetime
+from datetime import datetime
+import time
+import json
 
 class waIstsos(resource.waResourceAdmin):
     def __init__(self, waEnviron):
@@ -65,9 +69,6 @@ class Statisticsmethod(waIstsos):
     """
     def executePost(self):
         try:
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -111,13 +112,6 @@ class resamplingData(waIstsos):
 
     def executePost(self):
         try:
-            res = {}
-            from pandas import read_csv
-            from pandas import datetime
-            from datetime import datetime
-            import pandas as pd
-            import time
-            # import json
             freq=self.json['freq']
             how=self.json['sampling']
             fill=self.json['fill']
@@ -271,11 +265,6 @@ class HydroSeparationTh(waIstsos):
 
     def executePost(self):
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -330,11 +319,6 @@ class QualityMethod(waIstsos):
 
     def executePost(self):
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -413,11 +397,6 @@ class DataValuesMethod(waIstsos):
 
     def executePost(self):
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -496,11 +475,6 @@ class fillMethod(waIstsos):
 
     def executePost(self):
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -557,11 +531,6 @@ class Hargreaves(waIstsos):
     def executePost(self):
         data4 = []
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -612,11 +581,6 @@ class HydroIndices(waIstsos):
             "data": []
         }
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']
@@ -693,11 +657,6 @@ class HydroEventsTh(waIstsos):
     def executePost(self):
         dataFull=[]
         try:
-            import pandas as pd
-            import numpy as np
-            import datetime
-            from datetime import datetime
-            import time
             index1=self.json['index1']
             values1=self.json['values1']
             qua=self.json['qual']

@@ -55,6 +55,8 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 
 ###Data analysis and statistics tool suit Pool
 
+[pull request](https://github.com/istSOS/istsos2/pull/24)
+
 [forked github Repo.](https://github.com/rahulworld/istsos2)
 
 [Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
@@ -102,7 +104,7 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 [Added page Process time series GUI](https://github.com/rahulworld/Data-analysis/commit/b9269e911eab22a36dbfffc653abb7efcbebbba8)
 
 ##Other Links
-* [Blog](https://rahulworld.github.io/GSoC.html)
 * [Images and documentation](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
-* [Github](https://github.com/rahulworld)
 * [Wiki](https://wiki.osgeo.org/wiki/GSoC_17:_istSOS-Data_analysis_and_statistical_tools_suite)
+* [Blog](https://rahulworld.github.io/GSoC.html)
+* [Github](https://github.com/rahulworld)

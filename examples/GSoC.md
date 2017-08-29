@@ -3,17 +3,17 @@
 
 >Mentors : [@massimiliano-cannata](https://github.com/massimiliano-cannata), [@mantonovic](https://github.com/mantonovic)
 
-##Summary
+## Summary
 
 The primary goal of my project was to create `OAT(Data analysis and statistics)` extension in RESTFull Web api and `OAT extension` having data analysis and statistical tools for `istSOS` which is be used to automate the creation of statisticate documents using OAT library and harvesting the data from an istSOS server.
 
 
-![Implemented OAT methods](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
+[Implemented OAT methods](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
 
 ![OAT Extension](images/quality1.png)
 
 ---
-###istSOS
+### istSOS
 
 istSOS is an OGC SOS server implementation written in Python. istSOS allows for managing and dispatch observations from monitoring sensors according to the Sensor Observation Service standard.
 
@@ -23,7 +23,7 @@ The project provides also a Graphical user Interface that allows for easing the 
 
 ---
 
-###OAT(Observation Analysis Tool)
+### OAT(Observation Analysis Tool)
 
 `OAT` is a Python package which is integrated in the istSOS through an interface exposing its features to modellers and non programmer users. OAT library Method class which is designated to represent a processing method. The library applies the behavioral visitor pattern which allows the separation of an algorithm from the object on which it operates.
 
@@ -33,14 +33,14 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 
 ---
 
-##Tools Used
+## Tools Used
 
 1. [Pandas](http://pandas.pydata.org/)
 2. [NUMPY](http://www.numpy.org/)
 3. [SCIPY](https://www.scipy.org/)
 4. [d3.js](https://github.com/ruby-prof/ruby-prof)
 
-#Challenges
+# Challenges
 1. Understanding istSOS structure and OAT package
 2. Working with extjs tools in a concurrent environment.
 3. Developing consistent suits.
@@ -54,8 +54,6 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 # Commits
 
 ###Data analysis and statistics tool suit Pool
-
-[istSOS2 github Repo.](https://github.com/istSOS/istsos2)
 
 [forked github Repo.](https://github.com/rahulworld/istsos2)
 
@@ -104,11 +102,7 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 [Added page Process time series GUI](https://github.com/rahulworld/Data-analysis/commit/b9269e911eab22a36dbfffc653abb7efcbebbba8)
 
 ##Other Links
-* [Commits](https://github.com/rahulworld/Data-analysis/commits/master)
-* [Cloning Repo.](https://github.com/istSOS/istsos2)
 * [Blog](https://rahulworld.github.io/GSoC.html)
 * [Images and documentation](https://github.com/rahulworld/Data-analysis/blob/master/examples/README.md)
-* [istSOS Web](http://istsos.org/)
 * [Github](https://github.com/rahulworld)
 * [Wiki](https://wiki.osgeo.org/wiki/GSoC_17:_istSOS-Data_analysis_and_statistical_tools_suite)
-* [email](rahulnitsxr@gmail.com)

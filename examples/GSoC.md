@@ -57,7 +57,7 @@ From a dependency point of view, OAT takes advantage of the ![PANDAS](
 
 [pull request](https://github.com/istSOS/istsos2/pull/24)
 
-[forked github Repo.](https://github.com/rahulworld/istsos2)
+[forked github Repo.](https://github.com/rahulworld/istsos2/tree/oat)
 
 [Data analysis and statistics tools suit commits](https://github.com/rahulworld/Data-analysis/commits/master)
 

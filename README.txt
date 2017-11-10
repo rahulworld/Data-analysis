@@ -1,4 +1,4 @@
-# istsos2
+# **istsos2**
 Easily manage your sensor network and distribute your data in a standard way
 
 istSOS is an OGC SOS server implementation written in Python. istSOS allows for managing and dispatch observations from monitoring sensors according to the Sensor Observation Service standard.
